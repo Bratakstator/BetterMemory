@@ -50,6 +50,10 @@ public class Week {
         return pasient;
     }
 
+    public void setPasient(Pasient pasient){
+        this.pasient = pasient;
+    }
+
 
 
     
