@@ -1,6 +1,7 @@
 package no.bettermemory.models.time;
 
 import no.bettermemory.models.users.Pasient;
+import static no.bettermemory.tools.TimeControls.weekNumberCheck;
 
 import java.util.ArrayList;
 
@@ -16,6 +17,7 @@ public class Week {
     private Pasient pasient;
 
     public Week(int weeknumber, int year, ArrayList<Day> days, Pasient pasient) {
+        weekNumberCheck(weeknumber);
         this.weeknumber = weeknumber;
         this.year = year;
         this.days = days;
