@@ -8,13 +8,30 @@ import java.util.ArrayList;
 /**
  * This class represent a week objekt. It will consist of the following prameters:
  * @param weeknumber - Identifies the object with a spesific week number during a calender year.
- * @param 
+ * @param year - Identifies what year this week object belongs to.
+ * @param days - Is an list of days that the week object contains.
+ * @param pasient - Is a object that describes which pasient this week "plan" belongs to.
+ * 
+ * @author Hermann Mjelde Hamnnes
+ * @version 1
+ * 
+ * @code
+ * This is how you can create an object of this class:
+ * <pre>{@code Week week = new Week(1, 2024, days, pasient);} </pre>
+ * 
  */
 public class Week {
     private int weeknumber;
     private int year;
     private ArrayList<Day> days;
     private Pasient pasient;
+
+    /**
+     * This is the default constructure for this class.
+     */
+    public Week(){
+
+    }
 
     public Week(int weeknumber, int year, ArrayList<Day> days, Pasient pasient) {
         weekNumberCheck(weeknumber);
