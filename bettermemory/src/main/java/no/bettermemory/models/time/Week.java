@@ -7,9 +7,9 @@ import java.util.ArrayList;
 
 /**
  * This class represent a week objekt. It will consist of the following prameters:
- * @param weeknumber - Identifies the object with a spesific week number during a calender year.
+ * @param weekNumber - Identifies the object with a spesific week number during a calender year.
  * @param year - Identifies what year this week object belongs to.
- * @param days - Is an list of days that the week object contains.
+ * @param days - Is a list of days that the week object contains.
  * @param pasient - Is a object that describes which pasient this week "plan" belongs to.
  * 
  * @author Hermann Mjelde Hamnnes
@@ -21,7 +21,7 @@ import java.util.ArrayList;
  * 
  */
 public class Week {
-    private int weeknumber;
+    private int weekNumber;
     private int year;
     private ArrayList<Day> days;
     private Pasient pasient;
@@ -33,20 +33,20 @@ public class Week {
 
     }
 
-    public Week(int weeknumber, int year, ArrayList<Day> days, Pasient pasient) {
-        weekNumberCheck(weeknumber);
-        this.weeknumber = weeknumber;
+    public Week(int weekNumber, int year, ArrayList<Day> days, Pasient pasient) {
+        weekNumberCheck(weekNumber);
+        this.weekNumber = weekNumber;
         this.year = year;
         this.days = days;
         this.pasient= pasient;
     }
 
-    public int getWeeknumber() {
-        return weeknumber;
+    public int getWeekNumber() {
+        return weekNumber;
     }
 
-    public void setWeeknumber(int weeknumber) {
-        this.weeknumber = weeknumber;
+    public void setWeekNumber(int weekNumber) {
+        this.weekNumber = weekNumber;
     }
 
     public int getYear() {
