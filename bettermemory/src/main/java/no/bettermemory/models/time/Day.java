@@ -40,7 +40,7 @@ public class Day {
         this.dayName = dayName;
     }
     
-    public ArrayList<Activity> activities(){
+    public ArrayList<Activity> getActivities(){
         return activities;
     }
 
