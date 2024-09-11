@@ -12,6 +12,8 @@ import java.util.ArrayList;
  * @param days - Is a list of days that the week object contains.
  * @param pasient - Is a object that describes which pasient this week "plan" belongs to.
  * 
+ * test
+ * 
  * @author Hermann Mjelde Hamnnes
  * @version 1
  * 
