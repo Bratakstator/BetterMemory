@@ -6,6 +6,8 @@ import java.util.ArrayList;
 
 import static no.bettermemory.errorMessages.ErrorMessages.notARealDay;
 
+
+
 import no.bettermemory.models.activity.Activity;
 
 
