@@ -39,17 +39,11 @@ public class Week {
     public Week(int weekNumber, int year, ArrayList<Day> days, Pasient pasient) throws IllegalArgumentException {
         try {
             weekNumberCheck(weekNumber);
+            canOnlyBeeOneOfTheSameDay(days);
             this.weekNumber = weekNumber;
             this.year = year;
             this.pasient= pasient;
-            try {
-                canOnlyBeeOneOfTheSameDay(days);
-                this.days = days;
-            }
-    
-            catch (IllegalArgumentException exception) {
-                System.out.println(exception.getMessage() + "\n The object was not created.");
-            }
+            this.days = days;
         }
 
         catch (IllegalArgumentException exception) {
