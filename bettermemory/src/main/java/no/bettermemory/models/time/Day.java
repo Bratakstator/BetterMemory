@@ -1,5 +1,7 @@
 package no.bettermemory.models.time;
 
+import static no.bettermemory.tools.TimeControls.mustBeeARealDay;
+
 import java.util.ArrayList;
 
 import no.bettermemory.models.activity.Activity;
@@ -28,7 +30,10 @@ public class Day {
     }
 
     public Day(String dayName, ArrayList<Activity> activities){
-        this.dayName = dayName;
+        
+        if (mustBeeARealDay(dayName)) this.dayName = dayName;
+        else throw new IllegalArgumentException();
+        
         this.activities = activities;
     }
 

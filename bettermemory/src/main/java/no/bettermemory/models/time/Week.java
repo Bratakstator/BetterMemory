@@ -35,12 +35,19 @@ public class Week {
 
     }
 
-    public Week(int weekNumber, int year, ArrayList<Day> days, Pasient pasient) {
-        weekNumberCheck(weekNumber);
-        this.weekNumber = weekNumber;
-        this.year = year;
-        this.days = days;
-        this.pasient= pasient;
+    public Week(int weekNumber, int year, ArrayList<Day> days, Pasient pasient) throws IllegalArgumentException {
+        try {
+            weekNumberCheck(weekNumber);
+            this.weekNumber = weekNumber;
+            this.year = year;
+            this.days = days;
+            this.pasient= pasient;
+        }
+
+        catch (IllegalArgumentException exception) {
+            System.out.println(exception.getMessage() + "\n The object was not created.");
+            throw exception;
+        }
     }
 
     public int getWeekNumber() {
