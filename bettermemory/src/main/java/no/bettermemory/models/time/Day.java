@@ -35,7 +35,10 @@ public class Day {
     public Day(String dayName, ArrayList<Activity> activities) throws IllegalArgumentException {
 
         if (mustBeeARealDay(dayName)) this.dayName = dayName.toLowerCase();
-        else throw new IllegalArgumentException(notARealDay(dayName));
+        else {
+            System.out.println(notARealDay(dayName));
+            throw new IllegalArgumentException(notARealDay(dayName));
+        }
         
         this.activities = activities;
     }

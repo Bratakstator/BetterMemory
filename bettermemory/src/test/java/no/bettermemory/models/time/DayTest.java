@@ -37,13 +37,6 @@ public class DayTest {
 
         assertEquals(notARealDay(dayName), exception.getMessage());
 
-        
-
-        
-
-
-
-
     }
     
 }
