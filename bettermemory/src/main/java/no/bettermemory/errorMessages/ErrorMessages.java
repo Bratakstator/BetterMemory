@@ -16,6 +16,10 @@ public class ErrorMessages {
         return "A dublication of the day " + dayName + " has been detected. This is not allowed.";
     }
 
+    public static String notARealDay(String dayName) {
+        return "The day: " + dayName + " does not exist.";
+    }
+
 
     
     

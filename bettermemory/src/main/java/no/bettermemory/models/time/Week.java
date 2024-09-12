@@ -51,7 +51,6 @@ public class Week {
             throw exception;
         }
 
-        
     }
 
     public int getWeekNumber() {

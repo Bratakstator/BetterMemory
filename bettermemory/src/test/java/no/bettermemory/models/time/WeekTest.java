@@ -14,8 +14,6 @@ public record WeekTest() {
         ArrayList<Day> days = new ArrayList<>();
         Pasient pasient = new Pasient();
 
-
-
         Week week = new Week(1, 2024, days, pasient);
 
         assertNotNull(week);
@@ -51,5 +49,6 @@ public record WeekTest() {
         assertEquals(toLowWeekNumberError(weekNumber), exception.getMessage());
         
     }
+    
     
 }

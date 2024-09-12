@@ -1,10 +1,13 @@
 package no.bettermemory.models.time;
 
 import static no.bettermemory.tools.TimeControls.mustBeeARealDay;
+import static no.bettermemory.errorMessages.ErrorMessages.notARealDay;
 
 import java.util.ArrayList;
 
 import no.bettermemory.models.activity.Activity;
+
+
 
 
 /**
@@ -29,10 +32,10 @@ public class Day {
 
     }
 
-    public Day(String dayName, ArrayList<Activity> activities){
-        
-        if (mustBeeARealDay(dayName)) this.dayName = dayName;
-        else throw new IllegalArgumentException();
+    public Day(String dayName, ArrayList<Activity> activities) throws IllegalArgumentException {
+
+        if (mustBeeARealDay(dayName)) this.dayName = dayName.toLowerCase();
+        else throw new IllegalArgumentException(notARealDay(dayName));
         
         this.activities = activities;
     }
