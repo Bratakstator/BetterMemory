@@ -11,6 +11,12 @@ public class ErrorMessages {
         return weekNumber + " < 1. Week number "+
             " must be a positive whole number bigger or equal to one.";
     }
+
+    public static String dublicateDayInWeekError(String dayName) {
+        return "A dublication of the day " + dayName + " has been detected. This is not allowed.";
+    }
+
+
     
     
 }

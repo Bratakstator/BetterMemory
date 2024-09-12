@@ -2,6 +2,13 @@ package no.bettermemory.tools;
 
 import static no.bettermemory.errorMessages.ErrorMessages.toHighWeekNumberError;
 import static no.bettermemory.errorMessages.ErrorMessages.toLowWeekNumberError;
+import static no.bettermemory.errorMessages.ErrorMessages.dublicateDayInWeekError;
+
+
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
+import no.bettermemory.models.time.Day;
 
 /**
  * This class contains a variety of diffrent nice to have controll methodes. Methodes in this 
@@ -38,6 +45,19 @@ public class TimeControls {
         return false;
     }
 
+    /**
+     * This methode ensures that any dublication of days in a week gets detected.
+     * @param days
+     * @throws IllegalArgumentException
+     */
+    public static void canOnlyBeeOneOfTheSameDay(ArrayList<Day> days) throws IllegalArgumentException {
+        Set<String> daysInWeek = new HashSet<>();
+        for (Day day : days){
+            if(!daysInWeek.add(day.getDayName().toLowerCase())) {
+                throw new IllegalArgumentException(dublicateDayInWeekError(day.getDayName()));
+            }
+        }
+    }
     
     
 }
