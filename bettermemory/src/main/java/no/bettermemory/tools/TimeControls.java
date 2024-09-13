@@ -67,6 +67,15 @@ public class TimeControls {
     
         }
     }
+
+    public static void hourCheck(int hour) throws IllegalArgumentException {
+        if (hour > 23 || hour < 0) {
+            
+            throw new IllegalArgumentException("The hour value that was enterd was not accsepted.");
+    
+        }
+
+    }
     
     
 }
