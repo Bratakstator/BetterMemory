@@ -1,5 +1,8 @@
 package no.bettermemory.models.activity;
 
+import static no.bettermemory.tools.TimeControls.minuteCheck;
+import static no.bettermemory.tools.TimeControls.hourCheck;
+
 public class Activity {
     private int hour;
     private int minutes;
@@ -11,6 +14,8 @@ public class Activity {
     }
 
     public Activity(int hour, int minutes, String shortDescription, String longDescription){
+        minuteCheck(minutes);
+        hourCheck(hour);
         this.hour = hour;
         this.minutes = minutes;
         this.shortDescription = shortDescription;
