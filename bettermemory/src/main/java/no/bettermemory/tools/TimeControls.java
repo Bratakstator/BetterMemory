@@ -59,6 +59,14 @@ public class TimeControls {
             }
         }
     }
+
+    public static void minuteCheck(int minutes) throws IllegalArgumentException {
+        if (minutes > 59 || minutes < 0) {
+            
+            throw new IllegalArgumentException("The minute value that was enterd was not accsepted.");
+    
+        }
+    }
     
     
 }
