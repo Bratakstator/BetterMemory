@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" version="3.0.1" name="no.bettermemory.models.time.WeekTest" time="0.019" tests="4" errors="0" skipped="0" failures="0">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" version="3.0.1" name="no.bettermemory.models.time.DayTest" time="0.01" tests="2" errors="0" skipped="0" failures="0">
   <properties>
     <property name="java.specification.version" value="17"/>
     <property name="sun.cpu.isalist" value="amd64"/>
@@ -57,20 +57,9 @@
     <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
     <property name="java.class.version" value="61.0"/>
   </properties>
-  <testcase name="testInvalidWeekNumberHigh" classname="no.bettermemory.models.time.WeekTest" time="0.006">
-    <system-out><![CDATA[53 > 52. 53 exeeds the number of weeks in a calender year, and is therefore deemed invalid.
- The object was not created.
-]]></system-out>
-  </testcase>
-  <testcase name="testWeekConstructor" classname="no.bettermemory.models.time.WeekTest" time="0.001"/>
-  <testcase name="testInvalidWeekNumberLow" classname="no.bettermemory.models.time.WeekTest" time="0.003">
-    <system-out><![CDATA[0 < 1. Week number  must be a positive whole number bigger or equal to one.
- The object was not created.
-]]></system-out>
-  </testcase>
-  <testcase name="testDublicatedDayInWeek" classname="no.bettermemory.models.time.WeekTest" time="0.002">
-    <system-out><![CDATA[A dublication of the day monday has been detected. This is not allowed.
- The object was not created.
+  <testcase name="testDayConstructor" classname="no.bettermemory.models.time.DayTest" time="0.002"/>
+  <testcase name="testInvalidDayName" classname="no.bettermemory.models.time.DayTest" time="0.006">
+    <system-out><![CDATA[The day: smonday does not exist.
 ]]></system-out>
   </testcase>
 </testsuite>
