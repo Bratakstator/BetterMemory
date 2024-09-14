@@ -1,5 +1,27 @@
 package no.bettermemory.models.users;
 
+
+
+
+
+
+
+
+
+
+/**
+ * This class is meant to represent a patient-object. This object will be used to hold necessary
+ * information about a patient to be used in relation to activities and when to do them.
+ * 
+ * @param name - Is the full name of the patient.
+ * @param patientId - Is the patient id assigned by the governing health sector.
+ * 
+ * @author Joakim Klemsdal Bøe
+ * 
+ * @code
+ * To create an object of this class:
+ * <pre>{@code Patient patient = new Patient("Jane Doe", 123456789)}
+ */
 public class Patient {
 
     private String name;
