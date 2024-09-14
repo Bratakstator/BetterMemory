@@ -1,6 +1,6 @@
 package no.bettermemory.models.time;
 
-import no.bettermemory.models.users.Pasient;
+import no.bettermemory.models.users.Patient;
 import static no.bettermemory.tools.TimeControls.weekNumberCheck;
 import static no.bettermemory.tools.TimeControls.canOnlyBeeOneOfTheSameDay;
 
@@ -27,7 +27,7 @@ public class Week {
     private int weekNumber;
     private int year;
     private ArrayList<Day> days;
-    private Pasient pasient;
+    private Patient pasient;
 
     /**
      * This is the default constructure for this class.
@@ -36,7 +36,7 @@ public class Week {
 
     }
 
-    public Week(int weekNumber, int year, ArrayList<Day> days, Pasient pasient) throws IllegalArgumentException {
+    public Week(int weekNumber, int year, ArrayList<Day> days, Patient pasient) throws IllegalArgumentException {
         try {
             weekNumberCheck(weekNumber);
             canOnlyBeeOneOfTheSameDay(days);
@@ -77,11 +77,11 @@ public class Week {
         this.days = days;
     }
 
-    public Pasient getPasient(){
+    public Patient getPasient(){
         return pasient;
     }
 
-    public void setPasient(Pasient pasient){
+    public void setPasient(Patient pasient){
         this.pasient = pasient;
     }
 

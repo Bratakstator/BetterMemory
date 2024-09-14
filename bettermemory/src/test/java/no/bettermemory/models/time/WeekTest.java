@@ -1,6 +1,6 @@
 package no.bettermemory.models.time;
 
-import no.bettermemory.models.users.Pasient;
+import no.bettermemory.models.users.Patient;
 import static no.bettermemory.errorMessages.ErrorMessages.toHighWeekNumberError;
 import static no.bettermemory.errorMessages.ErrorMessages.toLowWeekNumberError;
 import static no.bettermemory.errorMessages.ErrorMessages.dublicateDayInWeekError;
@@ -22,7 +22,7 @@ public record WeekTest() {
         days.add( new Day("Saturday", new ArrayList<>()));
         days.add( new Day("Sunday", new ArrayList<>()));
 
-        Pasient pasient = new Pasient();
+        Patient pasient = new Patient("Jane Doe", 2258369);
 
         Week week = new Week(1, 2024, days, pasient);
 
@@ -36,7 +36,7 @@ public record WeekTest() {
     @Test 
     public void testInvalidWeekNumberHigh(){
         ArrayList<Day> days = new ArrayList<>();
-        Pasient pasient = new Pasient();
+        Patient pasient = new Patient("Jane Doe", 2258369);
         int weekNumber = 53;
 
         IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> {
@@ -49,7 +49,7 @@ public record WeekTest() {
     @Test 
     public void testInvalidWeekNumberLow(){
         ArrayList<Day> days = new ArrayList<>();
-        Pasient pasient = new Pasient();
+        Patient pasient = new Patient("Jane Doe", 2258369);
         int weekNumber = 0;
 
         IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> {
@@ -67,7 +67,7 @@ public record WeekTest() {
         days.add( new Day("monday", new ArrayList<>()));
 
         IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> {
-            new Week(30, 2024, days, new Pasient());
+            new Week(30, 2024, days, new Patient("Jane Doe", 2258369));
         });
 
         assertEquals(dublicateDayInWeekError("monday"), exception.getMessage());
