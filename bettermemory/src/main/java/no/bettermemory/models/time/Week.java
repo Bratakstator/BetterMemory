@@ -13,7 +13,6 @@ import java.util.ArrayList;
  * @param days - Is a list of days that the week object contains.
  * @param pasient - Is a object that describes which pasient this week "plan" belongs to.
  * 
- * test
  * 
  * @author Hermann Mjelde Hamnnes
  * @version 1
@@ -36,6 +35,16 @@ public class Week {
 
     }
 
+    /**
+     * This is the constructor for the week object. It will take in the following parameters:
+     * @param weekNumber - Identifies the object with a spesific week number during a calender year.
+     * @param year - Identifies what year this week object belongs to.
+     * @param days - Is a list of days that the week object contains.
+     * @param pasient - Is a object that describes which pasient this week "plan" belongs to.
+     * 
+     * @throws IllegalArgumentException
+     * 
+     */
     public Week(int weekNumber, int year, ArrayList<Day> days, Patient pasient) throws IllegalArgumentException {
         try {
             weekNumberCheck(weekNumber);
