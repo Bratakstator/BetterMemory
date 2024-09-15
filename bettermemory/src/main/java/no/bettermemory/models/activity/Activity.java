@@ -3,6 +3,22 @@ package no.bettermemory.models.activity;
 import static no.bettermemory.tools.TimeControls.minuteCheck;
 import static no.bettermemory.tools.TimeControls.hourCheck;
 
+/**
+ * This Class is meant to represent an Activity object. Its purpose is tho give information about the contents of the 
+ * planed activiy sutch as the time it is planed to take place during the day. 
+ * 
+ * @param hour
+ * @param minutes
+ * @param shortDescription - Is a string that works like a title for the activity.
+ * @param longDescription - Is a string which gives a more in-depth description of the contents of the activity.
+ * 
+ * @author Hermann Mjelde Hamnnes
+ * 
+ * @code
+ * This is how you can create an object of this class:
+ * <pre>{@code Activity activity = new Activity(10, 20, "Visit", "Your grand childeren are going to visit you.");} </pre>
+ * 
+ */
 public class Activity {
     private int hour;
     private int minutes;
@@ -13,7 +29,7 @@ public class Activity {
 
     }
 
-    public Activity(int hour, int minutes, String shortDescription, String longDescription) throws IllegalArgumentException{
+    public Activity(int hour, int minutes, String shortDescription, String longDescription) throws IllegalArgumentException {
      
         minuteCheck(minutes);
         hourCheck(hour);
