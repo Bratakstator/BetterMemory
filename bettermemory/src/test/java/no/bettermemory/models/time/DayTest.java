@@ -10,7 +10,9 @@ import static no.bettermemory.errorMessages.ErrorMessages.notARealDay;
 
 import no.bettermemory.models.activity.Activity;
 
-
+/**
+ * This class is meant to test the functionality of the Day class.
+ */
 public class DayTest {
 
     @Test
