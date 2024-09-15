@@ -20,7 +20,4 @@ public class ErrorMessages {
         return "The day: " + dayName + " does not exist.";
     }
 
-
-    
-    
 }

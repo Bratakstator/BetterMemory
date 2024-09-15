@@ -2,7 +2,6 @@ package no.bettermemory.models.activity;
 
 import org.junit.jupiter.api.Test;
 
-import no.bettermemory.models.time.Day;
 
 import static org.junit.jupiter.api.Assertions.*;
 
