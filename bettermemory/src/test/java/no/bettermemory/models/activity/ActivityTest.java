@@ -1,6 +1,9 @@
 package no.bettermemory.models.activity;
 
 import org.junit.jupiter.api.Test;
+
+import no.bettermemory.models.time.Day;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class ActivityTest {
@@ -17,6 +20,17 @@ public class ActivityTest {
         assertEquals("Your grand childeren are going to visit you.", activity.getLongDescription());
         assertEquals("10:20", activity.getTime());
 
+    }
+
+    @Test 
+    public void testInvalidMinuteInput(){
+
+         IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> {
+            new Activity(20, 60, "Something", "More");
+        });
+
+        assertEquals("The minute value that was enterd was not accsepted.", exception.getMessage());
+  
     }
 
 

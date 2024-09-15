@@ -13,13 +13,15 @@ public class Activity {
 
     }
 
-    public Activity(int hour, int minutes, String shortDescription, String longDescription){
+    public Activity(int hour, int minutes, String shortDescription, String longDescription) throws IllegalArgumentException{
+     
         minuteCheck(minutes);
         hourCheck(hour);
         this.hour = hour;
         this.minutes = minutes;
         this.shortDescription = shortDescription;
         this.longDescription = longDescription;
+        
     }
 
     public int getHour(){
