@@ -33,6 +33,19 @@ public class ActivityTest {
   
     }
 
+    @Test
+    public void testInvalidHourInput(){
+
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> {
+           new Activity(25, 30, "Something", "More");
+       });
+
+       assertEquals("The hour value that was enterd was not accsepted.", exception.getMessage());
+    }
+
+    
+
+
 
     
 }
