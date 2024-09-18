@@ -3,21 +3,21 @@ package no.bettermemory.models.users;
 
 public class HealthCarePersonel {
 
-    private int employeeNumber;
+    private String employeeNumber;
     private String firstName;
     private String surname;
 
-    public HealthCarePersonel(int employeeNumber, String firstName, String surname) {
+    public HealthCarePersonel(String employeeNumber, String firstName, String surname) {
         this.employeeNumber = employeeNumber;
         this.firstName = firstName;
         this.surname = surname;
     }
 
-    public int getEmployeeNumber() {
+    public String getEmployeeNumber() {
         return employeeNumber;
     }
 
-    public void setEmployeeNumber(int employeeNumber) {
+    public void setEmployeeNumber(String employeeNumber) {
         this.employeeNumber = employeeNumber;
     }
 
