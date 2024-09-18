@@ -8,9 +8,9 @@ public class HealthCarePersonel {
     private String surname;
 
     public HealthCarePersonel(String employeeNumber, String firstName, String surname) {
-        this.employeeNumber = employeeNumber;
-        this.firstName = firstName;
-        this.surname = surname;
+        this.employeeNumber = employeeNumber.toLowerCase();
+        this.firstName = firstName.toLowerCase();
+        this.surname = surname.toLowerCase();
     }
 
     public String getEmployeeNumber() {
