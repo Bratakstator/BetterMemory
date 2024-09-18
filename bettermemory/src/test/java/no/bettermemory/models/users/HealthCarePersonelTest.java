@@ -2,7 +2,6 @@ package no.bettermemory.models.users;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
-import no.bettermemory.models.users.HealthCarePersonel;
 
 public class HealthCarePersonelTest {
     @Test
