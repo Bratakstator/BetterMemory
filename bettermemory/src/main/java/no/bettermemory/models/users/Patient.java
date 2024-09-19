@@ -1,13 +1,6 @@
 package no.bettermemory.models.users;
 
-
-
-
-
-
-
-
-
+import java.util.ArrayList;
 
 /**
  * This class is meant to represent a patient-object. This object will be used to hold necessary
@@ -30,12 +23,20 @@ public class Patient {
     private String surname;
 
     // I'm just gonna leave this attribute out of the parameter for now
-    
+    private ArrayList<CloseRelative> closeRelatives = new ArrayList<>();
+       
     public Patient(String patientId, String firstName, String surname){
         this.patientId = patientId;
         this.firstName = firstName;
         this.surname = surname;
     }
+
+
+    public void addCloseRelative(String firstName, String surname) {
+        CloseRelative closeRelative = new CloseRelative(firstName, surname, this);
+        closeRelatives.add(closeRelative);
+    }
+
 
     public void setPatientId(String patientId) {
         this.patientId = patientId;
@@ -59,5 +60,9 @@ public class Patient {
 
     public String getSurname() {
         return surname;
+    }
+
+    public ArrayList<CloseRelative> getCloseRelatives() {
+        return closeRelatives;
     }
 }
