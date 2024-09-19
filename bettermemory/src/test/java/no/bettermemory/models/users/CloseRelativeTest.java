@@ -8,7 +8,7 @@ public class CloseRelativeTest {
     @Test
     public void createObject() {
         // Arrange
-        Patient patient = new Patient("John Doe", 123);
+        Patient patient = new Patient("123", "John", "Doe");
 
         // Act
         CloseRelative closeRelative1 = new CloseRelative("Jack", "Doe", patient);
