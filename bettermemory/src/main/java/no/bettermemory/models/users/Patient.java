@@ -24,27 +24,40 @@ package no.bettermemory.models.users;
  */
 public class Patient {
 
-    private String name;
-    private int patientId;
     
-    public Patient(String name, int patientId){
-        this.name = name;
+    private String patientId;
+    private String firstName;
+    private String surname;
+
+    // I'm just gonna leave this attribute out of the parameter for now
+    
+    public Patient(String patientId, String firstName, String surname){
+        this.patientId = patientId;
+        this.firstName = firstName;
+        this.surname = surname;
+    }
+
+    public void setPatientId(String patientId) {
         this.patientId = patientId;
     }
 
-    public void setName(String name) { 
-        this.name = name;
+    public void setFirstName(String firstName) { 
+        this.firstName = firstName;
     }
 
-    public void setPatientId(int patientId) {
-        this.patientId = patientId;
+    public void setSurname(String surname) {
+        this.surname = surname;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public int getPatientId() {
+    public String getPatientId() {
         return patientId;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public String getSurname() {
+        return surname;
     }
 }
