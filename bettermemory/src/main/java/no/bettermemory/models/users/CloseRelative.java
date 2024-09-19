@@ -29,7 +29,7 @@ public class CloseRelative {
          * i.e. a close relative will be added to the patient, the patient has the id 012, the relative will get the id
          * 012-1, when another relative is added to the patient their id will be 012-2, and so on.
          */
-        this.id = patient.getPatientId() + "-1"; // temporary solution, i promise
+        this.id = patient.getPatientId() + "-" + patient.getCloseRelatives().size() + 1;
     }
 
     public void setFirstName(String firstName) {
