@@ -1,16 +1,27 @@
 
 package no.bettermemory.models.users;
 
+import java.util.ArrayList;
+
 public class HealthCarePersonel {
 
     private String employeeNumber;
     private String firstName;
     private String surname;
+    private ArrayList<String> connectedPatients;
+
 
     public HealthCarePersonel(String employeeNumber, String firstName, String surname) {
         this.employeeNumber = employeeNumber.toLowerCase();
         this.firstName = firstName.toLowerCase();
         this.surname = surname.toLowerCase();
+    }
+
+    public HealthCarePersonel(String employeeNumber, String firstName, String surname, ArrayList<String> connectedPatients) {
+        this.employeeNumber = employeeNumber.toLowerCase();
+        this.firstName = firstName.toLowerCase();
+        this.surname = surname.toLowerCase();
+        this.connectedPatients = connectedPatients;
     }
 
     public String getEmployeeNumber() {
@@ -36,6 +47,19 @@ public class HealthCarePersonel {
     public void setSurname(String surname) {
         this.surname = surname;
     }
+
+    public ArrayList<String> getConnectedPatients(){
+        return connectedPatients;
+    }
+
+    public void setConnectedPatients(ArrayList<String> connectedPatient) {
+        this.connectedPatients = connectedPatient;
+    }
+
+    
+
+
+
 
 
 
