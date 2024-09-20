@@ -17,8 +17,6 @@ public class HealthCarePersonnelTest {
         assertEquals(firstName.toLowerCase(), healthCarePersonel.getFirstName());
         assertEquals(surname.toLowerCase(), healthCarePersonel.getSurname());
 
-        
-
     }
 
     
