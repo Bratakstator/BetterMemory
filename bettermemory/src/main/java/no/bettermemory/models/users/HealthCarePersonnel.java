@@ -56,6 +56,10 @@ public class HealthCarePersonnel {
         this.connectedPatients = connectedPatient;
     }
 
+    public void addPatientNumber(String patientId) {
+        this.connectedPatients.add(patientId);
+    }
+
     
 
 
