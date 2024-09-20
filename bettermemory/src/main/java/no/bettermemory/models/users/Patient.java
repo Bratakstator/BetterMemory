@@ -31,7 +31,7 @@ public class Patient {
         this.surname = surname;
     }
 
-
+    /** */
     public void addCloseRelative(String firstName, String surname) {
         CloseRelative closeRelative = new CloseRelative(firstName, surname, this);
         closeRelatives.add(closeRelative);
