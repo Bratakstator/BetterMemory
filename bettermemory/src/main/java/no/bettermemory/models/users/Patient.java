@@ -6,14 +6,16 @@ import java.util.ArrayList;
  * This class is meant to represent a patient-object. This object will be used to hold necessary
  * information about a patient to be used in relation to activities and when to do them.
  * 
- * @param name - Is the full name of the patient.
  * @param patientId - Is the patient id assigned by the governing health sector.
+ * @param firstName - Is the first name of the patient.
+ * @param surname - Is the surname / last name of the patient.
  * 
  * @author Joakim Klemsdal Bøe
+ * @version 1.1
  * 
  * @code
  * To create an object of this class:
- * <pre>{@code Patient patient = new Patient("Jane Doe", 123456789)}
+ * <pre>{@code Patient patient = new Patient("123", "Jane" "Doe")}
  */
 public class Patient {
 

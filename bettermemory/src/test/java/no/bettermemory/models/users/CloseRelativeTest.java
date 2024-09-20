@@ -2,6 +2,7 @@ package no.bettermemory.models.users;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import java.util.ArrayList;
 
 public class CloseRelativeTest {
 
@@ -11,13 +12,16 @@ public class CloseRelativeTest {
         Patient patient = new Patient("123", "John", "Doe");
 
         // Act
-        CloseRelative closeRelative1 = new CloseRelative("Jack", "Doe", patient);
-        CloseRelative closeRelative2 = new CloseRelative("Jane", "Doe", patient);
-        CloseRelative closeRelative3 = new CloseRelative("John", "Doe jr.", patient);
+        patient.addCloseRelative("Jane", "Doe");
+        patient.addCloseRelative("Jack", "Doe");
+        patient.addCloseRelative("John", "Doe jr.");
 
         // Assert
-        Assertions.assertEquals(patient.getPatientId()+"-1", closeRelative1.getId());
-        Assertions.assertEquals(patient.getPatientId()+"-2", closeRelative2.getId());
-        Assertions.assertEquals(patient.getPatientId()+"-3", closeRelative3.getId());
+        ArrayList<CloseRelative> closeRelatives = patient.getCloseRelatives();
+        int i = 0;
+        for (CloseRelative closeRelative : closeRelatives) {
+            i++;
+            Assertions.assertEquals(patient.getPatientId() + "-" + i, closeRelative.getId());
+        }
     }    
 }

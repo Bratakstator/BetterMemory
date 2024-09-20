@@ -9,7 +9,8 @@ package no.bettermemory.models.users;
  * @param surname - Is the relatives surname.
  * @param patient - This is a patient-object that this person is a relative of, used to assign a unique id for this user.
  * 
- * @author Joakim Klemsdal Ble
+ * @author Joakim Klemsdal Bøe
+ * @version 1
  * 
  * @code
  * To create an object of this class:
@@ -29,7 +30,7 @@ public class CloseRelative {
          * i.e. a close relative will be added to the patient, the patient has the id 012, the relative will get the id
          * 012-1, when another relative is added to the patient their id will be 012-2, and so on.
          */
-        this.id = patient.getPatientId() + "-1"; // temporary solution, i promise
+        this.id = patient.getPatientId() + "-" + (patient.getCloseRelatives().size() + 1);
     }
 
     public void setFirstName(String firstName) {
