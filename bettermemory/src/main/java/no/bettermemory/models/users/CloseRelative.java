@@ -10,6 +10,7 @@ package no.bettermemory.models.users;
  * @param patient - This is a patient-object that this person is a relative of, used to assign a unique id for this user.
  * 
  * @author Joakim Klemsdal Bøe
+ * @version 1
  * 
  * @code
  * To create an object of this class:

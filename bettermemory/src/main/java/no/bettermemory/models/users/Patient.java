@@ -11,6 +11,7 @@ import java.util.ArrayList;
  * @param surname - Is the surname / last name of the patient.
  * 
  * @author Joakim Klemsdal Bøe
+ * @version 1.1
  * 
  * @code
  * To create an object of this class:
