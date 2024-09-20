@@ -3,7 +3,7 @@ package no.bettermemory.models.users;
 
 import java.util.ArrayList;
 
-public class HealthCarePersonel {
+public class HealthCarePersonnel {
 
     private String employeeNumber;
     private String firstName;
@@ -11,13 +11,13 @@ public class HealthCarePersonel {
     private ArrayList<String> connectedPatients;
 
 
-    public HealthCarePersonel(String employeeNumber, String firstName, String surname) {
+    public HealthCarePersonnel(String employeeNumber, String firstName, String surname) {
         this.employeeNumber = employeeNumber.toLowerCase();
         this.firstName = firstName.toLowerCase();
         this.surname = surname.toLowerCase();
     }
 
-    public HealthCarePersonel(String employeeNumber, String firstName, String surname, ArrayList<String> connectedPatients) {
+    public HealthCarePersonnel(String employeeNumber, String firstName, String surname, ArrayList<String> connectedPatients) {
         this.employeeNumber = employeeNumber.toLowerCase();
         this.firstName = firstName.toLowerCase();
         this.surname = surname.toLowerCase();

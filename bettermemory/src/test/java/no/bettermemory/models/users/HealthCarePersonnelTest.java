@@ -3,14 +3,14 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 
-public class HealthCarePersonelTest {
+public class HealthCarePersonnelTest {
     @Test
     public void testHealthCarePersonelConstructor() {
 
         String employeeNumber = "D003809";
         String firstName = "Elissa";
         String surname = "Andersen";
-        HealthCarePersonel healthCarePersonel = new HealthCarePersonel(employeeNumber, firstName, surname);
+        HealthCarePersonnel healthCarePersonel = new HealthCarePersonnel(employeeNumber, firstName, surname);
 
         assertNotNull(healthCarePersonel);
         assertEquals(employeeNumber.toLowerCase(), healthCarePersonel.getEmployeeNumber());
