@@ -15,7 +15,7 @@ import java.util.ArrayList;
  * 
  * @code
  * To create an object of this class:
- * <pre>{@code Patient patient = new Patient("123", "Jane" "Doe")}
+ * <pre>{@code Patient patient = new Patient("123", "Jane" "Doe");}
  */
 public class Patient {
 
@@ -33,7 +33,18 @@ public class Patient {
         this.surname = surname;
     }
 
-    /** */
+    /** 
+     * Creates a CloseRelative-object to be added to the list of close relatives in patient-object.
+     * 
+     * @param firstName - The first name of the close relative.
+     * @param surname - The surname / last name of the close relative.
+     * 
+     * @author Joakim Klemsdal Bøe
+     * 
+     * @code
+     * How to use:
+     * <pre>{@code patientObject.addCloseRelative("John", "Doe");}
+    */
     public void addCloseRelative(String firstName, String surname) {
         CloseRelative closeRelative = new CloseRelative(firstName, surname, this);
         closeRelatives.add(closeRelative);
