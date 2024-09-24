@@ -49,8 +49,11 @@ public class HealthCarePersonnelTest {
         assertEquals(surname.toLowerCase(), healthCarePersonnel.getSurname());
         assertFalse(healthCarePersonnel.getConnectedPatients().isEmpty());
 
-        
-            
+        /*
+         * This logic will ensure that all patient numbers in the 
+         * patients list that was added indeed continues to 
+         * exist in the list.
+         */
         for (int x = 0; x < patients.size(); x++) {
             assertTrue(patients.contains(copyPatients.get(x)));
         }
