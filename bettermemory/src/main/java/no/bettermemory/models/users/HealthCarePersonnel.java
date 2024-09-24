@@ -1,14 +1,34 @@
 
 package no.bettermemory.models.users;
 
-import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
+/**
+ * This class is ment to represent a healthCarePerosnel-object. This object work as way to include
+ * new heealthCarePerosnel to the system. This class will contain information abot the employee and 
+ * who which patients this employee is allowed to wiev data on.
+ * 
+ * @param employeeNumber 
+ * @param firstName 
+ * @param surname 
+ * @param connectedPatients
+ * 
+ * @author Hermann Mjelde Hamnnes
+ * 
+ * @code
+ * This is how you can create an object of this class:
+ * <pre>{@code String employeeNumber = "D003809";
+        String firstName = "Elissa";
+        String surname = "Andersen";
+        HealthCarePersonnel healthCarePersonel = new HealthCarePersonnel(employeeNumber, firstName, surname);} </pre>
+ */
 public class HealthCarePersonnel {
 
     private String employeeNumber;
     private String firstName;
     private String surname;
-    private ArrayList<String> connectedPatients;
+    private Set<String> connectedPatients;
 
 
     public HealthCarePersonnel(String employeeNumber, String firstName, String surname) {
@@ -17,11 +37,11 @@ public class HealthCarePersonnel {
         this.surname = surname.toLowerCase();
     }
 
-    public HealthCarePersonnel(String employeeNumber, String firstName, String surname, ArrayList<String> connectedPatients) {
+    public HealthCarePersonnel(String employeeNumber, String firstName, String surname, Set<String> connectedPatients) {
         this.employeeNumber = employeeNumber.toLowerCase();
         this.firstName = firstName.toLowerCase();
         this.surname = surname.toLowerCase();
-        this.connectedPatients = connectedPatients;
+        this.connectedPatients = new HashSet<>(connectedPatients); //To ensure uniqueness
     }
 
     public String getEmployeeNumber() {
@@ -48,11 +68,11 @@ public class HealthCarePersonnel {
         this.surname = surname;
     }
 
-    public ArrayList<String> getConnectedPatients(){
+    public Set<String> getConnectedPatients(){
         return connectedPatients;
     }
 
-    public void setConnectedPatients(ArrayList<String> connectedPatient) {
+    public void setConnectedPatients(Set<String> connectedPatient) {
         this.connectedPatients = connectedPatient;
     }
 

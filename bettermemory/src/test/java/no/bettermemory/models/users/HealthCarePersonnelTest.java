@@ -4,7 +4,8 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.ArrayList;
-
+import java.util.HashSet;
+import java.util.Set;
 
 
 public class HealthCarePersonnelTest {
@@ -28,7 +29,7 @@ public class HealthCarePersonnelTest {
     @DisplayName("Test if the HealthCarePersonel constructor initializes correctly with patient list.")
     public void testHealthCarePersonelConstructorWithPatientList() {
         
-        ArrayList<String> patients = new ArrayList<>();
+        Set<String> patients = new HashSet<>();
         patients.add("03030303");
         patients.add("9494949");
         patients.add("0303030");
