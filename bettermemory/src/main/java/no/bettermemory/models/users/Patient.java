@@ -1,6 +1,9 @@
 package no.bettermemory.models.users;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+
+import org.bson.Document;
 
 /**
  * This class is meant to represent a patient-object. This object will be used to hold necessary
@@ -28,9 +31,9 @@ public class Patient {
     private ArrayList<CloseRelative> closeRelatives = new ArrayList<>();
        
     public Patient(String patientId, String firstName, String surname){
-        this.patientId = patientId;
-        this.firstName = firstName;
-        this.surname = surname;
+        this.patientId = patientId.toLowerCase();
+        this.firstName = firstName.toLowerCase();
+        this.surname = surname.toLowerCase();
     }
 
     /** 
@@ -48,6 +51,26 @@ public class Patient {
     public void addCloseRelative(String firstName, String surname) {
         CloseRelative closeRelative = new CloseRelative(firstName, surname, this);
         closeRelatives.add(closeRelative);
+    }
+
+
+    public Document toDocument() {
+        Document document = new Document("_id", patientId).append("first_name", firstName)
+        .append("surname", surname);
+
+        if (closeRelatives.size() != 0) {
+            ArrayList<Document> relativeDocuments = new ArrayList<>();
+            for (CloseRelative relative : closeRelatives) {
+                relativeDocuments.add(
+                    new Document("_id", relative.getId())
+                    .append("first_name", relative.getFirstName())
+                    .append("surname", relative.getSurname())
+                );
+            }
+            document.append("close_relatives", relativeDocuments);
+        }
+
+        return document;
     }
 
 
