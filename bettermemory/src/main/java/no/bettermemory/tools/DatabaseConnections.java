@@ -1,5 +1,7 @@
 package no.bettermemory.tools;
 
+import org.bson.Document;
+
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
@@ -19,11 +21,11 @@ public class DatabaseConnections {
         return client.getDatabase(MONGODB_USERS_DATABASE);
     }
 
-    public static MongoCollection getPatientCollection(MongoDatabase database) {
+    public static MongoCollection<Document> getPatientCollection(MongoDatabase database) {
         return database.getCollection(MONGODB_PATIENT_COLLECTION);
     }
 
-    public static MongoCollection getHealthCarePersonnelCollection(MongoDatabase database) {
+    public static MongoCollection<Document> getHealthCarePersonnelCollection(MongoDatabase database) {
         return database.getCollection(MONGODB_HEALTHCARE_PERSONNEL_COLLECTION);
     }
 }

@@ -3,10 +3,8 @@ package no.bettermemory.models.storageHandlers;
 import org.bson.Document;
 
 import com.mongodb.client.MongoClient;
-import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
-import com.mongodb.client.result.InsertOneResult;
 
 import no.bettermemory.interfaces.storageHandlers.ToDatabase;
 import no.bettermemory.models.users.Patient;
@@ -36,15 +34,17 @@ public class ToMongoDB implements ToDatabase {
         this.client = client;
     }
 
+    
     public void saveObject(Object object) {
         MongoDatabase database = DatabaseConnections.getUsersDatabase(client);
         if (object instanceof Patient) {
-            MongoCollection collection = DatabaseConnections.getPatientCollection(database);
+            MongoCollection<Document> collection = DatabaseConnections.getPatientCollection(database);
             Document document = ((Patient) object).toDocument();
             collection.insertOne(document);
         }
     }
 
+    
     public void updateObject(Object object) {}
 
     public void setClient(MongoClient client) {
