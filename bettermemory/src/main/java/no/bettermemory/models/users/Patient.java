@@ -13,7 +13,7 @@ import org.bson.Document;
  * @param surname - Is the surname / last name of the patient.
  * 
  * @author Joakim Klemsdal Bøe
- * @version 1.1
+ * @version 1.2
  * 
  * @code
  * To create an object of this class:
