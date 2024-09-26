@@ -44,7 +44,7 @@ public interface GetActivityPlanPatient {
      * @param minutes
      * @return Activity 
      */
-    public Activity geActivity(String patientId, int weekNumber, String dayName, int hour, 
+    public Activity getActivity(String patientId, int weekNumber, String dayName, int hour, 
                                 int minutes);
 
 
