@@ -31,6 +31,15 @@ public class GetUserFromMongoDb implements GetUser {
 
         if (result != null) {
             Patient patient = new Patient();
+            patient.setPatientId(result.getObjectId("_id").toString());
+            patient.setFirstName(result.getString("first_name"));
+            patient.setSurname(result.getString("surname"));
+
+            if(result.containsKey("close_relatives")) {
+
+            }
+
+
         }
 
 
