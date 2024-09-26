@@ -1,6 +1,6 @@
 package no.bettermemory.models.users;
 
-
+import org.bson.Document;
 
 /**
  * This class is meant to represent an object of a patients close relative.
@@ -32,6 +32,13 @@ public class CloseRelative {
          */
         this.id = patient.getPatientId() + "-" + (patient.getCloseRelatives().size() + 1);
     }
+
+
+    public Document toDocument() {
+        Document document = new Document("_id", id).append("first_name", firstName).append("surname", surname);
+        return document;
+    }
+
 
     public void setFirstName(String firstName) {
         this.firstName = firstName;

@@ -1,7 +1,6 @@
 package no.bettermemory.models.users;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 import org.bson.Document;
 
@@ -49,8 +48,7 @@ public class Patient {
      * <pre>{@code patientObject.addCloseRelative("John", "Doe");}
     */
     public void addCloseRelative(String firstName, String surname) {
-        CloseRelative closeRelative = new CloseRelative(firstName, surname, this);
-        closeRelatives.add(closeRelative);
+        closeRelatives.add(new CloseRelative(firstName, surname, this));
     }
 
 
@@ -61,11 +59,7 @@ public class Patient {
         if (closeRelatives.size() != 0) {
             ArrayList<Document> relativeDocuments = new ArrayList<>();
             for (CloseRelative relative : closeRelatives) {
-                relativeDocuments.add(
-                    new Document("_id", relative.getId())
-                    .append("first_name", relative.getFirstName())
-                    .append("surname", relative.getSurname())
-                );
+                relativeDocuments.add(relative.toDocument());
             }
             document.append("close_relatives", relativeDocuments);
         }
