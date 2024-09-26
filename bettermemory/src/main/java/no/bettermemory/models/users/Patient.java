@@ -30,6 +30,10 @@ public class Patient {
     // I'm just gonna leave this attribute out of the parameter for now
     private ArrayList<CloseRelative> closeRelatives = new ArrayList<>();
     
+    //Default constructor
+    public Patient() {
+
+    }
 
     public Patient(String patientId, String firstName, String surname){
         this.patientId = patientId.toLowerCase();
