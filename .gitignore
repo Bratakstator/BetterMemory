@@ -10,6 +10,9 @@
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/
 
+# Ignore HermannFunctionTesting.java
+no/bettermemory/HermannFunctionTesting.java
+
 # Package Files #
 *.jar
 *.war
