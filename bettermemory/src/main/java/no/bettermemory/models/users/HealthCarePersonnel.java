@@ -4,6 +4,8 @@ package no.bettermemory.models.users;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.bson.Document;
+
 /**
  * This class is ment to represent a healthCarePerosnel-object. This object work as way to include
  * new heealthCarePerosnel to the system. This class will contain information abot the employee and 
@@ -43,6 +45,17 @@ public class HealthCarePersonnel {
         this.surname = surname.toLowerCase();
         this.connectedPatients = new HashSet<>(connectedPatients); //To ensure uniqueness
     }
+
+
+    public Document toDocument() {
+        Document document = new Document("_id", employeeNumber).append("first_name", firstName).append("surname", surname);
+        if (connectedPatients != null) {
+            document.append("patients", connectedPatients);
+        }
+
+        return document;
+    }
+
 
     public String getEmployeeNumber() {
         return employeeNumber;

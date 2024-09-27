@@ -7,6 +7,7 @@ import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 
 import no.bettermemory.interfaces.storageHandlers.ToDatabase;
+import no.bettermemory.models.users.HealthCarePersonnel;
 import no.bettermemory.models.users.Patient;
 import no.bettermemory.tools.DatabaseConnections;
 
@@ -40,6 +41,11 @@ public class ToMongoDB implements ToDatabase {
         if (object instanceof Patient) {
             MongoCollection<Document> collection = DatabaseConnections.getPatientCollection(database);
             Document document = ((Patient) object).toDocument();
+            collection.insertOne(document);
+        }
+        if (object instanceof HealthCarePersonnel) {
+            MongoCollection<Document> collection = DatabaseConnections.getHealthCarePersonnelCollection(database);
+            Document document = ((HealthCarePersonnel) object).toDocument();
             collection.insertOne(document);
         }
     }

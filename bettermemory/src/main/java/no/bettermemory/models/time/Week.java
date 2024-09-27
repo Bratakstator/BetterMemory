@@ -66,7 +66,7 @@ public class Week {
 
     public Document toDocument() {
         Document document = new Document("week_number", weekNumber).append("year", year);
-        if (days.size() != 0) {
+        if (days != null) {
             ArrayList<Document> dayDocuments = new ArrayList<>();
             for (Day day : days) {
                 dayDocuments.add(day.toDocument());

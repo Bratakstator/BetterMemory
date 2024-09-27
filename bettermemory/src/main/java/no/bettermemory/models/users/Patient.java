@@ -61,7 +61,7 @@ public class Patient {
         Document document = new Document("_id", patientId).append("first_name", firstName)
         .append("surname", surname);
 
-        if (closeRelatives.size() != 0) {
+        if (closeRelatives != null) {
             ArrayList<Document> relativeDocuments = new ArrayList<>();
             for (CloseRelative relative : closeRelatives) {
                 relativeDocuments.add(relative.toDocument());
