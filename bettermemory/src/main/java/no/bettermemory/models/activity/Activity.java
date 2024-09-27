@@ -1,6 +1,9 @@
 package no.bettermemory.models.activity;
 
 import static no.bettermemory.tools.TimeControls.minuteCheck;
+
+import org.bson.Document;
+
 import static no.bettermemory.tools.TimeControls.hourCheck;
 
 /**
@@ -39,6 +42,13 @@ public class Activity {
         this.longDescription = longDescription;
         
     }
+
+
+    public Document toDocument() {
+        Document document = new Document("hour", hour).append("minutes", minutes).append("short_desc", shortDescription).append("long_desc", longDescription);
+        return document;
+    }
+
 
     public int getHour(){
         return this.hour;

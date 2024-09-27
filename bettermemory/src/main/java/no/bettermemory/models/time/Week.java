@@ -6,6 +6,8 @@ import static no.bettermemory.tools.TimeControls.canOnlyBeeOneOfTheSameDay;
 
 import java.util.ArrayList;
 
+import org.bson.Document;
+
 /**
  * This class represent a week objekt. It will consist of the following prameters:
  * @param weekNumber - Identifies the object with a spesific week number during a calender year.
@@ -60,6 +62,19 @@ public class Week {
             throw exception;
         }
 
+    }
+
+    public Document toDocument() {
+        Document document = new Document("week_number", weekNumber).append("year", year);
+        if (days.size() != 0) {
+            ArrayList<Document> dayDocuments = new ArrayList<>();
+            for (Day day : days) {
+                dayDocuments.add(day.toDocument());
+            }
+            document.append("days", dayDocuments);
+        }
+
+        return document;
     }
 
     public int getWeekNumber() {

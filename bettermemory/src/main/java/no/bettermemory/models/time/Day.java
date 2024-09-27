@@ -5,6 +5,8 @@ import static no.bettermemory.errorMessages.ErrorMessages.notARealDay;
 
 import java.util.ArrayList;
 
+import org.bson.Document;
+
 import no.bettermemory.models.activity.Activity;
 
 
@@ -42,6 +44,21 @@ public class Day {
         
         this.activities = activities;
     }
+
+
+    public Document toDocument() {
+        Document document = new Document("day", dayName);
+        if (activities.size() != 0) {
+            ArrayList<Document> activityDocuments = new ArrayList<>();
+            for (Activity activity : activities) {
+                activityDocuments.add(activity.toDocument());
+            }
+            document.append("activities", activityDocuments);
+        }
+
+        return document;
+    }
+
 
     public String getDayName(){
         return dayName;
