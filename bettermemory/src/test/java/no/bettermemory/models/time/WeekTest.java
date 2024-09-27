@@ -22,7 +22,7 @@ public record WeekTest() {
         days.add( new Day("Saturday", new ArrayList<>()));
         days.add( new Day("Sunday", new ArrayList<>()));
 
-        Patient pasient = new Patient("Jane Doe", 2258369);
+        Patient pasient = new Patient("123", "Jane", "Doe");
 
         Week week = new Week(1, 2024, days, pasient);
 
@@ -36,7 +36,7 @@ public record WeekTest() {
     @Test 
     public void testInvalidWeekNumberHigh(){
         ArrayList<Day> days = new ArrayList<>();
-        Patient pasient = new Patient("Jane Doe", 2258369);
+        Patient pasient = new Patient("123", "Jane", "Doe");
         int weekNumber = 53;
 
         IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> {
@@ -49,7 +49,7 @@ public record WeekTest() {
     @Test 
     public void testInvalidWeekNumberLow(){
         ArrayList<Day> days = new ArrayList<>();
-        Patient pasient = new Patient("Jane Doe", 2258369);
+        Patient pasient = new Patient("123", "Jane", "Doe");
         int weekNumber = 0;
 
         IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> {
@@ -67,7 +67,7 @@ public record WeekTest() {
         days.add( new Day("monday", new ArrayList<>()));
 
         IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> {
-            new Week(30, 2024, days, new Patient("Jane Doe", 2258369));
+            new Week(30, 2024, days, new Patient("123", "Jane", "Doe"));
         });
 
         assertEquals(dublicateDayInWeekError("monday"), exception.getMessage());
