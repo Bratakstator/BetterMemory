@@ -24,10 +24,12 @@ public class CloseRelative {
 
     /**
      * This constructor should be used in case you need to create a CloseRelative object 
-     * from information retrived from a database.
+     * from information retrieved from a database.
      * @param id
+     * @param firstName
+     * @param surname
      */
-    public CloseRelative(String id) {
+    public CloseRelative(String id, String firstName, String surname) {
         this.id = id;
     }
 

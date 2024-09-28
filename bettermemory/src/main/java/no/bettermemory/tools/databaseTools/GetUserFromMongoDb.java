@@ -30,7 +30,7 @@ public class GetUserFromMongoDb implements GetUser {
         Document query = new Document("_id", new ObjectId(patientId));
         Document result = collection.find(query).first();
 
-        if (result != null) { //Checks if the spesified document was found.
+        if (result != null) { //Checks if the specified document was found.
             Patient patient = new Patient(); //Creates a new Patient object, that will be built.
 
             //The Patient objects instance variables wil be set by the following code.
@@ -48,15 +48,15 @@ public class GetUserFromMongoDb implements GetUser {
                 Object closeRelativesObject = result.get("close_relatives"); 
                 if(closeRelativesObject instanceof List<?>) { //Checks if the closeRelativesObject indeed is a List.
                     /*
-                     * The reason for why List<questionmark> is used here is because the compiler can not 
-                     * guarantie that the cast of List<spesifiedObjectType> will work.
+                     * The reason for why List<question mark> is used here is because the compiler can not 
+                     * guarantee that the cast of List<specifiedObjectType> will work.
                      */
                     List<?> closeRelativeDocuments = (List<?>) closeRelativesObject;
                     for (Object object : closeRelativeDocuments) {
                         if (object instanceof Document) {
-                            Document closeRelativDocument = (Document) object;
+                            Document closeRelativeDocument = (Document) object;
 
-                            patient
+                            CloseRelative closeRelative
                         }
                     }
 
