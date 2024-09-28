@@ -11,6 +11,7 @@ import no.bettermemory.models.users.Patient;
 import org.bson.types.ObjectId;
 
 import no.bettermemory.models.users.*;
+import java.util.List;
 
 public class GetUserFromMongoDb implements GetUser {
 
@@ -29,13 +30,39 @@ public class GetUserFromMongoDb implements GetUser {
         Document query = new Document("_id", new ObjectId(patientId));
         Document result = collection.find(query).first();
 
-        if (result != null) {
-            Patient patient = new Patient();
-            patient.setPatientId(result.getObjectId("_id").toString());
+        if (result != null) { //Checks if the spesified document was found.
+            Patient patient = new Patient(); //Creates a new Patient object, that will be built.
+
+            //The Patient objects instance variables wil be set by the following code.
+            patient.setPatientId(result.getObjectId("_id").toString()); 
             patient.setFirstName(result.getString("first_name"));
             patient.setSurname(result.getString("surname"));
+            
+            //Checks if the Patient Object in the database is listed with any closeRelatives.
+            if(result.containsKey("close_relatives")) { 
 
-            if(result.containsKey("close_relatives")) {
+                /*
+                 * If the test over returns true, the following code will create a object from the
+                 * the returned field.
+                 */
+                Object closeRelativesObject = result.get("close_relatives"); 
+                if(closeRelativesObject instanceof List<?>) { //Checks if the closeRelativesObject indeed is a List.
+                    /*
+                     * The reason for why List<questionmark> is used here is because the compiler can not 
+                     * guarantie that the cast of List<spesifiedObjectType> will work.
+                     */
+                    List<?> closeRelativeDocuments = (List<?>) closeRelativesObject;
+                    for (Object object : closeRelativeDocuments) {
+                        if (object instanceof Document) {
+                            Document closeRelativDocument = (Document) object;
+
+                            patient
+                        }
+                    }
+
+
+                }
+
 
             }
 
