@@ -12,6 +12,7 @@ import org.bson.types.ObjectId;
 
 import no.bettermemory.models.users.*;
 import java.util.List;
+import java.util.ArrayList;
 
 public class GetUserFromMongoDb implements GetUser {
 
@@ -53,11 +54,19 @@ public class GetUserFromMongoDb implements GetUser {
                      */
                     List<?> closeRelativeDocuments = (List<?>) closeRelativesObject;
                     for (Object object : closeRelativeDocuments) {
+                        ArrayList<CloseRelative> closeRelatives = new ArrayList<>();
+
                         if (object instanceof Document) {
                             Document closeRelativeDocument = (Document) object;
 
-                            CloseRelative closeRelative
+                            String id = closeRelativeDocument.getString("_id");
+                            String firstName = closeRelativeDocument.getString("first_name");
+                            String surname = closeRelativeDocument.getString("surname");
+
+                            closeRelatives.add(new CloseRelative(id, firstName, surname));
                         }
+
+                        patient.set
                     }
 
 
