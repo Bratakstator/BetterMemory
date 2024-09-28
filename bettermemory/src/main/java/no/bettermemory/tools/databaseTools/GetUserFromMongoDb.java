@@ -7,7 +7,6 @@ import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import org.bson.Document;
-import no.bettermemory.models.users.Patient;
 import org.bson.types.ObjectId;
 
 import no.bettermemory.models.users.*;
@@ -27,7 +26,7 @@ public class GetUserFromMongoDb implements GetUser {
     }
 
     @Override
-    public getPatient(String patientId) throws Exception{
+    public Patient getPatient(String patientId) throws Exception{
         Document query = new Document("_id", new ObjectId(patientId));
         Document result = collection.find(query).first();
 
@@ -42,6 +41,8 @@ public class GetUserFromMongoDb implements GetUser {
             //Checks if the Patient Object in the database is listed with any closeRelatives.
             if(result.containsKey("close_relatives")) { 
 
+                ArrayList<CloseRelative> closeRelatives = new ArrayList<>();
+
                 /*
                  * If the test over returns true, the following code will create a object from the
                  * the returned field.
@@ -54,7 +55,7 @@ public class GetUserFromMongoDb implements GetUser {
                      */
                     List<?> closeRelativeDocuments = (List<?>) closeRelativesObject;
                     for (Object object : closeRelativeDocuments) {
-                        ArrayList<CloseRelative> closeRelatives = new ArrayList<>();
+                       
 
                         if (object instanceof Document) {
                             Document closeRelativeDocument = (Document) object;
@@ -65,22 +66,32 @@ public class GetUserFromMongoDb implements GetUser {
 
                             closeRelatives.add(new CloseRelative(id, firstName, surname));
                         }
-
-                        patient.set
                     }
-
-
                 }
 
+                patient.setCloseRelatives(closeRelatives);
 
             }
 
+            return patient;
 
         }
 
-
-
+        else {
+            throw new Exception("No patient was found.");
+        }
     }
 
     
+    @Override
+    public HealthCarePersonnel getHealthCarePersonnel(String employeeNumber) throws Exception {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public CloseRelative getCRelative(String patientId, String firstName) throws Exception {
+        // TODO Auto-generated method stub
+        return null;
+    }
 }
