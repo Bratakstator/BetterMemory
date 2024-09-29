@@ -86,6 +86,22 @@ public class HealthCarePersonnel {
         this.connectedPatients.add(patientId);
     }
 
+    @Override
+    public String toString() {
+        StringBuilder string = new StringBuilder();
+        string.append("Employee number: " + employeeNumber);
+        string.append("\nFirst name: " + firstName);
+        string.append("\nSurname: " + surname);
+        if (connectedPatients != null) {
+            string.append("\nConnected patients:");
+            for (String patient : connectedPatients) {
+                string.append("\n" + patient);
+            }
+        }
+
+        return string.toString();
+    }
+
     
 
 
