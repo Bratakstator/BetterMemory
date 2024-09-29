@@ -30,6 +30,12 @@ public class HealthCarePersonnel {
     private String surname;
     private Set<String> connectedPatients;
 
+    /**
+     * Default constructor.
+     */
+    public HealthCarePersonnel(){
+
+    }
 
     public HealthCarePersonnel(String employeeNumber, String firstName, String surname) {
         this.employeeNumber = employeeNumber.toLowerCase();

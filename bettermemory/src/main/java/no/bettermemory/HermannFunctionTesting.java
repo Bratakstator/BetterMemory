@@ -13,7 +13,7 @@ public class HermannFunctionTesting {
         GetUserFromMongoDb getUserFromMongoDb = new GetUserFromMongoDb();
 
         try{
-            Patient patient = getUserFromMongoDb.getPatient("1234");
+            Patient patient = getUserFromMongoDb.getPatient("2022002");
             System.out.println(patient);
         }
 
