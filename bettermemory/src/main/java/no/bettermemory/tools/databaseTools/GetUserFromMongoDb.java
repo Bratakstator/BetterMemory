@@ -7,7 +7,6 @@ import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import org.bson.Document;
-import org.bson.types.ObjectId;
 
 import no.bettermemory.models.users.*;
 import java.util.List;
@@ -27,14 +26,14 @@ public class GetUserFromMongoDb implements GetUser {
 
     @Override
     public Patient getPatient(String patientId) throws Exception{
-        Document query = new Document("_id", new ObjectId(patientId));
+        Document query = new Document("_id", patientId);
         Document result = collection.find(query).first();
 
         if (result != null) { //Checks if the specified document was found.
             Patient patient = new Patient(); //Creates a new Patient object, that will be built.
 
             //The Patient objects instance variables wil be set by the following code.
-            patient.setPatientId(result.getObjectId("_id").toString()); 
+            patient.setPatientId(result.getString("_id")); 
             patient.setFirstName(result.getString("first_name"));
             patient.setSurname(result.getString("surname"));
             
