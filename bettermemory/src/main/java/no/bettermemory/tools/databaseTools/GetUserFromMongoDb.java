@@ -107,7 +107,7 @@ public class GetUserFromMongoDb implements GetUser {
     
     @Override
     public HealthCarePersonnel getHealthCarePersonnel(String employeeNumber) throws Exception {
-        // TODO Auto-generated method stub
+        
         return null;
     }
 

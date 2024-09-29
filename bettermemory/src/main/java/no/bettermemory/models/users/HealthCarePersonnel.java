@@ -5,9 +5,9 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * This class is ment to represent a healthCarePerosnel-object. This object work as way to include
- * new heealthCarePerosnel to the system. This class will contain information abot the employee and 
- * who which patients this employee is allowed to wiev data on.
+ * This class is meant to represent a healthCarePersonnel-object. This object work as way to include
+ * new healthCarePersonnel to the system. This class will contain information about the employee and 
+ * who which patients this employee is allowed to view data on.
  * 
  * @param employeeNumber 
  * @param firstName 
@@ -21,7 +21,7 @@ import java.util.Set;
  * <pre>{@code String employeeNumber = "D003809";
         String firstName = "Elissa";
         String surname = "Andersen";
-        HealthCarePersonnel healthCarePersonel = new HealthCarePersonnel(employeeNumber, firstName, surname);} </pre>
+        HealthCarePersonnel healthCarePersonnel = new HealthCarePersonnel(employeeNumber, firstName, surname);} </pre>
  */
 public class HealthCarePersonnel {
 
