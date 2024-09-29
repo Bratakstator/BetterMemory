@@ -64,4 +64,12 @@ public class CloseRelative {
     public String getSurname() {
         return surname;
     }
+
+    @Override
+    public String toString() {
+        return "ID: " + id
+            +"\nFirst name: " + firstName
+            +"\nSurname: " + surname;
+
+    }
 }
