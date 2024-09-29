@@ -33,7 +33,7 @@ public class GetUserFromMongoDb implements GetUser {
      * This method should be used for creating Patient object from data stored in a 
      * mongoDB. 
      * @author Hermann Mjelde Hamnnes
-     * @param patientId - All patients in the database is organized based on their patientId.
+     * @param patientId - All patients in the database are organized based on their patientId.
      * @code
      * This is an example of how you can use this method:
      * <pre>{@code  GetUserFromMongoDb getUserFromMongoDb = new GetUserFromMongoDb();
@@ -107,6 +107,26 @@ public class GetUserFromMongoDb implements GetUser {
         }
     }
 
+
+    /**
+     * This method should be used for creating HealthCarePersonnel object from data stored in a 
+     * mongoDB. 
+     * @author Hermann Mjelde Hamnnes
+     * @param employeeNumber - All health care personnel in the database are organized based on their employee number.
+     * @code
+     * This is an example of how you can use this method:
+     * <pre>{@code  GetUserFromMongoDb getUserFromMongoDb = new GetUserFromMongoDb();
+
+       try{
+            HealthCarePersonnel healthCarePersonnel = getUserFromMongoDb.getHealthCarePersonnel("D003809");
+            System.out.println(healthCarePersonnel);
+        }
+
+        catch (Exception exception) {
+            System.err.println("It did not work");
+            exception.printStackTrace();
+        }
+    */
     
     @Override
     public HealthCarePersonnel getHealthCarePersonnel(String employeeNumber) throws Exception {
@@ -130,16 +150,16 @@ public class GetUserFromMongoDb implements GetUser {
                 Set<String> connectedPatients = new HashSet<>();
 
                 /*
-                    * If the test over returns true, the following code will create a object from the
-                    * the returned field.
-                    */
+                * If the test over returns true, the following code will create a object from the
+                * the returned field.
+                */
                 Object connectedPatientsObject = result.get("connected_patients"); 
-                if(connectedPatientsObject instanceof List<?>) { //Checks if the closeRelativesObject indeed is a List.
+                if(connectedPatientsObject instanceof List<?>) { //Checks if the connected_patient field indeed is a List.
                     /*
-                        * The reason for why List<question mark> is used here is because the compiler can not 
-                        * guarantee that the cast of List<specifiedObjectType> will work. Therefor, for safe handling
-                        * we are only interested to see if the embedded document indeed is a List object.
-                        */
+                    * The reason for why List<question mark> is used here is because the compiler can not 
+                    * guarantee that the cast of List<specifiedObjectType> will work. Therefor, for safe handling
+                    * we are only interested to see if the embedded document indeed is a List object.
+                    */
                     List<?> connectedPatientList = (List<?>) connectedPatientsObject;
                     for (Object object : connectedPatientList) {
 
@@ -162,15 +182,85 @@ public class GetUserFromMongoDb implements GetUser {
         }
 
         else {
-            throw new Exception("No patient was found.");
+            throw new Exception("No health care personnel was found.");
         }
 
     
     }
 
     @Override
-    public CloseRelative getCRelative(String patientId, String firstName) throws Exception {
-        // TODO Auto-generated method stub
-        return null;
+    public CloseRelative getCloseRelative(String patientId, String firstName) throws Exception {
+        collection = database.getCollection("patient");
+        Document query = new Document("_id", patientId);
+        Document result = collection.find(query).first();
+
+        if (result != null) { //Checks if the specified document was found.
+
+            //Checks if the Patient Object in the database is listed with any closeRelatives.
+            if(result.containsKey("close_relatives")) { 
+
+                /*
+                 * If the test over returns true, the following code will create a object from the
+                 * the returned field.
+                 */
+                Object closeRelativesObject = result.get("close_relatives"); 
+                if(closeRelativesObject instanceof List<?>) { //Checks if the closeRelativesObject indeed is a List.
+                    /*
+                     * The reason for why List<question mark> is used here is because the compiler can not 
+                     * guarantee that the cast of List<specifiedObjectType> will work. Therefor, for safe handling
+                     * we are only interested to see if the embedded document indeed is a List object.
+                     */
+                    List<?> closeRelativeDocuments = (List<?>) closeRelativesObject;
+
+
+                        
+                    for (Object object : closeRelativeDocuments) {
+                
+                        if (object instanceof Document) {
+                            Document closeRelativeDocument = (Document) object;
+
+                            if (closeRelativeDocument.containsValue(firstName)) {
+
+                                String id = closeRelativeDocument.get("relative_id").toString();
+                                String surname = closeRelativeDocument.get("surname").toString();
+
+                                CloseRelative closeRelative = new CloseRelative(id, firstName, surname);
+
+                                return closeRelative;
+
+
+                            }
+
+                            else {
+                                throw new Exception("The patient has no close relatives with the provided name.");
+                            }
+                        }
+
+                        else {
+                            throw new Exception("Could not convert object to Document-type");
+                        }
+                    }
+
+                    
+                    
+                }
+
+                else {
+                    throw new Exception("No close relative list was found.");
+                }
+
+
+            }
+
+            else {
+                throw new Exception("The patient has no close relatives");
+            }
+
+
+        }
+
+        
+        throw new Exception("No patient was found.");
+        
     }
 }

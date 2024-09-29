@@ -21,7 +21,6 @@ public class CloseRelative {
     private String firstName;
     private String surname;
 
-
     /**
      * This constructor should be used in case you need to create a CloseRelative object 
      * from information retrieved from a database.

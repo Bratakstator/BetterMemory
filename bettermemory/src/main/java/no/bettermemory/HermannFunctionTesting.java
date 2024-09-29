@@ -1,6 +1,7 @@
 package no.bettermemory;
 
 import no.bettermemory.models.storageHandlers.ToMongoDB;
+import no.bettermemory.models.users.CloseRelative;
 import no.bettermemory.models.users.HealthCarePersonnel;
 import no.bettermemory.models.users.Patient;
 import no.bettermemory.tools.DatabaseConnections;
@@ -26,6 +27,16 @@ public class HermannFunctionTesting {
         try{
             HealthCarePersonnel healthCarePersonnel = getUserFromMongoDb.getHealthCarePersonnel("D003809");
             System.out.println(healthCarePersonnel);
+        }
+
+        catch (Exception exception) {
+            System.err.println("It did not work");
+            exception.printStackTrace();
+        }
+
+        try{
+            CloseRelative closeRelative = getUserFromMongoDb.getCloseRelative("2022002", "Joakim");
+            System.out.println(closeRelative);
         }
 
         catch (Exception exception) {
