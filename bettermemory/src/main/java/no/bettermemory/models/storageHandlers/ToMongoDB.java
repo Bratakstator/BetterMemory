@@ -15,7 +15,6 @@ import com.mongodb.client.result.InsertManyResult;
 import com.mongodb.client.result.InsertOneResult;
 
 import no.bettermemory.interfaces.storageHandlers.ToDatabase;
-import no.bettermemory.models.activity.Activity;
 import no.bettermemory.models.time.Day;
 import no.bettermemory.models.time.Week;
 import no.bettermemory.models.users.HealthCarePersonnel;
