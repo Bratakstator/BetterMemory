@@ -30,7 +30,7 @@ public record WeekTest() {
         assertEquals(1, week.getWeekNumber());
         assertEquals(2024, week.getYear());
         assertEquals(days, week.getDays());
-        assertEquals(pasient, week.getPasient());  
+        assertEquals(pasient, week.getPatient());  
     }
 
     @Test 
