@@ -31,6 +31,8 @@ public class CloseRelative {
      */
     public CloseRelative(String id, String firstName, String surname) {
         this.id = id;
+        this.firstName = firstName;
+        this.surname = surname;
     }
 
     public CloseRelative(String firstName, String surname, Patient patient) {
