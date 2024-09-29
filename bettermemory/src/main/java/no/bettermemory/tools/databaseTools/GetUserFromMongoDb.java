@@ -12,6 +12,9 @@ import no.bettermemory.models.users.*;
 import java.util.List;
 import java.util.ArrayList;
 
+/**
+ * 
+ */
 public class GetUserFromMongoDb implements GetUser {
 
     private MongoClient mongoClient;
@@ -24,6 +27,25 @@ public class GetUserFromMongoDb implements GetUser {
         collection = database.getCollection("patient");
     }
 
+    /**
+     * This method should be used for creating Patient object from data stored in a 
+     * mongoDB. 
+     * @author Hermann Mjelde Hamnnes
+     * @param patientId - All patients in the database is organized based on their patientId.
+     * @code
+     * This is an example of how you can use this method:
+     * <pre>{@code  GetUserFromMongoDb getUserFromMongoDb = new GetUserFromMongoDb();
+
+        try{
+            Patient patient = getUserFromMongoDb.getPatient("1234");
+            System.out.println(patient);
+        }
+
+        catch (Exception exception) {
+            System.err.println("It did not work");
+            exception.printStackTrace();
+        } </pre>
+     */
     @Override
     public Patient getPatient(String patientId) throws Exception{
         Document query = new Document("_id", patientId);
@@ -50,7 +72,8 @@ public class GetUserFromMongoDb implements GetUser {
                 if(closeRelativesObject instanceof List<?>) { //Checks if the closeRelativesObject indeed is a List.
                     /*
                      * The reason for why List<question mark> is used here is because the compiler can not 
-                     * guarantee that the cast of List<specifiedObjectType> will work.
+                     * guarantee that the cast of List<specifiedObjectType> will work. Therefor, for safe handling
+                     * we are only interested to see if the embedded document indeed is a List object.
                      */
                     List<?> closeRelativeDocuments = (List<?>) closeRelativesObject;
                     for (Object object : closeRelativeDocuments) {
