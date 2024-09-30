@@ -3,6 +3,7 @@ package no.bettermemory.models.storageHandlers;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.bson.Document;
 import org.bson.types.ObjectId;
@@ -15,11 +16,13 @@ import com.mongodb.client.result.InsertManyResult;
 import com.mongodb.client.result.InsertOneResult;
 
 import no.bettermemory.interfaces.storageHandlers.ToDatabase;
+import no.bettermemory.models.activity.Activity;
 import no.bettermemory.models.time.Day;
 import no.bettermemory.models.time.Week;
 import no.bettermemory.models.users.HealthCarePersonnel;
 import no.bettermemory.models.users.Patient;
 import no.bettermemory.tools.DatabaseConnections;
+import no.bettermemory.tools.DatabaseDataHandler;
 
 
 
@@ -48,13 +51,17 @@ public class ToMongoDB implements ToDatabase {
         MongoDatabase database = DatabaseConnections.getUsersDatabase(client);
         if (object instanceof Patient) {
             MongoCollection<Document> collection = DatabaseConnections.getPatientCollection(database);
-            Document document = ((Patient) object).toDocument();
-            collection.insertOne(document);
+            if (DatabaseDataHandler.checkIfExists(collection, object) == null) {
+                Document document = ((Patient) object).toDocument();
+                collection.insertOne(document);
+            }
         }
         else if (object instanceof HealthCarePersonnel) {
             MongoCollection<Document> collection = DatabaseConnections.getHealthCarePersonnelCollection(database);
-            Document document = ((HealthCarePersonnel) object).toDocument();
-            collection.insertOne(document);
+            if (DatabaseDataHandler.checkIfExists(collection, object) == null) {
+                Document document = ((HealthCarePersonnel) object).toDocument();
+                collection.insertOne(document);
+            }
         }
         else if (object instanceof Week) {
             MongoCollection<Document> activityCollection = DatabaseConnections.getActivitiesCollection(database);
@@ -65,24 +72,53 @@ public class ToMongoDB implements ToDatabase {
             ArrayList<Day> days = week.getDays();
             List<ObjectId> dayResultValues = new ArrayList<>();
             for (Day day : days) {
-                List<Document> activities = day.getActivities().stream().map(activity -> activity.toDocument()).collect(Collectors.toList());
+                List<Document> activities = day.getActivities().stream().filter(
+                    activity -> DatabaseDataHandler.checkIfExists(activityCollection, activity) == null
+                ).map(Activity::toDocument).collect(Collectors.toList());
+
+                List<Activity> existingActivities = day.getActivities().stream().filter(
+                    activity -> DatabaseDataHandler.checkIfExists(activityCollection, activity) != null
+                ).collect(Collectors.toList());
+
                 List<ObjectId> insertResultValues;
-                try {
-                    InsertManyResult insertResult = activityCollection.insertMany(activities);
-                    insertResultValues = insertResult.getInsertedIds().values()
-                    .stream().map(document -> document.asObjectId().getValue()).collect(Collectors.toList());
-                } catch (MongoBulkWriteException e) {
-                    insertResultValues = e.getWriteResult().getInserts().stream()
-                    .map(document -> document.getId().asObjectId().getValue()).collect(Collectors.toList());
+
+                if (activities.size() != 0) {
+                    try {
+                        InsertManyResult insertResult = activityCollection.insertMany(activities);
+                        insertResultValues = insertResult.getInsertedIds().values()
+                        .stream().map(document -> document.asObjectId().getValue()).collect(Collectors.toList());
+                    } catch (MongoBulkWriteException e) {
+                        insertResultValues = e.getWriteResult().getInserts().stream()
+                        .map(document -> document.getId().asObjectId().getValue()).collect(Collectors.toList());
+                    }
+                } else insertResultValues = new ArrayList<>();
+
+                List<ObjectId> existingIds = existingActivities.stream().map(
+                    activity -> DatabaseDataHandler.checkIfExists(activityCollection, activity)
+                ).collect(Collectors.toList());
+
+                List<ObjectId> allIds = Stream.concat(
+                    insertResultValues.stream(),
+                    existingIds.stream()
+                ).distinct().toList();
+
+                ObjectId dayExists = DatabaseDataHandler.checkIfExists(dayCollection, day);
+
+                if (dayExists == null) {
+                    Document dayDocument = day.toDocument();
+                    dayDocument.append("activities", allIds);
+                    InsertOneResult insertOneResult = dayCollection.insertOne(dayDocument);
+                    dayResultValues.add(insertOneResult.getInsertedId().asObjectId().getValue());
                 }
-                Document dayDocument = day.toDocument();
-                dayDocument.append("activities", insertResultValues);
-                InsertOneResult insertOneResult = dayCollection.insertOne(dayDocument);
-                dayResultValues.add(insertOneResult.getInsertedId().asObjectId().getValue());
+                else {
+                    dayResultValues.add(dayExists);
+                }
             }
-            Document weekDocument = week.toDocument();
-            weekDocument.append("days", dayResultValues);
-            weekCollection.insertOne(weekDocument);
+            if (DatabaseDataHandler.checkIfExists(weekCollection, week) == null) {
+                Document weekDocument = week.toDocument();
+                weekDocument.append("days", dayResultValues);
+                weekCollection.insertOne(weekDocument);
+            }
         }
     }
 

@@ -15,7 +15,7 @@ import no.bettermemory.models.users.HealthCarePersonnel;
 import no.bettermemory.models.users.Patient;
 
 public class DatabaseDataHandler {
-    public static ObjectId CheckIfExists(MongoCollection<Document> collection, Object object) {
+    public static ObjectId checkIfExists(MongoCollection<Document> collection, Object object) {
         ObjectId objectId;
         if (object instanceof Patient) objectId = checkIfExistsPatient(collection, (Patient) object);
         else if (object instanceof HealthCarePersonnel) objectId = checkIfExistsHealthCarePersonnel(collection, (HealthCarePersonnel) object);
