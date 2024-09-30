@@ -34,7 +34,7 @@ public class HermannFunctionTesting {
         }
 
         try{
-            CloseRelative closeRelative = getUserFromMongoDb.getCloseRelative("2022002", "Joakim");
+            CloseRelative closeRelative = getUserFromMongoDb.getCloseRelative("2022002", "Toakim");
             System.out.println(closeRelative);
         }
 
