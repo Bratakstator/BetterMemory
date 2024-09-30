@@ -12,8 +12,8 @@ import java.util.Set;
 import no.bettermemory.models.time.Day;
 
 /**
- * This class contains a variety of diffrent nice to have controll methodes. Methodes in this 
- * class can be uses insted of creating the same code multiple times diffrent places in the whole 
+ * This class contains a variety of different nice to have control methods. Method in this 
+ * class can be uses instead  of creating the same code multiple times different places in the whole 
  * program.
  */
 public class TimeControls {
@@ -21,7 +21,7 @@ public class TimeControls {
     static final String[] DAYS_OF_THE_WEEK = {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"};
 
     /**
-     * Tis methode can be used to check that a given week number actully exist.
+     * Tis method can be used to check that a given week number actually exist.
      * @param weekNumber
      * @throws IllegalArgumentException
      */
@@ -47,7 +47,7 @@ public class TimeControls {
     }
 
     /**
-     * This methode ensures that any dublication of days in a week gets detected.
+     * This method ensures that any duplication of days in a week gets detected.
      * @param days
      * @throws IllegalArgumentException
      */

@@ -21,6 +21,19 @@ public class CloseRelative {
     private String firstName;
     private String surname;
 
+    /**
+     * This constructor should be used in case you need to create a CloseRelative object 
+     * from information retrieved from a database.
+     * @param id
+     * @param firstName
+     * @param surname
+     */
+    public CloseRelative(String id, String firstName, String surname) {
+        this.id = id;
+        this.firstName = firstName;
+        this.surname = surname;
+    }
+
     public CloseRelative(String firstName, String surname, Patient patient) {
         this.firstName = firstName.toLowerCase();
         this.surname = surname.toLowerCase();
@@ -58,5 +71,13 @@ public class CloseRelative {
 
     public String getSurname() {
         return surname;
+    }
+
+    @Override
+    public String toString() {
+        return "ID: " + id
+            +"\nFirst name: " + firstName
+            +"\nSurname: " + surname;
+
     }
 }

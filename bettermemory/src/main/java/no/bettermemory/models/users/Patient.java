@@ -100,4 +100,18 @@ public class Patient {
     public ArrayList<CloseRelative> getCloseRelatives() {
         return closeRelatives;
     }
+
+    public void setCloseRelatives(ArrayList<CloseRelative> closeRelatives) {
+        this.closeRelatives = closeRelatives;
+    }
+
+    @Override
+    public String toString() {
+
+        return "Patient ID: " + patientId 
+            +"\nFirst name: " + firstName 
+            +"\nSurname: " + surname
+            +"\nClose relatives: " + closeRelatives; 
+
+    }
 }

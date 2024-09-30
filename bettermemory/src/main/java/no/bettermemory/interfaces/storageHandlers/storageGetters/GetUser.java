@@ -31,7 +31,7 @@ public interface GetUser {
      * @return CloseRelative
      * @throws Exception
      */
-    CloseRelative getCRelative(String patientId, String firstName) throws Exception;
+    CloseRelative getCloseRelative(String patientId, String firstName) throws Exception;
 
     /**
      * This methode should take the following parameter employeeId.
