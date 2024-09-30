@@ -1,4 +1,4 @@
-package no.bettermemory.tools.databaseTools;
+package no.bettermemory.models.storageHandlers.databaseExtraction;
 
 import no.bettermemory.interfaces.storageHandlers.storageGetters.GetUser;
 import no.bettermemory.tools.DatabaseConnections;
@@ -27,7 +27,6 @@ public class GetUserFromMongoDb implements GetUser {
     public GetUserFromMongoDb() {
         mongoClient = DatabaseConnections.getMongodbClientInfo();
         database = DatabaseConnections.getUsersDatabase(mongoClient);
-        
     }
 
     /**
