@@ -1,9 +1,10 @@
 package no.bettermemory.tools.databaseTools;
 
 import no.bettermemory.interfaces.storageHandlers.storageGetters.GetUser;
+import no.bettermemory.tools.DatabaseConnections;
 
 import com.mongodb.client.MongoClient;
-import com.mongodb.client.MongoClients;
+
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import org.bson.Document;
@@ -24,8 +25,8 @@ public class GetUserFromMongoDb implements GetUser {
     private MongoCollection<Document> collection;
 
     public GetUserFromMongoDb() {
-        mongoClient = MongoClients.create("mongodb://localhost:27017");
-        database = mongoClient.getDatabase("user_info");
+        mongoClient = DatabaseConnections.getMongodbClientInfo();
+        database = DatabaseConnections.getUsersDatabase(mongoClient);
         
     }
 
@@ -50,7 +51,7 @@ public class GetUserFromMongoDb implements GetUser {
      */
     @Override
     public Patient getPatient(String patientId) throws Exception{
-        collection = database.getCollection("patient");
+        collection = DatabaseConnections.getPatientCollection(database);
         Document query = new Document("_id", patientId);
         Document result = collection.find(query).first();
 
@@ -130,7 +131,7 @@ public class GetUserFromMongoDb implements GetUser {
     
     @Override
     public HealthCarePersonnel getHealthCarePersonnel(String employeeNumber) throws Exception {
-        collection = database.getCollection("health_care_personnel");
+        collection = DatabaseConnections.getHealthCarePersonnelCollection(database);
         Document query = new Document("_id", employeeNumber);
         Document result = collection.find(query).first();
 
@@ -190,7 +191,7 @@ public class GetUserFromMongoDb implements GetUser {
 
     @Override
     public CloseRelative getCloseRelative(String patientId, String firstName) throws Exception {
-        collection = database.getCollection("patient");
+        collection = DatabaseConnections.getPatientCollection(database);
         Document query = new Document("_id", patientId);
         Document result = collection.find(query).first();
 

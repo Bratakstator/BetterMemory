@@ -1,10 +1,9 @@
 package no.bettermemory;
 
-import no.bettermemory.models.storageHandlers.ToMongoDB;
+
 import no.bettermemory.models.users.CloseRelative;
 import no.bettermemory.models.users.HealthCarePersonnel;
 import no.bettermemory.models.users.Patient;
-import no.bettermemory.tools.DatabaseConnections;
 import no.bettermemory.tools.databaseTools.GetUserFromMongoDb;
 
 
