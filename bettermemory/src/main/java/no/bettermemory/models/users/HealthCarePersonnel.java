@@ -7,9 +7,9 @@ import java.util.Set;
 import org.bson.Document;
 
 /**
- * This class is ment to represent a healthCarePerosnel-object. This object work as way to include
- * new heealthCarePerosnel to the system. This class will contain information abot the employee and 
- * who which patients this employee is allowed to wiev data on.
+ * This class is meant to represent a healthCarePersonnel-object. This object work as way to include
+ * new healthCarePersonnel to the system. This class will contain information about the employee and 
+ * who which patients this employee is allowed to view data on.
  * 
  * @param employeeNumber 
  * @param firstName 
@@ -23,7 +23,7 @@ import org.bson.Document;
  * <pre>{@code String employeeNumber = "D003809";
         String firstName = "Elissa";
         String surname = "Andersen";
-        HealthCarePersonnel healthCarePersonel = new HealthCarePersonnel(employeeNumber, firstName, surname);} </pre>
+        HealthCarePersonnel healthCarePersonnel = new HealthCarePersonnel(employeeNumber, firstName, surname);} </pre>
  */
 public class HealthCarePersonnel {
 
@@ -32,6 +32,12 @@ public class HealthCarePersonnel {
     private String surname;
     private Set<String> connectedPatients;
 
+    /**
+     * Default constructor.
+     */
+    public HealthCarePersonnel(){
+
+    }
 
     public HealthCarePersonnel(String employeeNumber, String firstName, String surname) {
         this.employeeNumber = employeeNumber.toLowerCase();
@@ -91,6 +97,22 @@ public class HealthCarePersonnel {
 
     public void addPatientNumber(String patientId) {
         this.connectedPatients.add(patientId);
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder string = new StringBuilder();
+        string.append("Employee number: " + employeeNumber);
+        string.append("\nFirst name: " + firstName);
+        string.append("\nSurname: " + surname);
+        if (connectedPatients != null) {
+            string.append("\nConnected patients:");
+            for (String patient : connectedPatients) {
+                string.append("\n" + patient);
+            }
+        }
+
+        return string.toString();
     }
 
     

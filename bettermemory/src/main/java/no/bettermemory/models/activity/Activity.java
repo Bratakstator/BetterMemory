@@ -19,7 +19,7 @@ import static no.bettermemory.tools.TimeControls.hourCheck;
  * 
  * @code
  * This is how you can create an object of this class:
- * <pre>{@code Activity activity = new Activity(10, 20, "Visit", "Your grand childeren are going to visit you.");} </pre>
+ * <pre>{@code Activity activity = new Activity(10, 20, "Visit", "Your grand children are going to visit you.");} </pre>
  * 
  */
 public class Activity {
