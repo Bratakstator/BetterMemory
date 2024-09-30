@@ -29,14 +29,12 @@ import no.bettermemory.tools.DatabaseConnections;
  * The ToMongoDB class takes the provided information and establishes a connection to the database if possible.
  * 
  * @param connectionString - This string should contain the information used to connect to a client.
- * @param databaseName - This string should contain the name of the database to be used.
- * @param collectionName - This string should contain the name of the collection to be used.
  * 
  * @author Joakim Klemsdal Bøe
  * 
  * @code
  * To create an object of this class:
- * <pre>{@code ToMongoDB toMongoDB = new ToMongoDB("mongodb://localhost:27017", "Users", "Patients")}
+ * <pre>{@code ToMongoDB toMongoDB = new ToMongoDB("mongodb://localhost:27017")}
  */
 public class ToMongoDB implements ToDatabase {
     private MongoClient client;
