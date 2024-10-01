@@ -2,6 +2,8 @@ package no.bettermemory.models.users;
 
 import java.util.ArrayList;
 
+import org.bson.Document;
+
 /**
  * This class is meant to represent a patient-object. This object will be used to hold necessary
  * information about a patient to be used in relation to activities and when to do them.
@@ -11,7 +13,7 @@ import java.util.ArrayList;
  * @param surname - Is the surname / last name of the patient.
  * 
  * @author Joakim Klemsdal Bøe
- * @version 1.1
+ * @version 1.2
  * 
  * @code
  * To create an object of this class:
@@ -26,11 +28,16 @@ public class Patient {
 
     // I'm just gonna leave this attribute out of the parameter for now
     private ArrayList<CloseRelative> closeRelatives = new ArrayList<>();
-       
+    
+    //Default constructor
+    public Patient() {
+
+    }
+
     public Patient(String patientId, String firstName, String surname){
-        this.patientId = patientId;
-        this.firstName = firstName;
-        this.surname = surname;
+        this.patientId = patientId.toLowerCase();
+        this.firstName = firstName.toLowerCase();
+        this.surname = surname.toLowerCase();
     }
 
     /** 
@@ -46,8 +53,23 @@ public class Patient {
      * <pre>{@code patientObject.addCloseRelative("John", "Doe");}
     */
     public void addCloseRelative(String firstName, String surname) {
-        CloseRelative closeRelative = new CloseRelative(firstName, surname, this);
-        closeRelatives.add(closeRelative);
+        closeRelatives.add(new CloseRelative(firstName, surname, this));
+    }
+
+
+    public Document toDocument() {
+        Document document = new Document("_id", patientId).append("first_name", firstName)
+        .append("surname", surname);
+
+        if (closeRelatives != null) {
+            ArrayList<Document> relativeDocuments = new ArrayList<>();
+            for (CloseRelative relative : closeRelatives) {
+                relativeDocuments.add(relative.toDocument());
+            }
+            document.append("close_relatives", relativeDocuments);
+        }
+
+        return document;
     }
 
 
@@ -77,5 +99,19 @@ public class Patient {
 
     public ArrayList<CloseRelative> getCloseRelatives() {
         return closeRelatives;
+    }
+
+    public void setCloseRelatives(ArrayList<CloseRelative> closeRelatives) {
+        this.closeRelatives = closeRelatives;
+    }
+
+    @Override
+    public String toString() {
+
+        return "Patient ID: " + patientId 
+            +"\nFirst name: " + firstName 
+            +"\nSurname: " + surname
+            +"\nClose relatives: " + closeRelatives; 
+
     }
 }

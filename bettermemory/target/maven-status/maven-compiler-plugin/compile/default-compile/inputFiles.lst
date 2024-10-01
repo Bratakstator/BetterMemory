@@ -5,6 +5,7 @@ X:\Onedrive\Dokumenter\Høgskolen i Østfold\3.Semester\ITD25023 Teknologiprosje
 X:\Onedrive\Dokumenter\Høgskolen i Østfold\3.Semester\ITD25023 Teknologiprosjekt\BetterMemory\BetterMemory\bettermemory\src\main\java\no\bettermemory\models\storageHandlers\ToMongoDB.java
 X:\Onedrive\Dokumenter\Høgskolen i Østfold\3.Semester\ITD25023 Teknologiprosjekt\BetterMemory\BetterMemory\bettermemory\src\main\java\no\bettermemory\models\time\Day.java
 X:\Onedrive\Dokumenter\Høgskolen i Østfold\3.Semester\ITD25023 Teknologiprosjekt\BetterMemory\BetterMemory\bettermemory\src\main\java\no\bettermemory\models\time\Week.java
-X:\Onedrive\Dokumenter\Høgskolen i Østfold\3.Semester\ITD25023 Teknologiprosjekt\BetterMemory\BetterMemory\bettermemory\src\main\java\no\bettermemory\models\users\Pasient.java
+X:\Onedrive\Dokumenter\Høgskolen i Østfold\3.Semester\ITD25023 Teknologiprosjekt\BetterMemory\BetterMemory\bettermemory\src\main\java\no\bettermemory\models\users\HealthCarePersonnel.java
+X:\Onedrive\Dokumenter\Høgskolen i Østfold\3.Semester\ITD25023 Teknologiprosjekt\BetterMemory\BetterMemory\bettermemory\src\main\java\no\bettermemory\models\users\Patient.java
 X:\Onedrive\Dokumenter\Høgskolen i Østfold\3.Semester\ITD25023 Teknologiprosjekt\BetterMemory\BetterMemory\bettermemory\src\main\java\no\bettermemory\tools\NumberControls.java
 X:\Onedrive\Dokumenter\Høgskolen i Østfold\3.Semester\ITD25023 Teknologiprosjekt\BetterMemory\BetterMemory\bettermemory\src\main\java\no\bettermemory\tools\TimeControls.java

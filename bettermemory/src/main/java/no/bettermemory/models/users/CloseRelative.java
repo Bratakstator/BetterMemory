@@ -1,6 +1,6 @@
 package no.bettermemory.models.users;
 
-
+import org.bson.Document;
 
 /**
  * This class is meant to represent an object of a patients close relative.
@@ -10,7 +10,7 @@ package no.bettermemory.models.users;
  * @param patient - This is a patient-object that this person is a relative of, used to assign a unique id for this user.
  * 
  * @author Joakim Klemsdal Bøe
- * @version 1
+ * @version 1.1
  * 
  * @code
  * To create an object of this class:
@@ -20,6 +20,19 @@ public class CloseRelative {
     private final String id; // This is not to be changed after being assigned, thus final
     private String firstName;
     private String surname;
+
+    /**
+     * This constructor should be used in case you need to create a CloseRelative object 
+     * from information retrieved from a database.
+     * @param id
+     * @param firstName
+     * @param surname
+     */
+    public CloseRelative(String id, String firstName, String surname) {
+        this.id = id;
+        this.firstName = firstName;
+        this.surname = surname;
+    }
 
     public CloseRelative(String firstName, String surname, Patient patient) {
         this.firstName = firstName.toLowerCase();
@@ -32,6 +45,13 @@ public class CloseRelative {
          */
         this.id = patient.getPatientId() + "-" + (patient.getCloseRelatives().size() + 1);
     }
+
+
+    public Document toDocument() {
+        Document document = new Document("_id", id).append("first_name", firstName).append("surname", surname);
+        return document;
+    }
+
 
     public void setFirstName(String firstName) {
         this.firstName = firstName;
@@ -51,5 +71,13 @@ public class CloseRelative {
 
     public String getSurname() {
         return surname;
+    }
+
+    @Override
+    public String toString() {
+        return "ID: " + id
+            +"\nFirst name: " + firstName
+            +"\nSurname: " + surname;
+
     }
 }

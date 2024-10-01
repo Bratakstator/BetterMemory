@@ -6,12 +6,14 @@ import static no.bettermemory.tools.TimeControls.canOnlyBeeOneOfTheSameDay;
 
 import java.util.ArrayList;
 
+import org.bson.Document;
+
 /**
  * This class represent a week objekt. It will consist of the following prameters:
  * @param weekNumber - Identifies the object with a spesific week number during a calender year.
  * @param year - Identifies what year this week object belongs to.
  * @param days - Is a list of days that the week object contains.
- * @param pasient - Is a object that describes which pasient this week "plan" belongs to.
+ * @param patient - Is a object that describes which pasient this week "plan" belongs to.
  * 
  * 
  * @author Hermann Mjelde Hamnnes
@@ -26,7 +28,7 @@ public class Week {
     private int weekNumber;
     private int year;
     private ArrayList<Day> days;
-    private Patient pasient;
+    private Patient patient;
 
     /**
      * This is the default constructure for this class.
@@ -40,18 +42,18 @@ public class Week {
      * @param weekNumber - Identifies the object with a spesific week number during a calender year.
      * @param year - Identifies what year this week object belongs to.
      * @param days - Is a list of days that the week object contains.
-     * @param pasient - Is a object that describes which pasient this week "plan" belongs to.
+     * @param patient - Is a object that describes which pasient this week "plan" belongs to.
      * 
      * @throws IllegalArgumentException
      * 
      */
-    public Week(int weekNumber, int year, ArrayList<Day> days, Patient pasient) throws IllegalArgumentException {
+    public Week(int weekNumber, int year, ArrayList<Day> days, Patient patient) throws IllegalArgumentException {
         try {
             weekNumberCheck(weekNumber);
             canOnlyBeeOneOfTheSameDay(days);
             this.weekNumber = weekNumber;
             this.year = year;
-            this.pasient= pasient;
+            this.patient= patient;
             this.days = days;
         }
 
@@ -60,6 +62,11 @@ public class Week {
             throw exception;
         }
 
+    }
+
+    public Document toDocument() {
+        Document document = new Document("week_number", weekNumber).append("year", year).append("patient", patient.getPatientId());
+        return document;
     }
 
     public int getWeekNumber() {
@@ -86,12 +93,12 @@ public class Week {
         this.days = days;
     }
 
-    public Patient getPasient(){
-        return pasient;
+    public Patient getPatient(){
+        return patient;
     }
 
-    public void setPasient(Patient pasient){
-        this.pasient = pasient;
+    public void setPasient(Patient patient){
+        this.patient = patient;
     }
 
 
