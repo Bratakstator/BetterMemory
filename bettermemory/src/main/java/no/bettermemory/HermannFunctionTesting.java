@@ -1,11 +1,10 @@
 package no.bettermemory;
 
-import no.bettermemory.models.storageHandlers.ToMongoDB;
+
+import no.bettermemory.models.storageHandlers.databaseExtraction.GetUserFromMongoDb;
 import no.bettermemory.models.users.CloseRelative;
 import no.bettermemory.models.users.HealthCarePersonnel;
 import no.bettermemory.models.users.Patient;
-import no.bettermemory.tools.DatabaseConnections;
-import no.bettermemory.tools.databaseTools.GetUserFromMongoDb;
 
 
 public class HermannFunctionTesting {
@@ -35,7 +34,7 @@ public class HermannFunctionTesting {
         }
 
         try{
-            CloseRelative closeRelative = getUserFromMongoDb.getCloseRelative("2022002", "Joakim");
+            CloseRelative closeRelative = getUserFromMongoDb.getCloseRelative("2022002", "Toakim");
             System.out.println(closeRelative);
         }
 
