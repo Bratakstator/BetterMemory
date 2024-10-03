@@ -27,12 +27,14 @@ public class Activity {
     private int minutes;
     private String shortDescription;
     private String longDescription;
+    private boolean important;
+    private boolean concluded = false;
 
     public Activity(){
 
     }
 
-    public Activity(int hour, int minutes, String shortDescription, String longDescription) throws IllegalArgumentException {
+    public Activity(int hour, int minutes, String shortDescription, String longDescription, boolean important) throws IllegalArgumentException {
      
         minuteCheck(minutes);
         hourCheck(hour);
@@ -40,7 +42,19 @@ public class Activity {
         this.minutes = minutes;
         this.shortDescription = shortDescription;
         this.longDescription = longDescription;
+        this.important = important;
         
+    }
+    public Activity(int hour, int minutes, String shortDescription,
+    String longDescription, boolean important, boolean concluded) throws IllegalArgumentException {
+        minuteCheck(minutes);
+        hourCheck(hour);
+        this.hour = hour;
+        this.minutes = minutes;
+        this.shortDescription = shortDescription;
+        this.longDescription = longDescription;
+        this.important = important;
+        this.concluded = concluded;
     }
 
 
@@ -80,6 +94,22 @@ public class Activity {
 
     public void setLongDescription(String longDescription){
         this.longDescription = longDescription;
+    }
+
+    public boolean getImportant() {
+        return important;
+    }
+
+    public void setImportant(boolean important) {
+        this.important = important;
+    }
+
+    public boolean getConcluded() {
+        return concluded;
+    }
+
+    public void setConcluded(boolean concluded) {
+        this.concluded = concluded;
     }
 
     public String getTime(){

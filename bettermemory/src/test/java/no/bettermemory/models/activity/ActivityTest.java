@@ -10,7 +10,7 @@ public class ActivityTest {
     @Test
     public void testActivityConstructor(){
 
-        Activity activity = new Activity(10, 20, "Visit", "Your grand childeren are going to visit you.");
+        Activity activity = new Activity(10, 20, "Visit", "Your grand childeren are going to visit you.", true);
 
         assertNotNull(activity);
         assertEquals(10, activity.getHour());
@@ -25,7 +25,7 @@ public class ActivityTest {
     public void testInvalidMinuteInput(){
 
          IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> {
-            new Activity(20, 60, "Something", "More");
+            new Activity(20, 60, "Something", "More", false);
         });
 
         assertEquals("The minute value that was enterd was not accsepted.", exception.getMessage());
@@ -36,7 +36,7 @@ public class ActivityTest {
     public void testInvalidHourInput(){
 
         IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> {
-           new Activity(25, 30, "Something", "More");
+           new Activity(25, 30, "Something", "More", false);
        });
 
        assertEquals("The hour value that was enterd was not accsepted.", exception.getMessage());
