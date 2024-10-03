@@ -20,7 +20,7 @@ public interface GetActivityPlanPatient {
      * @param weekNumber
      * @param year
      * @return Week
-     * @throws Exeption 
+     * @throws Exception 
      */
     Week getWeekPlan(String patientId, int weekNumber, int year) throws Exception;
 
@@ -33,7 +33,7 @@ public interface GetActivityPlanPatient {
      * @param year
      * @param dayName
      * @return Day 
-     * @throws Exeption 
+     * @throws Exception 
      */
     Day getDayPlan(String patientId, int weekNumber, int year, String dayName) throws Exception;
 
@@ -48,7 +48,7 @@ public interface GetActivityPlanPatient {
      * @param hour
      * @param minutes
      * @return Activity 
-     * @throws Exeption 
+     * @throws Exception 
      */
     Activity getActivity(String patientId, int weekNumber, int year, String dayName, int hour, 
                                 int minutes) throws Exception;
