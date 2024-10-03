@@ -18,10 +18,11 @@ public interface GetActivityPlanPatient {
      * Week object for a given patient.
      * @param patientId
      * @param weekNumber
+     * @param year
      * @return Week
      * @throws Exeption 
      */
-    Week getWeekPlan(String patientId, int weekNumber) throws Exception;
+    Week getWeekPlan(String patientId, int weekNumber, int year) throws Exception;
 
     /**
      * This methode should take the following parameters patientId, weekNumber, dayName
@@ -29,11 +30,12 @@ public interface GetActivityPlanPatient {
      * Day object for a given patient.
      * @param patientId
      * @param weekNumber
+     * @param year
      * @param dayName
      * @return Day 
      * @throws Exeption 
      */
-    Day getDayPlan(String patientId, int weekNumber, String dayName) throws Exception;
+    Day getDayPlan(String patientId, int weekNumber, int year, String dayName) throws Exception;
 
     /**
      * This methode should take the following parameters patientId, weekNumber, dayName, 
@@ -41,13 +43,14 @@ public interface GetActivityPlanPatient {
      * create and return a Activity object for a given patient.
      * @param patientId
      * @param weekNumber
+     * @param year
      * @param dayName
      * @param hour
      * @param minutes
      * @return Activity 
      * @throws Exeption 
      */
-    Activity getActivity(String patientId, int weekNumber, String dayName, int hour, 
+    Activity getActivity(String patientId, int weekNumber, int year, String dayName, int hour, 
                                 int minutes) throws Exception;
 
 
