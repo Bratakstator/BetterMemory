@@ -14,12 +14,14 @@ import static no.bettermemory.tools.TimeControls.hourCheck;
  * @param minutes
  * @param shortDescription - Is a string that works like a title for the activity.
  * @param longDescription - Is a string which gives a more in-depth description of the contents of the activity.
+ * @param important - Is a boolean which indicates whether the activity is "important" or not.
+ * @param concluded - Is a boolean which indicates whether the activity has been performed or not.
  * 
  * @author Hermann Mjelde Hamnnes
  * 
  * @code
  * This is how you can create an object of this class:
- * <pre>{@code Activity activity = new Activity(10, 20, "Visit", "Your grand children are going to visit you.");} </pre>
+ * <pre>{@code Activity activity = new Activity(10, 20, "Visit", "Your grand children are going to visit you.", true);} </pre>
  * 
  */
 public class Activity {
@@ -44,17 +46,6 @@ public class Activity {
         this.longDescription = longDescription;
         this.important = important;
         
-    }
-    public Activity(int hour, int minutes, String shortDescription,
-    String longDescription, boolean important, boolean concluded) throws IllegalArgumentException {
-        minuteCheck(minutes);
-        hourCheck(hour);
-        this.hour = hour;
-        this.minutes = minutes;
-        this.shortDescription = shortDescription;
-        this.longDescription = longDescription;
-        this.important = important;
-        this.concluded = concluded;
     }
 
 
