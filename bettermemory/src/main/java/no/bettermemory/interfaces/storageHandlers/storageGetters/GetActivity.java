@@ -1,6 +1,5 @@
 package no.bettermemory.interfaces.storageHandlers.storageGetters;
 
-import org.bson.types.ObjectId;
 import java.util.List;
 
 import no.bettermemory.models.activity.Activity;
@@ -25,30 +24,6 @@ public interface GetActivity {
      * 
      */
     Activity getSpecificActivity(String patientId, int year, int weekNumber, String dayName, int hour, int minute) throws Exception;
-
-    /**
-     * This returns an object of Activity using its object id.
-     * This method is meant to be used by other database-extraction methods.
-     * 
-     * @param objectId - The object id used in the database.
-     * 
-     * @return Activity
-     * @throws Exception
-     * 
-     */
-    Activity getSpecificActivityFromObjectId(ObjectId activityId) throws Exception;
-
-    /**
-     * This returns a list of activities using a list of object ids.
-     * This method is meant to be used by other database-extraction methods.
-     * 
-     * @param objectIds - A list of Object ids used in the database.
-     * 
-     * @return List<Activity>
-     * @throws Exception
-     * 
-     */
-    List<Activity> getActivitiesFromObjectId(List<ObjectId> activityIds) throws Exception;
 
     /**
      * This returns a list of activites using attributes related to time, will return all activites happening at given hour.
