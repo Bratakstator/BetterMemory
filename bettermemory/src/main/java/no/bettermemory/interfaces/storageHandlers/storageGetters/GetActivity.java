@@ -23,9 +23,6 @@ public interface GetActivity {
      * @return Activity
      * @throws Exception
      * 
-     * @code
-     * Example of how to execute method:
-     * <pre>{@code Activity activity = getActivity.getSpecificActivity("123", 2024, 40, "Monday", 10, 30);}</pre>
      */
     Activity getSpecificActivity(String patientId, int year, int weekNumber, String dayName, int hour, int minute) throws Exception;
 
@@ -38,9 +35,6 @@ public interface GetActivity {
      * @return Activity
      * @throws Exception
      * 
-     * @code
-     * Example of how to execute method:
-     * <pre>{@code Activity activity = getActivity.getActivityFromObjectId(anObjectId);}</pre>
      */
     Activity getSpecificActivityFromObjectId(ObjectId activityId) throws Exception;
 
@@ -53,9 +47,6 @@ public interface GetActivity {
      * @return List<Activity>
      * @throws Exception
      * 
-     * @code
-     * Example of how to execute method:
-     * <pre>{@code List<Activity> activities = getActivity.getActivitiesFromObjectId(objectIds)}</pre>
      */
     List<Activity> getActivitiesFromObjectId(List<ObjectId> activityIds) throws Exception;
 
@@ -72,9 +63,6 @@ public interface GetActivity {
      * 
      * @throws Exception
      * 
-     * @code
-     * Example of how to execute method:
-     * <pre>{@code List<Activity> activities = getActivity.getActivitiesByHour("123", 2024, 40, "Monday", 10);}
      */
     List<Activity> getActivitiesByHour(String patientId, int year, int weekNumber, String dayName, int hour) throws Exception;
 }
