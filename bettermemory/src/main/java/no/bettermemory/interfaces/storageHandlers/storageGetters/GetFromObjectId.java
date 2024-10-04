@@ -14,7 +14,7 @@ public interface GetFromObjectId<T> {
      * @throws Exception
      * 
      */
-    T getSpecificDayFromObjectId(ObjectId tId) throws Exception;
+    T getSpecificFromObjectId(ObjectId tId) throws Exception;
 
     /**
      * Returns a list of objects using object id.
@@ -26,5 +26,5 @@ public interface GetFromObjectId<T> {
      * @throws Exception
      * 
      */
-    List<T> getDaysFromObjectId(List<ObjectId> tIds) throws Exception;    
+    List<T> getListFromObjectId(List<ObjectId> tIds) throws Exception;
 }
