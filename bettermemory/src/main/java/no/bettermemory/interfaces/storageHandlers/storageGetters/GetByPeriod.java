@@ -16,7 +16,7 @@ public interface GetByPeriod<T> {
      * @throw Exception
      * 
      */
-    T getSpecific(String patiendId, int year, int weekNumber, String dayName, Integer... time) throws Exception;
+    T getSpecific(String patientId, int year, int weekNumber, String dayName, Integer... time) throws Exception;
 
     /**
      * Used to return one instance of an object.
@@ -31,5 +31,5 @@ public interface GetByPeriod<T> {
      * @throw Exception
      * 
      */
-    List<T> getListByPeriod(String patiendId, int year, int weekNumber, String dayName, Integer... time) throws Exception; 
+    List<T> getListByPeriod(String patientId, int year, int weekNumber, String dayName, Integer... time) throws Exception; 
 }

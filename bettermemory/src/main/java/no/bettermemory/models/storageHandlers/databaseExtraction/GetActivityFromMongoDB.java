@@ -4,6 +4,7 @@ import org.bson.Document;
 import org.bson.types.ObjectId;
 
 import java.util.List;
+import java.util.ArrayList;
 
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoCollection;
@@ -24,7 +25,7 @@ public class GetActivityFromMongoDB implements GetByPeriod<Activity>, GetFromObj
 
     @SuppressWarnings("unchecked")
     @Override
-    public Activity getSpecific(String patiendId, int year, int weekNumber, String dayName, Integer... time) throws Exception {
+    public Activity getSpecific(String patientId, int year, int weekNumber, String dayName, Integer... time) throws Exception {
         if (time == null) throw new Exception("Hour and minutes are required for search.");
         if (time.length < 2) {
             String message;
@@ -44,7 +45,7 @@ public class GetActivityFromMongoDB implements GetByPeriod<Activity>, GetFromObj
         int hour = time[0].intValue();
         int minute = time[0].intValue();
 
-        Document weekQuery = new Document("patient", patiendId).append("year", year).append("week_number", weekNumber);
+        Document weekQuery = new Document("patient", patientId).append("year", year).append("week_number", weekNumber);
         collection = DatabaseConnections.getWeeksCollection(database);
         Document weekResult = collection.find(weekQuery).first();
 
@@ -94,8 +95,24 @@ public class GetActivityFromMongoDB implements GetByPeriod<Activity>, GetFromObj
     }
 
     @Override
-    public List<Activity> getListByPeriod(String patiendId, int year, int weekNumber, String dayName, Integer... time) throws Exception {
-        return null;
+    public List<Activity> getListByPeriod(String patientId, int year, int weekNumber, String dayName, Integer... time) throws Exception {
+        if (time == null) throw new Exception("Hour and minutes are required for search.");
+        if (time.length == 0) {
+            throw new Exception("Missing hour.");
+        }
+
+        List<Activity> activities = new ArrayList<>();
+
+        int hour = time[0].intValue();
+        for (int minute = 0; minute < 60; minute++) {
+            activities.add(
+                getSpecific(patientId, year, weekNumber, dayName, hour, minute)
+            );
+        }
+
+        if (activities.size() == 0) throw new Exception("No activities found at the hour " + hour + ".");
+
+        return activities;
     }
 
     @Override
