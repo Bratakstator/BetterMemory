@@ -42,7 +42,7 @@ public interface GetActivity {
      * Example of how to execute method:
      * <pre>{@code Activity activity = getActivity.getActivityFromObjectId(anObjectId);}</pre>
      */
-    Activity getSpecificActivityFromObjectId(ObjectId objectId) throws Exception;
+    Activity getSpecificActivityFromObjectId(ObjectId activityId) throws Exception;
 
     /**
      * This returns a list of activities using a list of object ids.
@@ -57,7 +57,7 @@ public interface GetActivity {
      * Example of how to execute method:
      * <pre>{@code List<Activity> activities = getActivity.getActivitiesFromObjectId(objectIds)}</pre>
      */
-    List<Activity> getActivitiesFromObjectId(List<ObjectId> objectIds) throws Exception;
+    List<Activity> getActivitiesFromObjectId(List<ObjectId> activityIds) throws Exception;
 
     /**
      * This returns a list of activites using attributes related to time, will return all activites happening at given hour.
