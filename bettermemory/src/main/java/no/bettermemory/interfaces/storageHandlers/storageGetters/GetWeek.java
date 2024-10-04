@@ -4,5 +4,4 @@ import no.bettermemory.models.time.Week;
 
 public interface GetWeek {
     Week getSpecificWeek(String patientId, int year, int weekNumber) throws Exception;
-    List<Week> getListByYear(String patientId, int year) throws Exception;
 }
