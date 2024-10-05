@@ -5,43 +5,30 @@ import no.bettermemory.models.storageHandlers.databaseExtraction.GetUserFromMong
 import no.bettermemory.models.users.CloseRelative;
 import no.bettermemory.models.users.HealthCarePersonnel;
 import no.bettermemory.models.users.Patient;
+import no.bettermemory.interfaces.Models.HourProvider;
+import no.bettermemory.models.MicrocontrollerDatabaseBridge.*;
 
 
 public class HermannFunctionTesting {
 
     public static void main(String[] args) {
 
-        GetUserFromMongoDb getUserFromMongoDb = new GetUserFromMongoDb();
 
-        try{
-            Patient patient = getUserFromMongoDb.getPatient("2022002");
-            System.out.println(patient);
-        }
+        PresentHourInteger presentHourInteger = new PresentHourInteger();
 
-        catch (Exception exception) {
-            System.err.println("It did not work");
-            exception.printStackTrace();
-        }
+        System.out.println(presentHourInteger.getHour());
 
-        try{
-            HealthCarePersonnel healthCarePersonnel = getUserFromMongoDb.getHealthCarePersonnel("D003809");
-            System.out.println(healthCarePersonnel);
-        }
+        PresentMinutesInteger presentMinutesInteger = new PresentMinutesInteger();
 
-        catch (Exception exception) {
-            System.err.println("It did not work");
-            exception.printStackTrace();
-        }
+        System.out.println(presentMinutesInteger.getMinutes());
 
-        try{
-            CloseRelative closeRelative = getUserFromMongoDb.getCloseRelative("2022002", "Toakim");
-            System.out.println(closeRelative);
-        }
+        PresentWeekInteger presentWeekInteger = new PresentWeekInteger();
 
-        catch (Exception exception) {
-            System.err.println("It did not work");
-            exception.printStackTrace();
-        }
+        System.out.println(presentWeekInteger.getWeek());
+
+        PresentYearInteger presentYearInteger = new PresentYearInteger();
+
+        System.out.println(presentYearInteger.getYear());
 
 
 
