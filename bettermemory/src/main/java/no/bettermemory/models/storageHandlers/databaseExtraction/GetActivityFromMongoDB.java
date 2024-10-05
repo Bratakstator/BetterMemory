@@ -10,12 +10,12 @@ import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 
-import no.bettermemory.interfaces.storageHandlers.storageGetters.GetByPeriod;
-import no.bettermemory.interfaces.storageHandlers.storageGetters.GetFromObjectId;
+import no.bettermemory.interfaces.storageHandlers.storageGetters.GetActivity;
 import no.bettermemory.models.activity.Activity;
 import no.bettermemory.tools.DatabaseConnections;
+import no.bettermemory.tools.TimeControls;
 
-public class GetActivityFromMongoDB implements GetByPeriod<Activity>, GetFromObjectId<Activity> {
+public class GetActivityFromMongoDB implements GetActivity {
     private MongoDatabase database;
     private MongoCollection<Document> collection;
 
@@ -25,30 +25,20 @@ public class GetActivityFromMongoDB implements GetByPeriod<Activity>, GetFromObj
 
     @SuppressWarnings("unchecked")
     @Override
-    public Activity getSpecific(String patientId, int year, int weekNumber, String dayName, Integer... time) throws Exception {
-        if (time == null) throw new Exception("Hour and minutes are required for search.");
-        if (time.length < 2) {
-            String message;
-            switch (time.length) {
-                case 0:
-                    message = "Missing hour and minutes.";
-                    break;
-                case 1:
-                    message = "Missing minutes.";
-                    break;
-                default:
-                    message = "Missing time values, has " + time.length + " values.";
-            }
-            throw new Exception(message);
+    public List<Activity> getActivitiesAtMinute(String patientId, int year, int weekNumber, String dayName, int hour, int minutes) throws Exception {
+        try {
+            TimeControls.hourCheck(hour);
+            TimeControls.minuteCheck(minutes);
+        } catch (IllegalArgumentException e) {
+            throw new Exception(e.getMessage());
         }
 
-        int hour = time[0].intValue();
-        int minute = time[0].intValue();
 
         Document weekQuery = new Document("patient", patientId).append("year", year).append("week_number", weekNumber);
         collection = DatabaseConnections.getWeeksCollection(database);
         Document weekResult = collection.find(weekQuery).first();
 
+        if (weekResult == null) throw new Exception("week " + weekNumber + ", "+ year + " not registered in system");
         if (!weekResult.containsKey("days")) throw new Exception("No days registered on week " + weekNumber + ".");
 
         List<ObjectId> dayIds = (List<ObjectId>) weekResult.get("days");
@@ -61,48 +51,51 @@ public class GetActivityFromMongoDB implements GetByPeriod<Activity>, GetFromObj
         }
 
         if (relevantDay == null) throw new Exception(dayName + " not registered on week " + weekNumber + ".");
-
         if (!relevantDay.containsKey("activities")) throw new Exception(
             "No activities registered on " + dayName + " at week " + weekNumber + "."
         );
 
         List<ObjectId> activityIds = (List<ObjectId>) relevantDay.get("activities");
 
-        Document activityDocument = null;
+        List<Document> activityDocuments = new ArrayList<>();
         for (ObjectId activityId : activityIds) {
-            Document activityQuery = new Document("_id", activityId).append("hour", hour).append("minutes", minute);
+            Document activityQuery = new Document("_id", activityId).append("hour", hour).append("minutes", minutes);
             collection = DatabaseConnections.getActivitiesCollection(database);
-            activityDocument = collection.find(activityQuery).first();
+            Document activityResult = collection.find(activityQuery).first();
+            if (activityResult != null) activityDocuments.add(activityResult);
         }
 
-        if (activityDocument == null) throw new Exception(
-            "Could not find an activity happening on: " + dayName + ", week " + weekNumber + " at " + hour + ":" + minute + "."
+        if (activityDocuments.size() == 0) throw new Exception(
+            "Could not find an activity happening on: " + dayName + ", week " + weekNumber + " at " + hour + ":" + minutes + "."
         );
 
-        Activity activity = new Activity();
-        activity.setShortDescription(activityDocument.getString("short_desc"));
-        activity.setLongDescription(activityDocument.getString("long_desc"));
-        activity.setHour(activityDocument.getInteger("hour"));
-        activity.setMinutes(activityDocument.getInteger("minutes"));
-        activity.setImportant(activityDocument.getBoolean("important"));
-        activity.setConcluded(activityDocument.getBoolean("concluded"));
+        List<Activity> activities = new ArrayList<>();
+        for (Document activityDocument : activityDocuments) {
+            Activity activity = new Activity();
+            activity.setShortDescription(activityDocument.getString("short_desc"));
+            activity.setLongDescription(activityDocument.getString("long_desc"));
+            activity.setHour(activityDocument.getInteger("hour"));
+            activity.setMinutes(activityDocument.getInteger("minutes"));
+            activity.setImportant(activityDocument.getBoolean("important"));
+            activity.setConcluded(activityDocument.getBoolean("concluded"));
+            activities.add(activity);
+        }
 
-        return activity;
+        return activities;
     }
 
     @Override
-    public List<Activity> getListByPeriod(String patientId, int year, int weekNumber, String dayName, Integer... time) throws Exception {
-        if (time == null) throw new Exception("Hour and minutes are required for search.");
-        if (time.length == 0) {
-            throw new Exception("Missing hour.");
+    public List<Activity> getACtivitiesAtHour(String patientId, int year, int weekNumber, String dayName, int hour) throws Exception {
+        try {
+            TimeControls.hourCheck(hour);
+        } catch (IllegalArgumentException e) {
+            throw new Exception(e.getMessage());
         }
 
         List<Activity> activities = new ArrayList<>();
-
-        int hour = time[0].intValue();
         for (int minute = 0; minute < 60; minute++) {
-            activities.add(
-                getSpecific(patientId, year, weekNumber, dayName, hour, minute)
+            activities.addAll(
+                getActivitiesAtMinute(patientId, year, weekNumber, dayName, hour, minute)
             );
         }
 
@@ -112,33 +105,23 @@ public class GetActivityFromMongoDB implements GetByPeriod<Activity>, GetFromObj
     }
 
     @Override
-    public Activity getSpecificFromObjectId(ObjectId activityId) throws Exception {
-        Document query = new Document("_id", activityId);
-        collection = DatabaseConnections.getActivitiesCollection(database);
-        Document result = collection.find(query).first();
-
-        /*
-         * As we do have an object id for the activity, we should be able to assume its existence,
-         * for whenever the activity is to be deleted, its object id will be deleted from all day objects that holds it.
-        */
-
-        Activity activity = new Activity();
-        activity.setShortDescription(result.getString("short_desc"));
-        activity.setLongDescription(result.getString("long_desc"));
-        activity.setHour(result.getInteger("hour"));
-        activity.setMinutes(result.getInteger("minutes"));
-        activity.setImportant(result.getBoolean("important"));
-        activity.setConcluded(result.getBoolean("concluded"));
-
-        return activity;
-    }
-
-    @Override
     public List<Activity> getListFromObjectId(List<ObjectId> activityIds) throws Exception {
         List<Activity> activities = new ArrayList<>();
 
         for (ObjectId activityId : activityIds) {
-            activities.add(getSpecificFromObjectId(activityId));
+            Document query = new Document("_id", activityId);
+            collection = DatabaseConnections.getActivitiesCollection(database);
+            Document result = collection.find(query).first();
+
+            Activity activity = new Activity();
+            activity.setShortDescription(result.getString("short_desc"));
+            activity.setLongDescription(result.getString("long_desc"));
+            activity.setHour(result.getInteger("hour"));
+            activity.setMinutes(result.getInteger("minutes"));
+            activity.setImportant(result.getBoolean("important"));
+            activity.setConcluded(result.getBoolean("concluded"));
+
+            activities.add(activity);
         }
 
         return activities;
