@@ -52,7 +52,6 @@ public class GetActivityFromMongoDB implements GetByPeriod<Activity>, GetFromObj
         if (!weekResult.containsKey("days")) throw new Exception("No days registered on week " + weekNumber + ".");
 
         List<ObjectId> dayIds = (List<ObjectId>) weekResult.get("days");
-        if (dayIds == null || dayIds.size() == 0) throw new Exception("No days registered on week " + weekNumber + ".");
 
         Document relevantDay = null;
         for (ObjectId dayId : dayIds) {
@@ -68,9 +67,6 @@ public class GetActivityFromMongoDB implements GetByPeriod<Activity>, GetFromObj
         );
 
         List<ObjectId> activityIds = (List<ObjectId>) relevantDay.get("activities");
-        if (activityIds == null || activityIds.size() == 0) throw new Exception(
-            "No activities registered on " + dayName + " at week " + weekNumber + "."
-        );
 
         Document activityDocument = null;
         for (ObjectId activityId : activityIds) {
