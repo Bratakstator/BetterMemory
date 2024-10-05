@@ -18,6 +18,11 @@ public class HermannFunctionTesting {
 
         System.out.println(presentHourInteger.getHour());
 
+        PresentMinutesInteger presentMinutesInteger = new PresentMinutesInteger();
+
+        System.out.println(presentMinutesInteger.getMinutes());
+
+
 
 
         
