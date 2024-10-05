@@ -22,6 +22,9 @@ public class HermannFunctionTesting {
 
         System.out.println(presentMinutesInteger.getMinutes());
 
+        PresentWeekInteger presentWeekInteger = new PresentWeekInteger();
+
+        System.out.println(presentWeekInteger.getWeek());
 
 
 

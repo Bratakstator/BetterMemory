@@ -14,27 +14,27 @@ import java.time.ZoneId;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @ExtendWith(MockitoExtension.class)
-public class PresentMinutesIntegerTest {
+public class PresentWeekIntegerTest {
 
     @Test
-    @DisplayName("Get present minutes.")
-    public void getMinutes() {
+    @DisplayName("Get present week.")
+    public void getWeek() {
         /*
-         * Creates a fixed clock which to be used in the PresentMinutesInteger constructor.
+         * Creates a fixed clock which to be used in the PresentWeekInteger constructor.
          * The process of mocking the LocalDateTime class looked quite complicated, I therefor 
-         * found it simpler to implement a clock object to the PresentMinutesInteger class in order 
+         * found it simpler to implement a clock object to the PresentWeekInteger class in order 
          * to test this in a more predictable manner.
          */
         Clock fixedClock = Clock.fixed(Instant.parse("0001-01-01T12:50:00Z"), ZoneId.of("UTC"));
 
        //Crates a PresentHourInteger object with the already created fixedClock object.
-        PresentMinutesInteger presentMinutesInteger = new PresentMinutesInteger(fixedClock);
+        PresentWeekInteger presentWeekInteger = new PresentWeekInteger(fixedClock);
 
        
-        int presentMinutes = presentMinutesInteger.getMinutes();
+        int presentWeek = presentWeekInteger.getWeek();
 
     
-        assertEquals(50, presentMinutes);
+        assertEquals(1, presentWeek);
         
     }
 }
