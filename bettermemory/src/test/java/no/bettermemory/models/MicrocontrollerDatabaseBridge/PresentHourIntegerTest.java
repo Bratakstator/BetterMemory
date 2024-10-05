@@ -3,10 +3,10 @@ package no.bettermemory.models.MicrocontrollerDatabaseBridge;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mockito;
+
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.time.LocalDateTime;
+
 import java.time.Clock;
 import java.time.Instant;
 import java.time.ZoneId;
@@ -19,10 +19,15 @@ public class PresentHourIntegerTest {
     @Test
     @DisplayName("Get present hour.")
     public void getHour() {
-        
-        Clock fixedClock = Clock.fixed(Instant.parse("2023-10-01T12:00:00Z"), ZoneId.of("UTC"));
+        /*
+         * Creates a fixed clock which to be used in the PresentHourInteger constructor.
+         * The process of mocking the LocalDateTime class looked quite complicated, I therefor 
+         * found it simpler to implement a clock object to the PresentHourInteger class in order 
+         * to test this in a more predictable manner.
+         */
+        Clock fixedClock = Clock.fixed(Instant.parse("0001-01-01T12:00:00Z"), ZoneId.of("UTC"));
 
-       
+       //Crates a PresentHourInteger object with the already created fixedClock object.
         PresentHourInteger presentHourInteger = new PresentHourInteger(fixedClock);
 
        
