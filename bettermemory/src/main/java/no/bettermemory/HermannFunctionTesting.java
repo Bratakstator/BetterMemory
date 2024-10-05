@@ -26,6 +26,10 @@ public class HermannFunctionTesting {
 
         System.out.println(presentWeekInteger.getWeek());
 
+        PresentYearInteger presentYearInteger = new PresentYearInteger();
+
+        System.out.println(presentYearInteger.getYear());
+
 
 
         
