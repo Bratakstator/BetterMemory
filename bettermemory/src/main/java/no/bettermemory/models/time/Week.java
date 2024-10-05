@@ -97,7 +97,7 @@ public class Week {
         return patient;
     }
 
-    public void setPasient(Patient patient){
+    public void setPatient(Patient patient){
         this.patient = patient;
     }
 
