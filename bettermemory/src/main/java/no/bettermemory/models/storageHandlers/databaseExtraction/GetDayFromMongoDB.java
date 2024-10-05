@@ -86,9 +86,24 @@ public class GetDayFromMongoDB implements GetByPeriod<Day>, GetFromObjectId<Day>
         return days;
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public Day getSpecificFromObjectId(ObjectId dayId) throws Exception {
-        return null;
+        Document query = new Document("_id", dayId);
+        collection = DatabaseConnections.getDaysCollection(database);
+        Document result = collection.find(query).first();
+
+        Day day = new Day();
+
+        day.setDayName("day");
+        if (result.containsKey("activities")) {
+            List<ObjectId> activityIds = (List<ObjectId>) result.get("activities");
+            GetActivityFromMongoDB getActivities = new GetActivityFromMongoDB(client);
+            List<Activity> activities = getActivities.getListFromObjectId(activityIds);
+            day.setActivities((ArrayList<Activity>) activities);
+        }
+
+        return day;
     }
 
     @Override
