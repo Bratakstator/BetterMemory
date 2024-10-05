@@ -64,9 +64,26 @@ public class GetDayFromMongoDB implements GetByPeriod<Day>, GetFromObjectId<Day>
         return day;
     }
 
+    /*
+     * Ok, ok, i see now that i could not properly generalize GetDay and GetActivity interfaces into one generic interface
+     * due to the parameters, will fix later, just gonna create the logic, the splitting of interfaces will just create
+     * parameter changes.
+     */
+
     @Override
     public List<Day> getListByPeriod(String patientId, int year, int weekNumber, String dayName, Integer... time) throws Exception {
-        return null;
+        List<Day> days = new ArrayList<>();
+        String[] dayNames = {"monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"};
+
+        for (String dayNameT : dayNames) {
+            days.add(
+                getSpecific(patientId, year, weekNumber, dayNameT)
+            );
+        }
+
+        if (days.size() == 0) throw new Exception("No days found at week " + weekNumber + ".");
+
+        return days;
     }
 
     @Override
