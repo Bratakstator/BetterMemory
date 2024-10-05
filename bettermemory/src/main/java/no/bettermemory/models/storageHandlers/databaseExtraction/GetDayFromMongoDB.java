@@ -56,7 +56,7 @@ public class GetDayFromMongoDB implements GetDay {
         if (dayDocument.containsKey("activities")) {
             List<ObjectId> activityIds = (List<ObjectId>) dayDocument.get("activities");
             GetActivityFromMongoDB getActivities = new GetActivityFromMongoDB(client);
-            List<Activity> activities = getActivities.getListFromObjectId(activityIds);
+            List<Activity> activities = getActivities.getActivitiesFromObjectId(activityIds);
             day.setActivities((ArrayList<Activity>) activities);
         }
 
@@ -65,7 +65,7 @@ public class GetDayFromMongoDB implements GetDay {
 
     @SuppressWarnings("unchecked")
     @Override
-    public List<Day> getListFromObjectId(List<ObjectId> dayIds) throws Exception {
+    public List<Day> getDaysFromObjectId(List<ObjectId> dayIds) throws Exception {
         List<Day> days = new ArrayList<>();
 
         for (ObjectId dayId : dayIds) {
@@ -79,7 +79,7 @@ public class GetDayFromMongoDB implements GetDay {
             if (result.containsKey("activities")) {
                 List<ObjectId> activityIds = (List<ObjectId>) result.get("activities");
                 GetActivityFromMongoDB getActivities = new GetActivityFromMongoDB(client);
-                List<Activity> activities = getActivities.getListFromObjectId(activityIds);
+                List<Activity> activities = getActivities.getActivitiesFromObjectId(activityIds);
                 day.setActivities((ArrayList<Activity>) activities);
             }
 

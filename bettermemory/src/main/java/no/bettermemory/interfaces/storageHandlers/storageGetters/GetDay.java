@@ -8,5 +8,5 @@ import no.bettermemory.models.time.Day;
 
 public interface GetDay {
     Day getSpecific(String patientId, int year, int weekNumber, String dayName) throws Exception;
-    List<Day> getListFromObjectId(List<ObjectId> dayIds) throws Exception;
+    List<Day> getDaysFromObjectId(List<ObjectId> dayIds) throws Exception;
 }

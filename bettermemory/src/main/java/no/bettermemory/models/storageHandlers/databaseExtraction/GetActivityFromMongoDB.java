@@ -85,7 +85,7 @@ public class GetActivityFromMongoDB implements GetActivity {
     }
 
     @Override
-    public List<Activity> getACtivitiesAtHour(String patientId, int year, int weekNumber, String dayName, int hour) throws Exception {
+    public List<Activity> getActivitiesAtHour(String patientId, int year, int weekNumber, String dayName, int hour) throws Exception {
         try {
             TimeControls.hourCheck(hour);
         } catch (IllegalArgumentException e) {
@@ -105,7 +105,7 @@ public class GetActivityFromMongoDB implements GetActivity {
     }
 
     @Override
-    public List<Activity> getListFromObjectId(List<ObjectId> activityIds) throws Exception {
+    public List<Activity> getActivitiesFromObjectId(List<ObjectId> activityIds) throws Exception {
         List<Activity> activities = new ArrayList<>();
 
         for (ObjectId activityId : activityIds) {

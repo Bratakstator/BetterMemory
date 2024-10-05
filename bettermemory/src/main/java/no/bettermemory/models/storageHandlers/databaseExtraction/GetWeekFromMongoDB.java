@@ -48,7 +48,7 @@ public class GetWeekFromMongoDB implements GetWeek {
         );
         if (result.containsKey("patient")) {
             week.setDays(
-                (ArrayList<Day>) (new GetDayFromMongoDB(client)).getListFromObjectId(
+                (ArrayList<Day>) (new GetDayFromMongoDB(client)).getDaysFromObjectId(
                     (List<ObjectId>) result.get("days")
                 )
             );
