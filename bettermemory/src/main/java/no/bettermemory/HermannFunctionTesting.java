@@ -1,11 +1,6 @@
 package no.bettermemory;
 
 
-import no.bettermemory.models.storageHandlers.databaseExtraction.GetUserFromMongoDb;
-import no.bettermemory.models.users.CloseRelative;
-import no.bettermemory.models.users.HealthCarePersonnel;
-import no.bettermemory.models.users.Patient;
-import no.bettermemory.interfaces.Models.HourProvider;
 import no.bettermemory.models.MicrocontrollerDatabaseBridge.*;
 
 
