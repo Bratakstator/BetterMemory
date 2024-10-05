@@ -108,6 +108,12 @@ public class GetDayFromMongoDB implements GetByPeriod<Day>, GetFromObjectId<Day>
 
     @Override
     public List<Day> getListFromObjectId(List<ObjectId> dayIds) throws Exception {
-        return null;
+        List<Day> days = new ArrayList<>();
+
+        for (ObjectId dayId : dayIds) {
+            days.add(getSpecificFromObjectId(dayId));
+        }
+
+        return days;
     }
 }
