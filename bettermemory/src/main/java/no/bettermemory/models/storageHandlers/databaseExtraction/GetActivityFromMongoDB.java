@@ -139,6 +139,12 @@ public class GetActivityFromMongoDB implements GetByPeriod<Activity>, GetFromObj
 
     @Override
     public List<Activity> getListFromObjectId(List<ObjectId> activityIds) throws Exception {
-        return null;
+        List<Activity> activities = new ArrayList<>();
+
+        for (ObjectId activityId : activityIds) {
+            activities.add(getSpecificFromObjectId(activityId));
+        }
+
+        return activities;
     }
 }
