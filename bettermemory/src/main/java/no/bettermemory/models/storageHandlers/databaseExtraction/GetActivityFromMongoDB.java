@@ -116,12 +116,29 @@ public class GetActivityFromMongoDB implements GetByPeriod<Activity>, GetFromObj
     }
 
     @Override
-    public Activity getSpecificFromObjectId(ObjectId tId) throws Exception {
-        return null;
+    public Activity getSpecificFromObjectId(ObjectId activityId) throws Exception {
+        Document query = new Document("_id", activityId);
+        collection = DatabaseConnections.getActivitiesCollection(database);
+        Document result = collection.find(query).first();
+
+        /*
+         * As we do have an object id for the activity, we should be able to assume its existence,
+         * for whenever the activity is to be deleted, its object id will be deleted from all day objects that holds it.
+        */
+
+        Activity activity = new Activity();
+        activity.setShortDescription(result.getString("short_desc"));
+        activity.setLongDescription(result.getString("long_desc"));
+        activity.setHour(result.getInteger("hour"));
+        activity.setMinutes(result.getInteger("minutes"));
+        activity.setImportant(result.getBoolean("important"));
+        activity.setConcluded(result.getBoolean("concluded"));
+
+        return activity;
     }
 
     @Override
-    public List<Activity> getListFromObjectId(List<ObjectId> tIds) throws Exception {
+    public List<Activity> getListFromObjectId(List<ObjectId> activityIds) throws Exception {
         return null;
     }
 }
