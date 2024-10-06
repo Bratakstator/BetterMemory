@@ -4,7 +4,7 @@ package no.bettermemory.interfaces.MicrocontrollerDatabaseBridge;
  * This interface is meant to be used in order to return a 
  * an activity based on some set of time parameters.
  */
-public interface TimeBasedActivityRetriever<T> {
+public interface TimeBasedObjectRetriever<T> {
 
     /**
      * Should return the activity in a chosen data format.
@@ -16,7 +16,7 @@ public interface TimeBasedActivityRetriever<T> {
      * @return T
      * 
      */
-    T getActivity(int minute,
+    T getObject(int minute,
                   int hour,
                   String dayName,
                   int weekNumber,
