@@ -35,7 +35,7 @@ public class InsertPatientToMongoDB implements InsertToDatabase<Patient> {
 
     @Override
     public void updateObject(Patient patient) throws Exception {
-        ObjectId existingId = DatabaseDataHandler.checkIfExists(collection, patient);
+        String existingId = (String) DatabaseDataHandler.checkIfExists(collection, patient);
         if (existingId == null) throw new Exception("Patient does not exist in system.");
 
         Document query = new Document("_id", existingId);

@@ -15,8 +15,8 @@ import no.bettermemory.models.users.HealthCarePersonnel;
 import no.bettermemory.models.users.Patient;
 
 public class DatabaseDataHandler {
-    public static ObjectId checkIfExists(MongoCollection<Document> collection, Object object) {
-        ObjectId objectId;
+    public static Object checkIfExists(MongoCollection<Document> collection, Object object) {
+        Object objectId;
         if (object instanceof Patient) objectId = checkIfExistsPatient(collection, (Patient) object);
         else if (object instanceof HealthCarePersonnel) objectId = checkIfExistsHealthCarePersonnel(collection, (HealthCarePersonnel) object);
         else if (object instanceof Week) objectId = checkIfExistsWeek(collection, (Week) object);
@@ -27,24 +27,24 @@ public class DatabaseDataHandler {
         return objectId;
     }
 
-    private static ObjectId checkIfExistsPatient(MongoCollection<Document> collection, Patient patient) {
+    private static Object checkIfExistsPatient(MongoCollection<Document> collection, Patient patient) {
         Document query = new Document("_id", patient.getPatientId());
         Document result = collection.find(query).first();
-        if (result != null) return result.getObjectId("_id");
+        if (result != null) return result.getString("_id");
 
         return null;
     }
 
-    private static ObjectId checkIfExistsHealthCarePersonnel(MongoCollection<Document> collection, HealthCarePersonnel healthCarePersonnel) {
+    private static Object checkIfExistsHealthCarePersonnel(MongoCollection<Document> collection, HealthCarePersonnel healthCarePersonnel) {
         Document query = new Document("_id", healthCarePersonnel.getEmployeeNumber());
         Document result = collection.find(query).first();
-        if (result != null) return result.getObjectId("_id");
+        if (result != null) return result.getString("_id");
 
         return null;
     }
 
-    private static ObjectId checkIfExistsWeek(MongoCollection<Document> collection, Week week) {
-        List<ObjectId> dayIds = week.getDays().stream().map(
+    private static Object checkIfExistsWeek(MongoCollection<Document> collection, Week week) {
+        List<Object> dayIds = week.getDays().stream().map(
             day -> checkIfExistsDay(
                 DatabaseConnections.getDaysCollection(
                     DatabaseConnections.getUsersDatabase(
@@ -65,8 +65,8 @@ public class DatabaseDataHandler {
         return null;
     }
 
-    private static ObjectId checkIfExistsDay(MongoCollection<Document> collection, Day day) {
-        List<ObjectId> activityIds = day.getActivities().stream().map(
+    private static Object checkIfExistsDay(MongoCollection<Document> collection, Day day) {
+        List<Object> activityIds = day.getActivities().stream().map(
             activity -> checkIfExistsActivity(
                 DatabaseConnections.getActivitiesCollection(
                     DatabaseConnections.getUsersDatabase(
@@ -84,7 +84,7 @@ public class DatabaseDataHandler {
         return null;
     }
 
-    private static ObjectId checkIfExistsActivity(MongoCollection<Document> collection, Activity activity) {
+    private static Object checkIfExistsActivity(MongoCollection<Document> collection, Activity activity) {
         Document query = new Document("hour", activity.getHour()).append("minutes", activity.getMinutes())
         .append("short_desc", activity.getShortDescription()).append("long_desc", activity.getLongDescription());
         Document result = collection.find(query).first();
