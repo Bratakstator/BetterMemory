@@ -1,6 +1,7 @@
 package no.bettermemory.models.storageHandlers.databaseInsertions;
 
 import org.bson.Document;
+import org.bson.types.ObjectId;
 
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoCollection;
@@ -19,15 +20,26 @@ public class InsertPatientToMongoDB implements InsertToDatabase<Patient> {
     public InsertPatientToMongoDB(MongoClient client) {
         this.client = client;
         this.database = DatabaseConnections.getUsersDatabase(client);
+        this.collection = DatabaseConnections.getPatientCollection(database);
     }
     
     @Override
     public void saveObject(Patient patient) throws Exception {
-        collection = DatabaseConnections.getPatientCollection(database);
-
-        if (DatabaseDataHandler.checkIfExists(collection, patient) != null) throw new Exception("Patient already exists in system");
+        if (DatabaseDataHandler.checkIfExists(collection, patient) != null) throw new Exception(
+            "Patient already exists in system."
+        );
         
         Document insert = patient.toDocument();
         collection.insertOne(insert);
+    }
+
+    @Override
+    public void updateObject(Patient patient) throws Exception {
+        ObjectId existingId = DatabaseDataHandler.checkIfExists(collection, patient);
+        if (existingId == null) throw new Exception("Patient does not exist in system.");
+
+        Document query = new Document("_id", existingId);
+        Document replaceDocument = patient.toDocument();
+        collection.replaceOne(query, replaceDocument);
     }
 }
