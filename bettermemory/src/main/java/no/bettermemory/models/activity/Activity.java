@@ -50,7 +50,9 @@ public class Activity {
 
 
     public Document toDocument() {
-        Document document = new Document("hour", hour).append("minutes", minutes).append("short_desc", shortDescription).append("long_desc", longDescription);
+        Document document = new Document("hour", hour).append("minutes", minutes)
+        .append("short_desc", shortDescription).append("long_desc", longDescription)
+        .append("important", important).append("concluded", concluded);
         return document;
     }
 
