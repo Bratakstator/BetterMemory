@@ -32,5 +32,9 @@ public class InsertActivityToMongoDB implements InsertActivity {
     }
 
     @Override
-    public void updateObject(ObjectId activityId, Activity activity) throws Exception {}
+    public void updateObject(ObjectId activityId, Activity activity) throws Exception {
+        Document query = new Document("_id", activityId);
+        Document replaceDocument = activity.toDocument();
+        collection.replaceOne(query, replaceDocument);
+    }
 }
