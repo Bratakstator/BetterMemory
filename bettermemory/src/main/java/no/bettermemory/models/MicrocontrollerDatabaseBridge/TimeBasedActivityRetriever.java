@@ -26,8 +26,7 @@ public class TimeBasedActivityRetriever implements TimeBasedObjectRetriever<List
     private GetActivity getActivity;
 
     /**
-     * This method can be used to retrieve a list of Activities associated with some 
-     * time parameters provided by classes which implements some specific interfaces. 
+     *  
      * @param minute - Must be an object of a class which implements MinutesProvider
      * @param hour - Must be an object of a class which implements HourProvider
      * @param dayName - Must be an object of a class which implements DayProvider
@@ -53,6 +52,10 @@ public class TimeBasedActivityRetriever implements TimeBasedObjectRetriever<List
         this.getActivity = getActivity;
     }
 
+    /**
+     * This method can be used to retrieve a list of Activities associated with some 
+     * time parameters provided by classes which implements some specific interfaces.
+     */
     public List<Activity> getObject() {
 
         try{
