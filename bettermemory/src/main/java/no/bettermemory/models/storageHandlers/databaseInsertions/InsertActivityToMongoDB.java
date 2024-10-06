@@ -24,9 +24,11 @@ public class InsertActivityToMongoDB implements InsertActivity {
     }
 
     @Override
-    public void saveObject(Activity activity) throws Exception {
+    public ObjectId saveObject(Activity activity) throws Exception {
         Document insert = activity.toDocument();
         InsertOneResult result = collection.insertOne(insert);
+
+        return result.getInsertedId().asObjectId().getValue();
     }
 
     @Override
