@@ -19,15 +19,11 @@ import no.bettermemory.interfaces.storageHandlers.databaseInserters.InsertToData
  * To create an object of this class:
  * <pre>{@code ToMongoDB toMongoDB = new ToMongoDB("mongodb://localhost:27017")}
  */
-public class ToMongoDB implements InsertToDatabase<Object> {
+public class ToMongoDB {
     private MongoClient client;
 
     public ToMongoDB(MongoClient client) {
         this.client = client;
-    }
-
-    public void saveObject(Object object) throws Exception {
-        if (object == null) throw new Exception("Passed object is null.");
     }
 
     
