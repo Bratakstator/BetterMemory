@@ -45,7 +45,7 @@ public class PresentDayString implements DayProvider<String>{
      * or based on the time set by the clock.
      */
     public String getDay() {
-        return LocalDateTime.now(clock).getDayOfWeek().getDisplayName(TextStyle.FULL, Locale.getDefault());
+        return LocalDateTime.now(clock).getDayOfWeek().getDisplayName(TextStyle.FULL, Locale.ENGLISH);
 
     }
     
