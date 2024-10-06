@@ -1,7 +1,6 @@
 package no.bettermemory.tools;
 
 import org.bson.Document;
-import org.bson.types.ObjectId;
 
 import com.mongodb.client.MongoCollection;
 
