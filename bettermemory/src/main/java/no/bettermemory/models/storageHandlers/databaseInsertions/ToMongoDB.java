@@ -1,28 +1,8 @@
-package no.bettermemory.models.storageHandlers;
+package no.bettermemory.models.storageHandlers.databaseInsertions;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
-
-import org.bson.Document;
-import org.bson.types.ObjectId;
-
-import com.mongodb.MongoBulkWriteException;
 import com.mongodb.client.MongoClient;
-import com.mongodb.client.MongoCollection;
-import com.mongodb.client.MongoDatabase;
-import com.mongodb.client.result.InsertManyResult;
-import com.mongodb.client.result.InsertOneResult;
 
-import no.bettermemory.interfaces.storageHandlers.ToDatabase;
-import no.bettermemory.models.activity.Activity;
-import no.bettermemory.models.time.Day;
-import no.bettermemory.models.time.Week;
-import no.bettermemory.models.users.HealthCarePersonnel;
-import no.bettermemory.models.users.Patient;
-import no.bettermemory.tools.DatabaseConnections;
-import no.bettermemory.tools.DatabaseDataHandler;
+import no.bettermemory.interfaces.storageHandlers.databaseInserters.InsertToDatabase;
 
 
 
@@ -39,7 +19,7 @@ import no.bettermemory.tools.DatabaseDataHandler;
  * To create an object of this class:
  * <pre>{@code ToMongoDB toMongoDB = new ToMongoDB("mongodb://localhost:27017")}
  */
-public class ToMongoDB implements ToDatabase {
+public class ToMongoDB {
     private MongoClient client;
 
     public ToMongoDB(MongoClient client) {
@@ -47,7 +27,7 @@ public class ToMongoDB implements ToDatabase {
     }
 
     
-    public void saveObject(Object object) {
+    /*public void saveObject(Object object) {
         MongoDatabase database = DatabaseConnections.getUsersDatabase(client);
         if (object instanceof Patient) {
             MongoCollection<Document> collection = DatabaseConnections.getPatientCollection(database);
@@ -131,5 +111,5 @@ public class ToMongoDB implements ToDatabase {
 
     public MongoClient getClient() {
         return client;
-    }
+    }*/
 }
