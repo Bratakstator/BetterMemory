@@ -56,7 +56,7 @@ public class GetDayFromMongoDB implements GetDay {
         if (dayDocument.containsKey("activities")) {
             List<ObjectId> activityIds = (List<ObjectId>) dayDocument.get("activities");
             GetActivityFromMongoDB getActivities = new GetActivityFromMongoDB(client);
-            List<Activity> activities = getActivities.getActivitiesFromObjectId(activityIds);
+            List<Activity> activities = getActivities.getActivitiesFromObjectId(activityIds).values().stream().toList();
             day.setActivities((ArrayList<Activity>) activities);
         }
 
@@ -79,7 +79,7 @@ public class GetDayFromMongoDB implements GetDay {
             if (result.containsKey("activities")) {
                 List<ObjectId> activityIds = (List<ObjectId>) result.get("activities");
                 GetActivityFromMongoDB getActivities = new GetActivityFromMongoDB(client);
-                List<Activity> activities = getActivities.getActivitiesFromObjectId(activityIds);
+                List<Activity> activities = getActivities.getActivitiesFromObjectId(activityIds).values().stream().toList();
                 day.setActivities((ArrayList<Activity>) activities);
             }
 
