@@ -28,7 +28,7 @@ import no.bettermemory.models.activity.Activity;
 public class Day {
 
     private String dayName;
-    private ArrayList<Activity> activities;
+    private ArrayList<Activity> activities = new ArrayList<>();
 
     public Day(){
 
