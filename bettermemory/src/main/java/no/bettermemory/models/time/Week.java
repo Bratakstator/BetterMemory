@@ -27,7 +27,7 @@ import org.bson.Document;
 public class Week {
     private int weekNumber;
     private int year;
-    private ArrayList<Day> days;
+    private ArrayList<Day> days = new ArrayList<>();
     private Patient patient;
 
     /**
