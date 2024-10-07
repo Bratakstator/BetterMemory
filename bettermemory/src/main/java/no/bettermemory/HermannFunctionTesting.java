@@ -1,10 +1,11 @@
 package no.bettermemory;
 
 
-import java.time.Clock;
-import java.time.Instant;
-import java.time.ZoneId;
-
+import no.bettermemory.models.storageHandlers.databaseExtraction.GetUserFromMongoDb;
+import no.bettermemory.models.users.CloseRelative;
+import no.bettermemory.models.users.HealthCarePersonnel;
+import no.bettermemory.models.users.Patient;
+import no.bettermemory.interfaces.Models.HourProvider;
 import no.bettermemory.models.MicrocontrollerDatabaseBridge.*;
 
 
@@ -29,15 +30,6 @@ public class HermannFunctionTesting {
 
         System.out.println(presentYearInteger.getYear());
 
-        PresentDayString presentDayString = new PresentDayString(Clock.fixed(Instant.parse("0000-12-25T12:00:00Z"), ZoneId.of("UTC")));
-
-        System.out.println(presentDayString.getDay());
-
-
-
-        
-
-        
         
     }
 

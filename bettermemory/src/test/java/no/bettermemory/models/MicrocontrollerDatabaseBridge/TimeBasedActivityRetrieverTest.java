@@ -26,6 +26,10 @@ import no.bettermemory.models.activity.Activity;
 public class TimeBasedActivityRetrieverTest {
 
 
+    /*
+     * A wast number of classes gets mocked here in order to better 
+     * predict their behavior.
+     */
     @Mock
     private GetActivity mockGetActivity;
 
@@ -61,12 +65,13 @@ public class TimeBasedActivityRetrieverTest {
     @Test
     @DisplayName("Get activities for this instant")
     public void testGetObjectReturnsActivityList() throws Exception {
-        when(mockMinuteProvider.getMinutes()).thenReturn(5);
+        //Arrange
+        when(mockMinuteProvider.getMinutes()).thenReturn(5); //
         when(mockHourProvider.getHour()).thenReturn(15);
         when(mockDayProvider.getDay()).thenReturn("Monday");
         when(mockWeekProvider.getWeek()).thenReturn(40);
         when(mockYearProvider.getYear()).thenReturn(2024);
-        Mockito.doReturn(Collections.emptyList())
+        Mockito.doReturn(Collections.emptyList()) //doReturn() is used here to handle the checked exception for the class.
                                     .when(mockGetActivity)
                                     .getActivitiesAtMinute(anyString(),
                                                            anyInt(), 
@@ -75,12 +80,12 @@ public class TimeBasedActivityRetrieverTest {
                                                            anyInt(), 
                                                            anyInt());
 
+        //Act
         List<Activity> activities = timeBasedActivityRetriever.getObject();
         
+        //Assert
         assertNotNull(activities);
         assertTrue(activities.isEmpty());
-
-
     }
     
 
