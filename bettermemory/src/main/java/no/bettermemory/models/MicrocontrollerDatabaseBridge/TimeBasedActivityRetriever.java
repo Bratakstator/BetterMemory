@@ -55,6 +55,7 @@ public class TimeBasedActivityRetriever implements TimeBasedObjectRetriever<List
     /**
      * This method can be used to retrieve a list of Activities associated with some 
      * time parameters provided by classes which implements some specific interfaces.
+     * @throws RuntimeException if a handling error occurs while retrieving activities.
      */
     public List<Activity> getObject() {
 
