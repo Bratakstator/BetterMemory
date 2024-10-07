@@ -8,11 +8,11 @@ import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.result.InsertOneResult;
 
-import no.bettermemory.interfaces.storageHandlers.databaseInserters.InsertActivity;
+import no.bettermemory.interfaces.storageHandlers.databaseInserters.InsertActivityOrDay;
 import no.bettermemory.models.activity.Activity;
 import no.bettermemory.tools.DatabaseConnections;
 
-public class InsertActivityToMongoDB implements InsertActivity {
+public class InsertActivityToMongoDB implements InsertActivityOrDay<Activity> {
     MongoClient client;
     MongoDatabase database;
     MongoCollection<Document> collection;
