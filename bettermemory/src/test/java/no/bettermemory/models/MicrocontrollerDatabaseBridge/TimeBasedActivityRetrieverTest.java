@@ -1,9 +1,13 @@
 package no.bettermemory.models.MicrocontrollerDatabaseBridge;
 
+import org.bson.types.ObjectId;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.Mock;
+
+import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
 import static org.junit.jupiter.api.Assertions.*;
 import org.mockito.InjectMocks;
@@ -11,7 +15,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.DisplayName;
 import java.util.Collections;
 import org.mockito.Mockito;
-import java.util.List;
+import java.util.Map;
 
 import no.bettermemory.interfaces.storageHandlers.storageGetters.GetActivity;
 import no.bettermemory.interfaces.Models.MinutesProvider;
@@ -82,7 +86,7 @@ public class TimeBasedActivityRetrieverTest {
                                                            anyInt());
 
         //Act
-        List<Activity> activities = timeBasedActivityRetriever.getObject();
+        Map<ObjectId, Activity> activities = timeBasedActivityRetriever.getObject();
         
         //Assert
         assertNotNull(activities);

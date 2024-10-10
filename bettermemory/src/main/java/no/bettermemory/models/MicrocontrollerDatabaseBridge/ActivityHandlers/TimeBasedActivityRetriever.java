@@ -8,14 +8,16 @@ import no.bettermemory.interfaces.Models.WeekProvider;
 import no.bettermemory.interfaces.Models.YearProvider;
 import no.bettermemory.interfaces.storageHandlers.storageGetters.GetActivity;
 import no.bettermemory.models.activity.Activity;
-import java.util.List;
+import java.util.Map;
+
+import org.bson.types.ObjectId;
 
 /**
  * This class is meant to provide the activity objects which are associated with 
  * a specific time stamp.
  * @author Hermann Mjelde Hamnnes
  */
-public class TimeBasedActivityRetriever implements TimeBasedObjectRetriever<List<Activity>, GetActivity> {
+public class TimeBasedActivityRetriever implements TimeBasedObjectRetriever<Map<ObjectId, Activity>, GetActivity> {
 
     private MinutesProvider<Integer> minute;
     private HourProvider<Integer> hour;
@@ -34,14 +36,17 @@ public class TimeBasedActivityRetriever implements TimeBasedObjectRetriever<List
      * @param year - Must be an object of a class which implements YearProvider
      * @param patientId
      * @param getActivity - Must be an object of a class which implements GetActivity
+     *                            
      */
-    public TimeBasedActivityRetriever(MinutesProvider<Integer> minute,
-                                      HourProvider<Integer> hour,
-                                      DayProvider<String> dayName,
-                                      WeekProvider<Integer> weekNumber,
-                                      YearProvider<Integer> year,
-                                      String patientId,
-                                      GetActivity getActivity) {
+    public TimeBasedActivityRetriever(
+        MinutesProvider<Integer> minute,
+        HourProvider<Integer> hour,
+        DayProvider<String> dayName,
+        WeekProvider<Integer> weekNumber,
+        YearProvider<Integer> year,
+        String patientId,
+        GetActivity getActivity
+    ) {
         
         this.minute = minute;
         this.hour = hour;
@@ -57,17 +62,18 @@ public class TimeBasedActivityRetriever implements TimeBasedObjectRetriever<List
      * time parameters provided by classes which implements some specific interfaces.
      * @throws RuntimeException if a handling error occurs while retrieving activities.
      */
-    public List<Activity> getObject() {
-
+    public Map<ObjectId, Activity> getObject() {
         try{
-            return (List<Activity>) getActivity.getActivitiesAtMinute(patientId, 
-                                                                      year.getYear(),
-                                                                      weekNumber.getWeek(), 
-                                                                      dayName.getDay(), 
-                                                                      hour.getHour(), 
-                                                                      minute.getMinutes());
+            return (Map<ObjectId, Activity>) 
+            getActivity.getActivitiesAtMinute(
+                patientId,
+                year.getYear(),
+                weekNumber.getWeek(),
+                dayName.getDay(),
+                hour.getHour(),
+                minute.getMinutes()
+            );
         }
-
         catch (Exception e) {
             System.err.println(e);
             throw new RuntimeException(e);
