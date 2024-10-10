@@ -17,7 +17,7 @@ import org.bson.types.ObjectId;
  * a specific time stamp.
  * @author Hermann Mjelde Hamnnes
  */
-public class TimeBasedActivityRetriever implements TimeBasedObjectRetriever<Map<ObjectId, Activity>, GetActivity> {
+public class TimeBasedActivityRetriever implements TimeBasedObjectRetriever<Map<ObjectId, Activity>> {
 
     private MinutesProvider<Integer> minute;
     private HourProvider<Integer> hour;
@@ -64,8 +64,7 @@ public class TimeBasedActivityRetriever implements TimeBasedObjectRetriever<Map<
      */
     public Map<ObjectId, Activity> getObject() {
         try{
-            return (Map<ObjectId, Activity>) 
-            getActivity.getActivitiesAtMinute(
+            return (Map<ObjectId, Activity>) getActivity.getActivitiesAtMinute(
                 patientId,
                 year.getYear(),
                 weekNumber.getWeek(),
