@@ -1,4 +1,4 @@
-package no.bettermemory.models.MicrocontrollerDatabaseBridge;
+package no.bettermemory.models.MicrocontrollerDatabaseBridge.PresentTimeClasses;
 
 import no.bettermemory.interfaces.Models.HourProvider;
 import java.time.LocalDateTime;

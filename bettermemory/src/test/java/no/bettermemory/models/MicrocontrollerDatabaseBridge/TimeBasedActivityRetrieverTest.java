@@ -19,6 +19,7 @@ import no.bettermemory.interfaces.Models.HourProvider;
 import no.bettermemory.interfaces.Models.WeekProvider;
 import no.bettermemory.interfaces.Models.DayProvider;
 import no.bettermemory.interfaces.Models.YearProvider;
+import no.bettermemory.models.MicrocontrollerDatabaseBridge.ActivityHandlers.TimeBasedActivityRetriever;
 import no.bettermemory.models.activity.Activity;
 
 

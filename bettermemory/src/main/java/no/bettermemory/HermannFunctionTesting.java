@@ -7,6 +7,10 @@ import no.bettermemory.models.users.HealthCarePersonnel;
 import no.bettermemory.models.users.Patient;
 import no.bettermemory.interfaces.Models.HourProvider;
 import no.bettermemory.models.MicrocontrollerDatabaseBridge.*;
+import no.bettermemory.models.MicrocontrollerDatabaseBridge.PresentTimeClasses.PresentHourInteger;
+import no.bettermemory.models.MicrocontrollerDatabaseBridge.PresentTimeClasses.PresentMinutesInteger;
+import no.bettermemory.models.MicrocontrollerDatabaseBridge.PresentTimeClasses.PresentWeekInteger;
+import no.bettermemory.models.MicrocontrollerDatabaseBridge.PresentTimeClasses.PresentYearInteger;
 
 
 public class HermannFunctionTesting {
