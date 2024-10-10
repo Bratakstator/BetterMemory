@@ -5,6 +5,7 @@ import org.bson.types.ObjectId;
 
 import java.util.List;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoCollection;
@@ -25,7 +26,7 @@ public class GetActivityFromMongoDB implements GetActivity {
 
     @SuppressWarnings("unchecked")
     @Override
-    public List<Activity> getActivitiesAtMinute(String patientId, int year, int weekNumber, String dayName, int hour, int minutes) throws Exception {
+    public HashMap<ObjectId, Activity> getActivitiesAtMinute(String patientId, int year, int weekNumber, String dayName, int hour, int minutes) throws Exception {
         try {
             TimeControls.hourCheck(hour);
             TimeControls.minuteCheck(minutes);
@@ -69,7 +70,7 @@ public class GetActivityFromMongoDB implements GetActivity {
             "Could not find an activity happening on: " + dayName + ", week " + weekNumber + " at " + hour + ":" + minutes + "."
         );
 
-        List<Activity> activities = new ArrayList<>();
+        HashMap<ObjectId, Activity> activities = new HashMap<>();
         for (Document activityDocument : activityDocuments) {
             Activity activity = new Activity();
             activity.setShortDescription(activityDocument.getString("short_desc"));
@@ -78,23 +79,23 @@ public class GetActivityFromMongoDB implements GetActivity {
             activity.setMinutes(activityDocument.getInteger("minutes"));
             activity.setImportant(activityDocument.getBoolean("important"));
             activity.setConcluded(activityDocument.getBoolean("concluded"));
-            activities.add(activity);
+            activities.put(activityDocument.getObjectId("_id"), activity);
         }
 
         return activities;
     }
 
     @Override
-    public List<Activity> getActivitiesAtHour(String patientId, int year, int weekNumber, String dayName, int hour) throws Exception {
+    public HashMap<ObjectId, Activity> getActivitiesAtHour(String patientId, int year, int weekNumber, String dayName, int hour) throws Exception {
         try {
             TimeControls.hourCheck(hour);
         } catch (IllegalArgumentException e) {
             throw new Exception(e.getMessage());
         }
 
-        List<Activity> activities = new ArrayList<>();
+        HashMap<ObjectId, Activity> activities = new HashMap<>();
         for (int minute = 0; minute < 60; minute++) {
-            activities.addAll(
+            activities.putAll(
                 getActivitiesAtMinute(patientId, year, weekNumber, dayName, hour, minute)
             );
         }
@@ -105,8 +106,8 @@ public class GetActivityFromMongoDB implements GetActivity {
     }
 
     @Override
-    public List<Activity> getActivitiesFromObjectId(List<ObjectId> activityIds) throws Exception {
-        List<Activity> activities = new ArrayList<>();
+    public HashMap<ObjectId, Activity> getActivitiesFromObjectId(List<ObjectId> activityIds) throws Exception {
+        HashMap<ObjectId, Activity> activities = new HashMap<>();
 
         for (ObjectId activityId : activityIds) {
             Document query = new Document("_id", activityId);
@@ -121,7 +122,7 @@ public class GetActivityFromMongoDB implements GetActivity {
             activity.setImportant(result.getBoolean("important"));
             activity.setConcluded(result.getBoolean("concluded"));
 
-            activities.add(activity);
+            activities.put(activityId, activity);
         }
 
         return activities;
