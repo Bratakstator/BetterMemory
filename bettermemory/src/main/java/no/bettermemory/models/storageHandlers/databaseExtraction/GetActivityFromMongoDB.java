@@ -86,21 +86,29 @@ public class GetActivityFromMongoDB implements GetActivity {
     }
 
     @Override
-    public HashMap<ObjectId, Activity> getActivitiesAtHour(String patientId, int year, int weekNumber, String dayName, int hour) throws Exception {
+    public HashMap<ObjectId, Activity> getActivitiesAtInterval(
+        String patientId, int year, int weekNumber, String dayName, int currentHour, int currentMinutes, int interval
+    ) throws Exception {
         try {
-            TimeControls.hourCheck(hour);
+            TimeControls.hourCheck(currentHour);
+            TimeControls.minuteCheck(currentMinutes);
         } catch (IllegalArgumentException e) {
             throw new Exception(e.getMessage());
         }
 
         HashMap<ObjectId, Activity> activities = new HashMap<>();
-        for (int minute = 0; minute < 60; minute++) {
+        for (int offset = 0; offset < interval; offset++) {
+            int minute = currentMinutes + offset;
+            if (minute > 59) {
+                currentHour += 1;
+                currentMinutes -= 60;
+            }
             activities.putAll(
-                getActivitiesAtMinute(patientId, year, weekNumber, dayName, hour, minute)
+                getActivitiesAtMinute(patientId, year, weekNumber, dayName, currentHour, minute)
             );
         }
 
-        if (activities.size() == 0) throw new Exception("No activities found at the hour " + hour + ".");
+        if (activities.size() == 0) throw new Exception("No activities found at the hour " + currentHour + ".");
 
         return activities;
     }
