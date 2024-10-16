@@ -58,6 +58,19 @@ public class TimeIntervalBasedActivityRetriever implements TimeIntervalBasedObje
      * @throws RuntimeException if a handling error occurs while retrieving activities.
      */
     public Map<ObjectId, Activity> getObjects(int interval) {
-        return null;
+        try {
+            return getActivity.getActivitiesAtInterval(
+                patientId,
+                year.getYear(),
+                weekNumber.getWeek(),
+                dayName.getDay(),
+                hour.getHour(),
+                minute.getMinutes(),
+                interval
+            );
+        } catch (Exception e) {
+            System.err.println(e);
+            return null;
+        }
     }
 }
