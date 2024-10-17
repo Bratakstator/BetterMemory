@@ -31,7 +31,7 @@ public class DisplayArray implements StaticArrayHandler {
         return false;
     }
 
-    public int getFirstNull() {
+    public int getFirstNull() throws Exception {
         return 0;
     }
 

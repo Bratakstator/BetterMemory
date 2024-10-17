@@ -4,5 +4,5 @@ public interface StaticArrayHandler {
     void arrayShift();
     void addToArray();
     boolean hasNull();
-    int getFirstNull();
+    int getFirstNull() throws Exception;
 }
