@@ -1,6 +1,6 @@
 package no.bettermemory.interfaces.MicrocontrollerDatabaseBridge;
 
-public interface DisplayArray {
+public interface StaticArrayHandler {
     void arrayShift();
     void addToArray();
     int hasNull();
