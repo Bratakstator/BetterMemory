@@ -3,7 +3,7 @@ package no.bettermemory.models.MicrocontrollerDatabaseBridge.ActivityHandlers;
 import no.bettermemory.interfaces.MicrocontrollerDatabaseBridge.StaticArrayHandler;
 import no.bettermemory.models.DTO.ActivityDTO;
 
-public class DisplayArray implements StaticArrayHandler {
+public class DisplayArray implements StaticArrayHandler<ActivityDTO> {
     ActivityDTO[] activities;
 
     public DisplayArray(int arraySize) {
@@ -24,7 +24,14 @@ public class DisplayArray implements StaticArrayHandler {
         }
     }
 
-    public void addToArray() {}
+    public void addToArray(ActivityDTO activityDTO) throws Exception {
+        try {
+            int nullPos = getFirstNull();
+            activities[nullPos] = activityDTO;
+        } catch (Exception e) {
+            throw new Exception("No space for new activity.");
+        }
+    }
 
     public boolean hasNull() {
         for (ActivityDTO activity : activities) if (activity == null) return true;
