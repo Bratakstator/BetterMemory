@@ -32,7 +32,8 @@ public class DisplayArray implements StaticArrayHandler {
     }
 
     public int getFirstNull() throws Exception {
-        return 0;
+        for (int pos = 0; pos < activities.length; pos++) if (activities[pos] == null) return pos;
+        throw new Exception("Array does not contain null values.");
     }
 
     public ActivityDTO[] getActivityArray() {

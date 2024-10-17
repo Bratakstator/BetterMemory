@@ -2,6 +2,7 @@ package no.bettermemory.models.MicrocontrollerDatabaseBridge.ActivityHandlers;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.bson.types.ObjectId;
 import org.junit.jupiter.api.Test;
@@ -53,5 +54,50 @@ public class DisplayArrayTest {
 
         // Assert
         assertEquals(true, hasNull);
+    }
+
+    @Test
+    public void testHasNullWithNoNulls() {
+        // Arrange
+        DisplayArray displayArray = new DisplayArray(1);
+        displayArray.getActivityArray()[0] = new ActivityDTO(objectId, activity);
+
+        // Act
+        boolean hasNull = displayArray.hasNull();
+
+        // Assert
+        assertEquals(false, hasNull);
+    }
+
+    @Test
+    public void testGetFirstNullWithNulls() {
+        // Arrange
+        DisplayArray displayArray = new DisplayArray(2);
+        displayArray.getActivityArray()[0] = new ActivityDTO(objectId, activity);
+        displayArray.getActivityArray()[1] = null;
+
+        // Act
+        int nullPos = -1;
+        try {
+            nullPos = displayArray.getFirstNull();
+        } catch (Exception e) {
+            System.err.println(e);
+        }
+
+        // Assert
+        assertEquals(1, nullPos);
+    }
+
+    @Test
+    public void testGetFirstNullWithNoNulls() {
+        // Arrange
+        DisplayArray displayArray = new DisplayArray(1);
+        displayArray.getActivityArray()[0] = new ActivityDTO(objectId, activity);
+
+        // Act
+        Exception exception = assertThrows(Exception.class, () -> displayArray.getFirstNull());
+
+        // Assert
+        assertEquals("Array does not contain null values.", exception.getMessage());
     }
 }
