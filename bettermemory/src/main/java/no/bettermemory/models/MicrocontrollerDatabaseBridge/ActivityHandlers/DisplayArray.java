@@ -29,4 +29,8 @@ public class DisplayArray implements StaticArrayHandler {
     public int hasNull() {
         return 0;
     }
+
+    public ActivityDTO[] getActivityArray() {
+        return activities;
+    }
 }
