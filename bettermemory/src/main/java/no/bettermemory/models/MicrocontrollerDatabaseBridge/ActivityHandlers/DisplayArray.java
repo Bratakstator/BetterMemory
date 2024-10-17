@@ -26,7 +26,11 @@ public class DisplayArray implements StaticArrayHandler {
 
     public void addToArray() {}
 
-    public int hasNull() {
+    public boolean hasNull() {
+        return false;
+    }
+
+    public int getFirstNull() {
         return 0;
     }
 
