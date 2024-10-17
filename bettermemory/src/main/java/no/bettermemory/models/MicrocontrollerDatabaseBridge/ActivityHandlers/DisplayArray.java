@@ -27,6 +27,7 @@ public class DisplayArray implements StaticArrayHandler {
     public void addToArray() {}
 
     public boolean hasNull() {
+        for (ActivityDTO activity : activities) if (activity == null) return true;
         return false;
     }
 

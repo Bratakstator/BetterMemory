@@ -35,10 +35,23 @@ public class DisplayArrayTest {
         displayArray.arrayShift();
 
         // Assert
-        assertNotEquals(activities[0], null);
-        assertNotEquals(activities[1], null);
-        assertNotEquals(activities[2], null);
-        assertEquals(activities[3], null);
-        assertEquals(activities[4], null);
+        assertNotEquals(null, activities[0]);
+        assertNotEquals(null, activities[1]);
+        assertNotEquals(null, activities[2]);
+        assertEquals(null, activities[3]);
+        assertEquals(null, activities[4]);
+    }
+
+    @Test
+    public void testHasNullWithNulls() {
+        // Arrange
+        DisplayArray displayArray = new DisplayArray(1);
+        displayArray.getActivityArray()[0] = null;
+
+        // Act
+        boolean hasNull = displayArray.hasNull();
+
+        // Assert
+        assertEquals(true, hasNull);
     }
 }
