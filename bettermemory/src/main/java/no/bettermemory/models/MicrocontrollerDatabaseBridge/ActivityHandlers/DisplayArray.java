@@ -2,8 +2,9 @@ package no.bettermemory.models.MicrocontrollerDatabaseBridge.ActivityHandlers;
 
 import no.bettermemory.interfaces.MicrocontrollerDatabaseBridge.StaticArrayHandler;
 import no.bettermemory.models.DTO.ActivityDTO;
+import no.bettermemory.models.activity.Activity;
 
-public class DisplayArray implements StaticArrayHandler<ActivityDTO> {
+public class DisplayArray implements StaticArrayHandler<ActivityDTO, Activity> {
     ActivityDTO[] activities;
 
     public DisplayArray(int arraySize) {
@@ -30,6 +31,15 @@ public class DisplayArray implements StaticArrayHandler<ActivityDTO> {
             activities[nullPos] = activityDTO;
         } catch (Exception e) {
             throw new Exception("No space for new activity.");
+        }
+    }
+
+    public Activity getValueFromIndex(int index) throws IndexOutOfBoundsException {
+        try {
+            Activity activity = activities[index].getActivity();
+            return activity;
+        } catch (IndexOutOfBoundsException e) {
+            throw new IndexOutOfBoundsException(e.getMessage());
         }
     }
 
