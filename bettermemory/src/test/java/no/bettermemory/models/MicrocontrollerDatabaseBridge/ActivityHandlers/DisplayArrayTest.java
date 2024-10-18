@@ -2,6 +2,7 @@ package no.bettermemory.models.MicrocontrollerDatabaseBridge.ActivityHandlers;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.bson.types.ObjectId;
@@ -99,5 +100,36 @@ public class DisplayArrayTest {
 
         // Assert
         assertEquals("Array does not contain null values.", exception.getMessage());
+    }
+
+    @Test
+    public void testGetValueFromIndexInBounds() {
+        // Arrange
+        DisplayArray displayArray = new DisplayArray(2);
+        displayArray.getActivityArray()[0] = new ActivityDTO(objectId, activity);
+        displayArray.getActivityArray()[1] = new ActivityDTO(objectId, activity);
+
+        // Act
+        Activity activity1 = displayArray.getValueFromIndex(0);
+        Activity activity2 = displayArray.getValueFromIndex(1);
+
+        // Assert
+        assertNotNull(activity1);
+        assertNotNull(activity2);
+    }
+
+    @Test
+    public void testGetValueFromIndexOutOfBounds() {
+        // Arrange
+        DisplayArray displayArray = new DisplayArray(1);
+
+        // Act
+        IndexOutOfBoundsException exception = assertThrows(
+            IndexOutOfBoundsException.class,
+            () -> displayArray.getValueFromIndex(1)
+        );
+
+        // Assert
+        assertEquals("Index too large, Array only 1 long.", exception.getMessage());
     }
 }

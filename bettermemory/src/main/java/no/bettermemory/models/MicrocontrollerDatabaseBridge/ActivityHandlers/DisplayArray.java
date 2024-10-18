@@ -39,7 +39,7 @@ public class DisplayArray implements StaticArrayHandler<ActivityDTO, Activity> {
             Activity activity = activities[index].getActivity();
             return activity;
         } catch (IndexOutOfBoundsException e) {
-            throw new IndexOutOfBoundsException(e.getMessage());
+            throw new IndexOutOfBoundsException("Index too large, Array only " + activities.length + " long.");
         }
     }
 
