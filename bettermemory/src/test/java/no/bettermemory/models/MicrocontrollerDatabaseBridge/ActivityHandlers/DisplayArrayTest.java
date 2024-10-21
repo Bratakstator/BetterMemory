@@ -21,11 +21,11 @@ public class DisplayArrayTest {
     @Mock
     private Activity activity;
 
-    /*@Test
+    @Test
     public void testArrayShift() {
         // Arrange
-        ArrayHandler displayArray = new ArrayHandler(5);
-        ActivityDTO[] activities = displayArray.getActivityArray();
+        ArrayHandler<ActivityDTO> displayArray = new ArrayDTOHandler<>(new ActivityDTO[5]);
+        ActivityDTO[] activities = displayArray.getArray();
 
         activities[0] = new ActivityDTO(objectId, activity);
         activities[1] = null;
@@ -34,7 +34,7 @@ public class DisplayArrayTest {
         activities[4] = new ActivityDTO(objectId, activity);
 
         // Act
-        displayArray.arrayShift();
+        displayArray.nullShiftRight();
 
         // Assert
         assertNotEquals(null, activities[0]);
@@ -47,11 +47,11 @@ public class DisplayArrayTest {
     @Test
     public void testHasNullWithNulls() {
         // Arrange
-        ArrayHandler displayArray = new ArrayHandler(1);
-        displayArray.getActivityArray()[0] = null;
+        ArrayHandler<ActivityDTO> displayArray = new ArrayDTOHandler<>(new ActivityDTO[1]);
+        displayArray.getArray()[0] = null;
 
         // Act
-        boolean hasNull = displayArray.hasNull();
+        boolean hasNull = displayArray.hasNulls();
 
         // Assert
         assertEquals(true, hasNull);
@@ -60,11 +60,11 @@ public class DisplayArrayTest {
     @Test
     public void testHasNullWithNoNulls() {
         // Arrange
-        ArrayHandler displayArray = new ArrayHandler(1);
-        displayArray.getActivityArray()[0] = new ActivityDTO(objectId, activity);
+        ArrayHandler<ActivityDTO> displayArray = new ArrayDTOHandler<>(new ActivityDTO[1]);
+        displayArray.getArray()[0] = new ActivityDTO(objectId, activity);
 
         // Act
-        boolean hasNull = displayArray.hasNull();
+        boolean hasNull = displayArray.hasNulls();
 
         // Assert
         assertEquals(false, hasNull);
@@ -73,14 +73,14 @@ public class DisplayArrayTest {
     @Test
     public void testGetFirstNullWithNulls() {
         // Arrange
-        ArrayHandler displayArray = new ArrayHandler(2);
-        displayArray.getActivityArray()[0] = new ActivityDTO(objectId, activity);
-        displayArray.getActivityArray()[1] = null;
+        ArrayHandler<ActivityDTO> displayArray = new ArrayDTOHandler<>(new ActivityDTO[2]);
+        displayArray.getArray()[0] = new ActivityDTO(objectId, activity);
+        displayArray.getArray()[1] = null;
 
         // Act
         int nullPos = -1;
         try {
-            nullPos = displayArray.getFirstNull();
+            nullPos = displayArray.getFirstNullIndex();
         } catch (Exception e) {
             System.err.println(e);
         }
@@ -92,11 +92,11 @@ public class DisplayArrayTest {
     @Test
     public void testGetFirstNullWithNoNulls() {
         // Arrange
-        ArrayHandler displayArray = new ArrayHandler(1);
-        displayArray.getActivityArray()[0] = new ActivityDTO(objectId, activity);
+        ArrayHandler<ActivityDTO> displayArray = new ArrayDTOHandler<>(new ActivityDTO[1]);
+        displayArray.getArray()[0] = new ActivityDTO(objectId, activity);
 
         // Act
-        Exception exception = assertThrows(Exception.class, () -> displayArray.getFirstNull());
+        Exception exception = assertThrows(Exception.class, () -> displayArray.getFirstNullIndex());
 
         // Assert
         assertEquals("Array does not contain null values.", exception.getMessage());
@@ -105,13 +105,13 @@ public class DisplayArrayTest {
     @Test
     public void testGetValueFromIndexInBounds() {
         // Arrange
-        ArrayHandler displayArray = new ArrayHandler(2);
-        displayArray.getActivityArray()[0] = new ActivityDTO(objectId, activity);
-        displayArray.getActivityArray()[1] = new ActivityDTO(objectId, activity);
+        ArrayHandler<ActivityDTO> displayArray = new ArrayDTOHandler<>(new ActivityDTO[2]);
+        displayArray.getArray()[0] = new ActivityDTO(objectId, activity);
+        displayArray.getArray()[1] = new ActivityDTO(objectId, activity);
 
         // Act
-        Activity activity1 = displayArray.getValueFromIndex(0);
-        Activity activity2 = displayArray.getValueFromIndex(1);
+        Activity activity1 = displayArray.getAttributeOf(0,ActivityDTO::getActivity);
+        Activity activity2 = displayArray.getAttributeOf(1, ActivityDTO::getActivity);
 
         // Assert
         assertNotNull(activity1);
@@ -121,15 +121,15 @@ public class DisplayArrayTest {
     @Test
     public void testGetValueFromIndexOutOfBounds() {
         // Arrange
-        ArrayHandler displayArray = new ArrayHandler(1);
+        ArrayHandler<ActivityDTO> displayArray = new ArrayDTOHandler<>(new ActivityDTO[1]);
 
         // Act
         IndexOutOfBoundsException exception = assertThrows(
             IndexOutOfBoundsException.class,
-            () -> displayArray.getValueFromIndex(1)
+            () -> displayArray.getAttributeOf(1, ActivityDTO::getActivity)
         );
 
         // Assert
         assertEquals("Index too large, Array only 1 long.", exception.getMessage());
-    }*/
+    }
 }

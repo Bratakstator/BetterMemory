@@ -72,4 +72,12 @@ public abstract class ArrayHandler<T> implements StaticContainerHandler<T> {
             throw new IndexOutOfBoundsException("Index out of bounds by an amount: " + diff);
         }
     }
+
+    public T[] getArray() {
+        return array;
+    }
+
+    public void setArray(T[] array) {
+        this.array = array;
+    }
 }
