@@ -12,11 +12,23 @@ public abstract class ArrayHandler<T> implements StaticContainerHandler<T> {
     }
 
     public int add(T t) throws Exception {
-        return 0;
+        try {
+            int index = getFirstNullIndex();
+            array[index] = t;
+            return index;
+        } catch (Exception e) {
+            throw new Exception("No more space in array.");
+        }
     }
 
     public int addAtIndex(int index, T t) throws IndexOutOfBoundsException {
-        return 0;
+        try {
+            array[index] = t;
+            return index;
+        } catch (IndexOutOfBoundsException e) {
+            int diff = index - array.length;
+            throw new IndexOutOfBoundsException("Index out of bounds by an amount: " + diff);
+        }
     }
 
     public T[] nullShiftRight() {
@@ -39,14 +51,25 @@ public abstract class ArrayHandler<T> implements StaticContainerHandler<T> {
     }
 
     public int getFirstNullIndex() throws Exception {
-        return 0;
+        for (int index = 0; index < array.length; index++) if(array[index] == null) return index;
+        throw new Exception("No nulls in array.");
     }
 
     public T get(int index) throws IndexOutOfBoundsException {
-        return array[index];
+        try {
+            return array[index];
+        } catch (IndexOutOfBoundsException e) {
+            int diff = index - array.length;
+            throw new IndexOutOfBoundsException("Index out of bounds by an amount: " + diff);
+        }
     }
 
     public <R> R getAttributeOf(int index, Function<T, R> toReturn) throws IndexOutOfBoundsException {
-        return null;
+        try {
+            return toReturn.apply(array[index]);
+        } catch (IndexOutOfBoundsException e) {
+            int diff = index - array.length;
+            throw new IndexOutOfBoundsException("Index out of bounds by an amount: " + diff);
+        }
     }
 }
