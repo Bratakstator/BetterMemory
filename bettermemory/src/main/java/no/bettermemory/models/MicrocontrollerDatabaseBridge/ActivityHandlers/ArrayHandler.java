@@ -11,11 +11,11 @@ public abstract class ArrayHandler<T> implements StaticContainerHandler<T> {
         this.array = array;
     }
 
-    public int add(T t) {
+    public int add(T t) throws Exception {
         return 0;
     }
 
-    public int addAtIndex(int index, T t) {
+    public int addAtIndex(int index, T t) throws IndexOutOfBoundsException {
         return 0;
     }
 
@@ -34,18 +34,19 @@ public abstract class ArrayHandler<T> implements StaticContainerHandler<T> {
     }
 
     public boolean hasNulls() {
+        for (T t : array) if (t == null) return true;
         return false;
     }
 
-    public int getFirstNullIndex() {
+    public int getFirstNullIndex() throws Exception {
         return 0;
     }
 
-    public T get(int index) {
+    public T get(int index) throws IndexOutOfBoundsException {
         return array[index];
     }
 
-    public <R> R getAttributeOf(int index, Function<T, R> toReturn) {
+    public <R> R getAttributeOf(int index, Function<T, R> toReturn) throws IndexOutOfBoundsException {
         return null;
     }
 }
