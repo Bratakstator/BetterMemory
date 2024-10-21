@@ -15,7 +15,7 @@ import no.bettermemory.models.DTO.ActivityDTO;
 import no.bettermemory.models.activity.Activity;
 
 @ExtendWith(MockitoExtension.class)
-public class DisplayArrayTest {
+public class ArrayHandlerTest {
     @Mock
     private ObjectId objectId;
     @Mock
