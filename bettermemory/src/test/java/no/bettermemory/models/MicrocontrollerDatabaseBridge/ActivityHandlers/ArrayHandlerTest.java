@@ -103,7 +103,7 @@ public class ArrayHandlerTest {
     }
 
     @Test
-    public void testGetValueFromIndexInBounds() {
+    public void testGetAttributeOfElementFromIndexInBounds() {
         // Arrange
         ArrayHandler<ActivityDTO> displayArray = new ArrayDTOHandler<>(new ActivityDTO[2]);
         displayArray.getArray()[0] = new ActivityDTO(objectId, activity);
@@ -119,7 +119,7 @@ public class ArrayHandlerTest {
     }
 
     @Test
-    public void testGetValueFromIndexOutOfBounds() {
+    public void testGetAttributeOfElementFromIndexOutOfBounds() {
         // Arrange
         ArrayHandler<ActivityDTO> displayArray = new ArrayDTOHandler<>(new ActivityDTO[1]);
 
