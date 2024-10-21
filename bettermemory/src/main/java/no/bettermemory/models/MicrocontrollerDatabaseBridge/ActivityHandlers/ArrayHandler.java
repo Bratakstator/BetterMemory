@@ -38,6 +38,7 @@ public abstract class ArrayHandler<T> implements StaticContainerHandler<T> {
                     if (array[ahead] != null) {
                         array[index] = array[ahead];
                         array[ahead] = null;
+                        break;
                     }
                 }
             }
@@ -59,7 +60,7 @@ public abstract class ArrayHandler<T> implements StaticContainerHandler<T> {
         try {
             return array[index];
         } catch (IndexOutOfBoundsException e) {
-            int diff = index - array.length;
+            int diff = index - (array.length - 1);
             throw new IndexOutOfBoundsException("Index out of bounds by an amount: " + diff);
         }
     }
@@ -68,7 +69,7 @@ public abstract class ArrayHandler<T> implements StaticContainerHandler<T> {
         try {
             return toReturn.apply(array[index]);
         } catch (IndexOutOfBoundsException e) {
-            int diff = index - array.length;
+            int diff = index - (array.length - 1);
             throw new IndexOutOfBoundsException("Index out of bounds by an amount: " + diff);
         }
     }
