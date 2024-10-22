@@ -148,4 +148,92 @@ public class ArrayHandlerTest {
         // Assert
         assertNotNull(array.getArray()[0]);
     }
+
+    @Test
+    public void testAddToListWithoutNulls() {
+        // Arrange
+        ArrayHandler<ActivityDTO> array = new ArrayDTOHandler<>(
+            new ActivityDTO[]{new ActivityDTO(objectId, activity)}
+        );
+
+        // Act
+        Exception exception = assertThrows(
+            Exception.class,
+            () -> array.add(new ActivityDTO(objectId, activity))
+        );
+
+        // Assert
+        assertEquals("No more space in array.", exception.getMessage());
+    }
+
+    @Test
+    public void testAddAtIndexInBounds() {
+        // Arrange
+        ArrayHandler<ActivityDTO> array = new ArrayDTOHandler<>(new ActivityDTO[3]);
+
+        // Act
+        try {
+            array.addAtIndex(
+                1,
+                new ActivityDTO(objectId, activity)
+            );
+        } catch (IndexOutOfBoundsException e) {
+            System.err.println(e);
+        }
+
+        // Assert
+        assertNotNull(array.getArray()[1]);
+    }
+
+    @Test
+    public void testAddAtIndexOutOfBounds() {
+        // Arrange
+        ArrayHandler<ActivityDTO> array = new ArrayDTOHandler<>(new ActivityDTO[1]);
+
+        // Act
+        IndexOutOfBoundsException exception = assertThrows(
+            IndexOutOfBoundsException.class,
+            () -> array.addAtIndex(1, new ActivityDTO(objectId, activity))
+        );
+
+        // Assert
+        assertEquals("Index out of bounds by an amount: 1", exception.getMessage());
+    }
+
+    @Test
+    public void testGetInBounds() {
+        // Assert
+        ArrayHandler<ActivityDTO> array = new ArrayDTOHandler<>(
+            new ActivityDTO[]{new ActivityDTO(objectId, activity)}
+        );
+
+        // Act
+        ActivityDTO activity;
+        try {
+            activity = array.get(0);
+        } catch (IndexOutOfBoundsException e) {
+            activity = null;
+            System.err.println(e);
+        }
+
+        // Assert
+        assertNotNull(activity);
+    }
+
+    @Test
+    public void testGetOutOfBounds() {
+        // Assert
+        ArrayHandler<ActivityDTO> array = new ArrayDTOHandler<>(
+            new ActivityDTO[1]
+        );
+
+        // Act
+        IndexOutOfBoundsException exception = assertThrows(
+            IndexOutOfBoundsException.class,
+            () -> array.get(2)
+        );
+
+        // Assert
+        assertEquals("Index out of bounds by an amount: 2", exception.getMessage());
+    }
 }
