@@ -1,11 +1,10 @@
 package no.bettermemory;
 
 
-import java.time.Clock;
-import java.time.Instant;
-import java.time.ZoneId;
-
-import no.bettermemory.models.MicrocontrollerDatabaseBridge.*;
+import no.bettermemory.models.MicrocontrollerDatabaseBridge.PresentTimeClasses.PresentHourInteger;
+import no.bettermemory.models.MicrocontrollerDatabaseBridge.PresentTimeClasses.PresentMinutesInteger;
+import no.bettermemory.models.MicrocontrollerDatabaseBridge.PresentTimeClasses.PresentWeekInteger;
+import no.bettermemory.models.MicrocontrollerDatabaseBridge.PresentTimeClasses.PresentYearInteger;
 
 
 public class HermannFunctionTesting {
@@ -29,15 +28,6 @@ public class HermannFunctionTesting {
 
         System.out.println(presentYearInteger.getYear());
 
-        PresentDayString presentDayString = new PresentDayString(Clock.fixed(Instant.parse("0000-12-25T12:00:00Z"), ZoneId.of("UTC")));
-
-        System.out.println(presentDayString.getDay());
-
-
-
-        
-
-        
         
     }
 

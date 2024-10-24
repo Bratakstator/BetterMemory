@@ -1,4 +1,4 @@
-package no.bettermemory.models.MicrocontrollerDatabaseBridge;
+package no.bettermemory.models.MicrocontrollerDatabaseBridge.PresentTimeClasses;
 
 import java.time.Clock;
 import java.time.format.TextStyle;
