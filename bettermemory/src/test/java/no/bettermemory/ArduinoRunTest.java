@@ -1,10 +1,28 @@
 package no.bettermemory;
 
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.junit.jupiter.MockitoExtension;
+
 import com.fazecast.jSerialComm.SerialPort;
 
+import no.bettermemory.models.DTO.ActivityDTO;
+import no.bettermemory.models.MicrocontrollerDatabaseBridge.ActivityHandlers.ArrayDTOHandler;
+import no.bettermemory.models.activity.Activity;
 import no.bettermemory.tools.ArduinoActivityCommunicator;
 
+@ExtendWith(MockitoExtension.class)
 public class ArduinoRunTest {
+    @Mock
+    private ArrayDTOHandler<ActivityDTO> arrayHandeler;
+
+    @Mock
+    private Activity activity;
+
     static String shortDescription = "Drink Water"; 
     static String longDescription = "2 glasses of water before 2 pm";
     static int hour = 13;
@@ -22,18 +40,17 @@ public class ArduinoRunTest {
      * as well as having the Arduino.ino installed, and the correct conections on the board.
      * 
      */
-public static void main(String[] args) {
-    ArduinoActivityCommunicator Arduino1 = new ArduinoActivityCommunicator();
-    SerialPort comport = Arduino1.OpenPort();
-    Arduino1.ArduinoSendActivety(shortDescription, longDescription, hour, minutes, comport);
+    @Test
+    public void testArduinoComAndReceive() {
+        Mockito.when(arrayHandeler.getAttributeOf(eq(0), any())).thenReturn(activity);
+        Mockito.when(activity.getShortDescription()).thenReturn(shortDescription);
+        Mockito.when(activity.getLongDescription()).thenReturn(longDescription);
+        Mockito.when(activity.getHour()).thenReturn(hour);
+        Mockito.when(activity.getMinutes()).thenReturn(minutes);
 
-    try {
-        Thread.sleep(5000);
-    } catch (InterruptedException e) {
-        e.printStackTrace();
+        ArduinoActivityCommunicator Arduino1 = new ArduinoActivityCommunicator(arrayHandeler);
+        SerialPort comport = Arduino1.OpenPort();
+        Arduino1.ArduinoSendActivity(comport);
+        Arduino1.ClosePort(comport);
     }
-
-    Arduino1.ArduinoSendActivety(shortDescription2, longDescription2, hour2, minutes2, comport);
-    Arduino1.ClosePort(comport);
-}
 }

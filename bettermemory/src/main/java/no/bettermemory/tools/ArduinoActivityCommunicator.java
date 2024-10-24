@@ -3,10 +3,18 @@ import java.util.Scanner;
 
 import com.fazecast.jSerialComm.SerialPort;
 
+import no.bettermemory.interfaces.MicrocontrollerDatabaseBridge.StaticContainerHandler;
+import no.bettermemory.models.DTO.ActivityDTO;
+import no.bettermemory.models.activity.Activity;
+
 public class ArduinoActivityCommunicator {
+    private StaticContainerHandler<ActivityDTO> arrayHandeler;
+
+    public ArduinoActivityCommunicator(StaticContainerHandler<ActivityDTO> arrayHandeler){
+        this.arrayHandeler = arrayHandeler;
+    }
+
     private String compiledString = "";
-
-
 
     //creates massge that will be sendt to arduino
     public String BuildMessage(String shortDescription, String longDescription, int hour, int minutes){
@@ -46,7 +54,13 @@ public class ArduinoActivityCommunicator {
 
 
     //Send activety
-    public void ArduinoSendActivety(String shortDescription, String longDescription, int hour, int minutes, SerialPort comportRecived){
+    public void ArduinoSendActivity(SerialPort comportRecived){
+        Activity activity = arrayHandeler.getAttributeOf(0, ActivityDTO::getActivity);
+        String longDescription = activity.getLongDescription();
+        String shortDescription = activity.getShortDescription();
+        int hour = activity.getHour();
+        int minutes = activity.getMinutes();
+
         compiledString = BuildMessage(shortDescription, longDescription, hour, minutes);
         SerialPort comPort = comportRecived;
 
