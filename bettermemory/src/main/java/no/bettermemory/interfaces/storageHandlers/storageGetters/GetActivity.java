@@ -12,8 +12,8 @@ public interface GetActivity {
         String patientId, int year, int weekNumber, String dayName, int hour, int minutes
     ) throws Exception;
 
-    HashMap<ObjectId, Activity> getActivitiesAtHour(
-        String patientId, int year, int weekNumber, String dayName, int hour
+    HashMap<ObjectId, Activity> getActivitiesAtInterval(
+        String patientId, int year, int weekNumber, String dayName, int currentHour, int currentMinutes, int interval
     ) throws Exception;
     
     HashMap<ObjectId, Activity> getActivitiesFromObjectId(List<ObjectId> activityIds) throws Exception;

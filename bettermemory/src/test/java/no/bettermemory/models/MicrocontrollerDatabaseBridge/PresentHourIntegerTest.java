@@ -6,6 +6,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import no.bettermemory.models.MicrocontrollerDatabaseBridge.PresentTimeClasses.PresentHourInteger;
 
 import java.time.Clock;
 import java.time.Instant;
