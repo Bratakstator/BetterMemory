@@ -1,11 +1,11 @@
-package no.bettermemory.models.MicrocontrollerDatabaseBridge.PresentTimeClasses;
+package no.bettermemory.models.MicrocontrollerDatabaseBridge;
 
-import no.bettermemory.interfaces.Models.YearProvider;
+import no.bettermemory.interfaces.Models.HourProvider;
 import java.time.LocalDateTime;
 import java.time.Clock;
 
 /**
- * This class is meant to provide the current year. However, it is possible to
+ * This class is meant to provide the current hour. However, it is possible to
  * set the clock in order to manually set the time of choosing or to represent 
  * time with an offset.
  * 
@@ -14,7 +14,7 @@ import java.time.Clock;
  * @author 
  * Hermann Mjelde Hamnnes
  */
-public class PresentYearInteger implements YearProvider<Integer> {
+public class PresentHourInteger implements HourProvider<Integer> {
 
     private final Clock clock;
 
@@ -22,7 +22,7 @@ public class PresentYearInteger implements YearProvider<Integer> {
      * If no Clock object was passed to the constructor, the clock will
      * by default be set to the systemDefaultZone.
      */
-    public PresentYearInteger() {
+    public PresentHourInteger() {
         this.clock = Clock.systemDefaultZone();
     }
 
@@ -31,7 +31,7 @@ public class PresentYearInteger implements YearProvider<Integer> {
      * a different Clock than the systemDefaultZone.
      * @param Clock
      */
-    public PresentYearInteger(Clock clock) {
+    public PresentHourInteger(Clock clock) {
         this.clock = clock;
     }
 
@@ -39,10 +39,11 @@ public class PresentYearInteger implements YearProvider<Integer> {
     @Override
     /**
      * This class will provide an integer which represent the current or a predefined 
-     * year.
+     * hour.
      */
-    public Integer getYear() {
-        return  LocalDateTime.now(clock).getYear();
+    public Integer getHour() {
+        return LocalDateTime.now(clock).getHour();
+        
     }
     
 }

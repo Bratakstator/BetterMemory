@@ -5,7 +5,7 @@ package no.bettermemory.interfaces.MicrocontrollerDatabaseBridge;
  * a class to return some activities based on a specified time 
  * interval.
  */
-public interface TimeIntervalBasedObjectRetriever<T> {
+public interface TimeIntervalBasedActivityRetriever<T, U, I> {
 
     /**
      * This method should return a set of activities based on a
@@ -16,7 +16,7 @@ public interface TimeIntervalBasedObjectRetriever<T> {
      * @param timeInterval 
      * @return
      */
-    T getObjects(int interval);
+    T getActivities(U timeBasedActivityRetriever, I timeInterval);
 
     
     

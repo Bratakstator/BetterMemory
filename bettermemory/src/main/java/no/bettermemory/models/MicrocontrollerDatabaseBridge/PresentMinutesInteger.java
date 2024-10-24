@@ -1,11 +1,11 @@
-package no.bettermemory.models.MicrocontrollerDatabaseBridge.PresentTimeClasses;
+package no.bettermemory.models.MicrocontrollerDatabaseBridge;
 
-import no.bettermemory.interfaces.Models.HourProvider;
+import no.bettermemory.interfaces.Models.MinutesProvider;
 import java.time.LocalDateTime;
 import java.time.Clock;
 
 /**
- * This class is meant to provide the current hour. However, it is possible to
+ * This class is meant to provide the current minutes. However, it is possible to
  * set the clock in order to manually set the time of choosing or to represent 
  * time with an offset.
  * 
@@ -14,7 +14,7 @@ import java.time.Clock;
  * @author 
  * Hermann Mjelde Hamnnes
  */
-public class PresentHourInteger implements HourProvider<Integer> {
+public class PresentMinutesInteger implements MinutesProvider<Integer> {
 
     private final Clock clock;
 
@@ -22,7 +22,7 @@ public class PresentHourInteger implements HourProvider<Integer> {
      * If no Clock object was passed to the constructor, the clock will
      * by default be set to the systemDefaultZone.
      */
-    public PresentHourInteger() {
+    public PresentMinutesInteger() {
         this.clock = Clock.systemDefaultZone();
     }
 
@@ -31,7 +31,7 @@ public class PresentHourInteger implements HourProvider<Integer> {
      * a different Clock than the systemDefaultZone.
      * @param Clock
      */
-    public PresentHourInteger(Clock clock) {
+    public PresentMinutesInteger(Clock clock) {
         this.clock = clock;
     }
 
@@ -39,10 +39,10 @@ public class PresentHourInteger implements HourProvider<Integer> {
     @Override
     /**
      * This class will provide an integer which represent the current or a predefined 
-     * hour.
+     * minutes.
      */
-    public Integer getHour() {
-        return LocalDateTime.now(clock).getHour();
+    public Integer getMinutes() {
+        return  LocalDateTime.now(clock).getMinute();
         
     }
     
