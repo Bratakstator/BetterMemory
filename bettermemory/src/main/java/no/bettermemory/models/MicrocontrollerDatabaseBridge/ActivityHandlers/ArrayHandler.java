@@ -31,7 +31,7 @@ public abstract class ArrayHandler<T> implements StaticContainerHandler<T> {
         }
     }
 
-    public T[] nullShiftRight() {
+    public StaticContainerHandler<T> nullShiftRight() {
         for (int index = 0; index < array.length; index++) {
             if (array[index] == null) {
                 for (int ahead = index + 1; ahead < array.length; ahead++) {
@@ -43,7 +43,7 @@ public abstract class ArrayHandler<T> implements StaticContainerHandler<T> {
                 }
             }
         }
-        return array;
+        return this;
     }
 
     public boolean hasNulls() {
