@@ -28,5 +28,7 @@ public class ActivityQueHandler implements ObjectQueHandler<ActivityDTO> {
         return null;
     }
 
-    public void checkNullsAndAddToList(Map<?, ?> objectMap) {}
+    public void checkNullsAndAddToList() {
+
+    }
 }
