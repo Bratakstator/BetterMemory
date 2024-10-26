@@ -21,7 +21,11 @@ public class ActivityQueHandler implements ObjectQueHandler<ActivityDTO> {
         InsertActivityOrDay<Activity> insertActivity,
         TimeIntervalBasedObjectRetriever<Map<ObjectId, Activity>> activitiesMap,
         StaticContainerHandler<ActivityDTO> arrayHandler
-    ) {}
+    ) {
+        this.insertActivity = insertActivity;
+        this.activitiesMap = activitiesMap;
+        this.arrayHandler = arrayHandler;
+    }
 
     public void run() {}
 
