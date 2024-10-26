@@ -74,6 +74,10 @@ public abstract class ArrayHandler<T> implements StaticContainerHandler<T> {
         }
     }
 
+    public int length() {
+        return array.length;
+    }
+
     public T[] getArray() {
         return array;
     }

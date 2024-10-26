@@ -10,4 +10,5 @@ public interface StaticContainerHandler<T> {
     int getFirstNullIndex() throws Exception;
     T get(int index) throws IndexOutOfBoundsException;
     <R> R getAttributeOf(int index, Function<T, R> toReturn) throws IndexOutOfBoundsException;
+    int length();
 }
