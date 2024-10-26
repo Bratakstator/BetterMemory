@@ -12,7 +12,7 @@ import no.bettermemory.interfaces.storageHandlers.databaseInserters.InsertActivi
 import no.bettermemory.models.DTO.ActivityDTO;
 import no.bettermemory.models.activity.Activity;
 
-public class ActivityQueHandler implements ObjectQueHandler<ActivityDTO, Map<ObjectId, Activity>> {
+public class ActivityQueHandler implements ObjectQueHandler<ActivityDTO> {
     private InsertActivityOrDay<Activity> insertActivity;
     private TimeIntervalBasedObjectRetriever<Map<ObjectId, Activity>> activitiesMap;
     private StaticContainerHandler<ActivityDTO> arrayHandler;
@@ -53,18 +53,11 @@ public class ActivityQueHandler implements ObjectQueHandler<ActivityDTO, Map<Obj
         }
     }
 
-    public ActivityDTO[] containerElementToDTOConverter(Map<ObjectId, Activity> activityMap) {
-        // I wanted to do this in one line, but it ended up being so long it became three lines anyways.
-        ActivityDTO[] activityDTOs = (ActivityDTO[]) activityMap.keySet().stream().map(
-            object -> new ActivityDTO((ObjectId) object, (Activity) activityMap.get(object))
-        ).toArray();
-        return activityDTOs;
-    }
-
     public void checkNullsAndAddToList() throws Exception {
-        ActivityDTO[] activityDTOs = containerElementToDTOConverter(
-            activitiesMap.getObjects(30)
-        );
+        Map<ObjectId, Activity> activityMap = activitiesMap.getObjects(30);
+        ActivityDTO[] activityDTOs = activityMap.keySet().stream().map(
+            key -> new ActivityDTO(key, activityMap.get(key))
+        ).toArray(ActivityDTO[]::new);
 
         if (activityDTOs == null) throw new Exception("No activities to add.");
 

@@ -1,7 +1,6 @@
 package no.bettermemory.interfaces.MicrocontrollerDatabaseBridge;
 
-public interface ObjectQueHandler<T, U> {
+public interface ObjectQueHandler<T> {
     void run();
-    T[] containerElementToDTOConverter(U u);
     void checkNullsAndAddToList() throws Exception;
 }
