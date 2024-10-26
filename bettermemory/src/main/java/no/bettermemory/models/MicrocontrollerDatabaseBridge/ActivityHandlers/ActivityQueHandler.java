@@ -38,6 +38,22 @@ public class ActivityQueHandler implements ObjectQueHandler<ActivityDTO> {
         }
     }
 
+    public void checkConcluded() {
+        for (int index = 0; index < arrayHandler.length(); index++) {
+            if (arrayHandler.getAttributeOf(index, ActivityDTO::getActivity).getConcluded()) {
+                try {
+                    insertActivity.updateObject(
+                        arrayHandler.getAttributeOf(index, ActivityDTO::getActivityId),
+                        arrayHandler.getAttributeOf(index, ActivityDTO::getActivity)
+                    );
+                    arrayHandler.addAtIndex(index, null);
+                } catch (Exception e) {
+                    System.out.println("I should reconsider how this handling works, maybe, might not be an issue either way.");
+                }
+            }
+        }
+    }
+
     public ActivityDTO[] containerElementToDTOConverter(Map<?, ?> objectMap) {
         // I wanted to do this in one line, but it ended up being so long it became three lines anyways.
         ActivityDTO[] activityDTOs = (ActivityDTO[]) objectMap.keySet().stream().map(
