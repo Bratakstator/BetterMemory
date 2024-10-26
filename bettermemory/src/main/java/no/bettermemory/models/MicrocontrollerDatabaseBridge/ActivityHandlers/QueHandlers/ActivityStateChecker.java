@@ -1,11 +1,10 @@
 package no.bettermemory.models.MicrocontrollerDatabaseBridge.ActivityHandlers.QueHandlers;
 
-import java.util.Calendar;
-
 import no.bettermemory.interfaces.MicrocontrollerDatabaseBridge.StaticContainerHandler;
 import no.bettermemory.interfaces.storageHandlers.databaseInserters.InsertActivityOrDay;
 import no.bettermemory.models.DTO.ActivityDTO;
 import no.bettermemory.models.activity.Activity;
+import no.bettermemory.tools.TimeComparisons;
 
 public class ActivityStateChecker {
     private StaticContainerHandler<ActivityDTO> arrayHandler;
@@ -17,13 +16,9 @@ public class ActivityStateChecker {
     }
 
     public void checkQueState() {
-        Calendar calendar = Calendar.getInstance();
-        int currentMinutesToday = (calendar.get(Calendar.HOUR_OF_DAY) * 60) + calendar.get(Calendar.MINUTE);
 
         for (int index = 0; index < arrayHandler.length(); index++) {
             ActivityDTO activityDTO = arrayHandler.get(index);
-
-            int activityMinutes = (activityDTO.getActivity().getHour() * 60) + activityDTO.getActivity().getMinutes();
 
             if (activityDTO.getActivity().getConcluded()) {
                 try {
@@ -36,7 +31,15 @@ public class ActivityStateChecker {
                     System.out.println("I should reconsider how this handling works, maybe, might not be an issue either way.");
                 }
             }
-            else if ((currentMinutesToday - activityMinutes) > 30) arrayHandler.addAtIndex(index, null);
+            else if (
+                TimeComparisons.currentTimeHasPassedThreshold(
+                    activityDTO.getActivity().getHour(),
+                    activityDTO.getActivity().getMinutes(),
+                    30
+                )
+            ) {
+                arrayHandler.addAtIndex(index, null);
+            }
         }
     }
 }
