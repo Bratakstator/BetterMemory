@@ -2,8 +2,8 @@ package no.bettermemory.interfaces.MicrocontrollerDatabaseBridge;
 
 import java.util.Map;
 
-public interface ObjectQueHandler<T> {
+public interface ObjectQueHandler<T, U> {
     void run();
-    T[] containerElementToDTOConverter(Map<?, ?> objectMap);
+    T[] containerElementToDTOConverter(U u);
     void checkNullsAndAddToList() throws Exception;
 }

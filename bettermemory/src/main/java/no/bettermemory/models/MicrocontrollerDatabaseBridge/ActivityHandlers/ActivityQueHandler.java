@@ -12,7 +12,7 @@ import no.bettermemory.interfaces.storageHandlers.databaseInserters.InsertActivi
 import no.bettermemory.models.DTO.ActivityDTO;
 import no.bettermemory.models.activity.Activity;
 
-public class ActivityQueHandler implements ObjectQueHandler<ActivityDTO> {
+public class ActivityQueHandler implements ObjectQueHandler<ActivityDTO, Map<ObjectId, Activity>> {
     private InsertActivityOrDay<Activity> insertActivity;
     private TimeIntervalBasedObjectRetriever<Map<ObjectId, Activity>> activitiesMap;
     private StaticContainerHandler<ActivityDTO> arrayHandler;
@@ -53,10 +53,10 @@ public class ActivityQueHandler implements ObjectQueHandler<ActivityDTO> {
         }
     }
 
-    public ActivityDTO[] containerElementToDTOConverter(Map<?, ?> objectMap) {
+    public ActivityDTO[] containerElementToDTOConverter(Map<ObjectId, Activity> activityMap) {
         // I wanted to do this in one line, but it ended up being so long it became three lines anyways.
-        ActivityDTO[] activityDTOs = (ActivityDTO[]) objectMap.keySet().stream().map(
-            object -> new ActivityDTO((ObjectId) object, (Activity) objectMap.get(object))
+        ActivityDTO[] activityDTOs = (ActivityDTO[]) activityMap.keySet().stream().map(
+            object -> new ActivityDTO((ObjectId) object, (Activity) activityMap.get(object))
         ).toArray();
         return activityDTOs;
     }
