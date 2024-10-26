@@ -5,5 +5,5 @@ import java.util.Map;
 public interface ObjectQueHandler<T> {
     void run();
     T[] containerElementToDTOConverter(Map<?, ?> objectMap);
-    void checkNullsAndAddToList();
+    void checkNullsAndAddToList() throws Exception;
 }
