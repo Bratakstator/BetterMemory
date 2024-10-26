@@ -1,4 +1,4 @@
-package no.bettermemory.models.MicrocontrollerDatabaseBridge.ActivityHandlers;
+package no.bettermemory.models.MicrocontrollerDatabaseBridge.ActivityHandlers.ArrayHandlers;
 
 public class ArrayDTOHandler<T> extends ArrayHandler<T> {
     public ArrayDTOHandler(T[] array) {

@@ -1,4 +1,4 @@
-package no.bettermemory.models.MicrocontrollerDatabaseBridge.ActivityHandlers;
+package no.bettermemory.models.MicrocontrollerDatabaseBridge.ActivityHandlers.ArrayHandlers;
 
 import com.mongodb.Function;
 

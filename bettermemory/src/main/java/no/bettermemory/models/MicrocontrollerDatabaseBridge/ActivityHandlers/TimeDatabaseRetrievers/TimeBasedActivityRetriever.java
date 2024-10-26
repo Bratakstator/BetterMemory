@@ -1,4 +1,4 @@
-package no.bettermemory.models.MicrocontrollerDatabaseBridge.ActivityHandlers;
+package no.bettermemory.models.MicrocontrollerDatabaseBridge.ActivityHandlers.TimeDatabaseRetrievers;
 
 import no.bettermemory.interfaces.MicrocontrollerDatabaseBridge.TimeBasedObjectRetriever;
 import no.bettermemory.interfaces.Models.DayProvider;

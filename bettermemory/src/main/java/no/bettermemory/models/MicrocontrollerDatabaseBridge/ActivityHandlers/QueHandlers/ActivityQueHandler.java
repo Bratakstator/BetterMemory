@@ -1,4 +1,4 @@
-package no.bettermemory.models.MicrocontrollerDatabaseBridge.ActivityHandlers;
+package no.bettermemory.models.MicrocontrollerDatabaseBridge.ActivityHandlers.QueHandlers;
 
 import java.util.Calendar;
 import java.util.Map;
