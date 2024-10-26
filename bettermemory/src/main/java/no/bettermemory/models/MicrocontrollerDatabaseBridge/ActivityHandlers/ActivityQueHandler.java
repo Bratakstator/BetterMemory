@@ -25,32 +25,27 @@ public class ActivityQueHandler implements ObjectQueHandler<ActivityDTO> {
 
     public void run() {}
 
-    public void checkTimeOuts() {
-        int currentHour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
-        int currentminutes = Calendar.getInstance().get(Calendar.MINUTE);
-        int totalMinutes = (currentHour * 60) + currentminutes;
+    public void checkQueState() {
+        Calendar calendar = Calendar.getInstance();
+        int currentMinutesToday = (calendar.get(Calendar.HOUR_OF_DAY) * 60) + calendar.get(Calendar.MINUTE);
 
         for (int index = 0; index < arrayHandler.length(); index++) {
-            Activity activity = arrayHandler.getAttributeOf(index, ActivityDTO::getActivity);
-            int activityMinutes = (activity.getHour() * 60) + activity.getMinutes();
+            ActivityDTO activityDTO = arrayHandler.get(index);
 
-            if ((totalMinutes - activityMinutes) > 30) arrayHandler.addAtIndex(index, null);
-        }
-    }
+            int activityMinutes = (activityDTO.getActivity().getHour() * 60) + activityDTO.getActivity().getMinutes();
 
-    public void checkConcluded() {
-        for (int index = 0; index < arrayHandler.length(); index++) {
-            if (arrayHandler.getAttributeOf(index, ActivityDTO::getActivity).getConcluded()) {
+            if (activityDTO.getActivity().getConcluded()) {
                 try {
                     insertActivity.updateObject(
-                        arrayHandler.getAttributeOf(index, ActivityDTO::getActivityId),
-                        arrayHandler.getAttributeOf(index, ActivityDTO::getActivity)
+                        activityDTO.getActivityId(),
+                        activityDTO.getActivity()
                     );
                     arrayHandler.addAtIndex(index, null);
                 } catch (Exception e) {
                     System.out.println("I should reconsider how this handling works, maybe, might not be an issue either way.");
                 }
             }
+            else if ((currentMinutesToday - activityMinutes) > 30) arrayHandler.addAtIndex(index, null);
         }
     }
 
