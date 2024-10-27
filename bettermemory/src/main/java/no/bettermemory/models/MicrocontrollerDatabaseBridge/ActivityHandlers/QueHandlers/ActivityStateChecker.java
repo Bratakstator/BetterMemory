@@ -28,7 +28,7 @@ public class ActivityStateChecker {
                     );
                     arrayHandler.addAtIndex(index, null);
                 } catch (Exception e) {
-                    System.out.println("I should reconsider how this handling works, maybe, might not be an issue either way.");
+                    System.err.println(e);
                 }
             }
             else if (
