@@ -1,7 +1,9 @@
 package no.bettermemory.models.MicrocontrollerDatabaseBridge.ActivityHandlers.QueHandlers;
 
+import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.*;
 
+import org.bson.types.ObjectId;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -23,13 +25,23 @@ public class ActivityQueStateCheckerTest {
     @InjectMocks
     private ActivityQueStateChecker stateChecker;
 
+    @Mock
+    private ActivityDTO mockActivityDTO;
+    @Mock
+    private ObjectId mockObjectId;
+    @Mock
+    private Activity mockActivity;
+
     @BeforeEach
     void setup() {
         stateChecker = new ActivityQueStateChecker(mockArrayHandler, mockInsertActivity);
     }
 
-    // I will come back to these.
     @Test
     public void testCheckQueStateWhenConcluded() {
+        // Arrange
+        when(mockArrayHandler.length()).thenReturn(1);
+        when(mockArrayHandler.get(anyInt())).thenReturn(mockActivityDTO);
+        when(mockActivityDTO.getActivity().getConcluded()).thenReturn(true);
     }
 }
