@@ -5,14 +5,16 @@ import java.util.Map;
 import org.bson.types.ObjectId;
 
 import no.bettermemory.interfaces.MicrocontrollerDatabaseBridge.ArrayHandlers.StaticContainerHandler;
+import no.bettermemory.interfaces.MicrocontrollerDatabaseBridge.QueHandlers.ObjectQueInserter;
 import no.bettermemory.interfaces.MicrocontrollerDatabaseBridge.TimeBasedDatabaseRetrievers.TimeIntervalBasedObjectRetriever;
 import no.bettermemory.models.DTO.ActivityDTO;
 import no.bettermemory.models.activity.Activity;
 
-public class ActivityQueInserter {
+public class ActivityQueInserter implements ObjectQueInserter {
     private TimeIntervalBasedObjectRetriever<Map<ObjectId, Activity>> activitiesMap;
     private StaticContainerHandler<ActivityDTO> arrayHandler;
 
+    @Override
     public void checkNullsAndAddToList() throws Exception {
         Map<ObjectId, Activity> activityMap = activitiesMap.getObjects(30);
         ActivityDTO[] activityDTOs = activityMap.keySet().stream().map(
