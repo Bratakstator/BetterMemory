@@ -7,11 +7,11 @@ import no.bettermemory.models.DTO.ActivityDTO;
 import no.bettermemory.models.activity.Activity;
 import no.bettermemory.tools.TimeComparisons;
 
-public class ActivityStateChecker implements ObjectQueStateChecker {
+public class ActivityQueStateChecker implements ObjectQueStateChecker {
     private StaticContainerHandler<ActivityDTO> arrayHandler;
     private InsertActivityOrDay<Activity> insertActivity;
 
-    public ActivityStateChecker(StaticContainerHandler<ActivityDTO> arrayHandler, InsertActivityOrDay<Activity> insertActivity) {
+    public ActivityQueStateChecker(StaticContainerHandler<ActivityDTO> arrayHandler, InsertActivityOrDay<Activity> insertActivity) {
         this.arrayHandler = arrayHandler;
         this.insertActivity = insertActivity;
     }

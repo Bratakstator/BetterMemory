@@ -13,7 +13,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 @ExtendWith(MockitoExtension.class)
 public class ActivityQueHandlerTest {
     @Mock
-    private ActivityStateChecker mockStateChecker;
+    private ActivityQueStateChecker mockStateChecker;
     @Mock
     private ActivityQueInserter mockQueInserter;
     @InjectMocks
