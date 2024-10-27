@@ -1,4 +1,4 @@
-package no.bettermemory.models.MicrocontrollerDatabaseBridge;
+package no.bettermemory.models.MicrocontrollerDatabaseBridge.ActivityHandlers.TimeBasedDatabaseRetrievers;
 
 import org.bson.types.ObjectId;
 import org.junit.jupiter.api.BeforeEach;
