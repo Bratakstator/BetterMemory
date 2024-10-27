@@ -1,4 +1,4 @@
-package no.bettermemory.models.MicrocontrollerDatabaseBridge.ActivityHandlers;
+package no.bettermemory.models.MicrocontrollerDatabaseBridge.ActivityHandlers.ArrayHandlers;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
@@ -12,8 +12,6 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import no.bettermemory.models.DTO.ActivityDTO;
-import no.bettermemory.models.MicrocontrollerDatabaseBridge.ActivityHandlers.ArrayHandlers.ArrayDTOHandler;
-import no.bettermemory.models.MicrocontrollerDatabaseBridge.ActivityHandlers.ArrayHandlers.ArrayHandler;
 import no.bettermemory.models.activity.Activity;
 
 @ExtendWith(MockitoExtension.class)
