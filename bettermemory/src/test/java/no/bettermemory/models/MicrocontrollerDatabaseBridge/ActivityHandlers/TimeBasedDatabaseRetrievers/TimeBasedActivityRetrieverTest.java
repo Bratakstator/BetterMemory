@@ -13,7 +13,8 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.mockito.InjectMocks;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.DisplayName;
-import java.util.Collections;
+import java.util.HashMap;
+
 import org.mockito.Mockito;
 import java.util.Map;
 
@@ -76,14 +77,15 @@ public class TimeBasedActivityRetrieverTest {
         when(mockDayProvider.getDay()).thenReturn("Monday");
         when(mockWeekProvider.getWeek()).thenReturn(40);
         when(mockYearProvider.getYear()).thenReturn(2024);
-        Mockito.doReturn(Collections.emptyList()) //doReturn() is used here to handle the checked exception for the class.
-                                    .when(mockGetActivity)
-                                    .getActivitiesAtMinute(anyString(),
-                                                           anyInt(), 
-                                                           anyInt(), 
-                                                           anyString(), 
-                                                           anyInt(), 
-                                                           anyInt());
+        //doReturn() is used here to handle the checked exception for the class.
+        Mockito.doReturn(new HashMap<ObjectId, Activity>()).when(mockGetActivity).getActivitiesAtMinute(
+            anyString(),
+            anyInt(), 
+            anyInt(), 
+            anyString(), 
+            anyInt(), 
+            anyInt()
+        );
 
         //Act
         Map<ObjectId, Activity> activities = timeBasedActivityRetriever.getObject();
