@@ -1,78 +1,23 @@
 package no.bettermemory.models.MicrocontrollerDatabaseBridge.ActivityHandlers.QueHandlers;
 
-import java.util.Calendar;
-import java.util.Map;
+import no.bettermemory.interfaces.MicrocontrollerDatabaseBridge.QueHandlers.ObjectQueInserter;
+import no.bettermemory.interfaces.MicrocontrollerDatabaseBridge.QueHandlers.ObjectQueStateChecker;
 
-import org.bson.types.ObjectId;
+public class ActivityQueHandler implements Runnable {
+    public ObjectQueStateChecker stateChecker;
+    public ObjectQueInserter inserter;
 
-import no.bettermemory.interfaces.MicrocontrollerDatabaseBridge.ArrayHandlers.StaticContainerHandler;
-import no.bettermemory.interfaces.MicrocontrollerDatabaseBridge.QueHandlers.ObjectQueHandler;
-import no.bettermemory.interfaces.MicrocontrollerDatabaseBridge.TimeBasedDatabaseRetrievers.TimeIntervalBasedObjectRetriever;
-import no.bettermemory.interfaces.storageHandlers.databaseInserters.InsertActivityOrDay;
-import no.bettermemory.models.DTO.ActivityDTO;
-import no.bettermemory.models.activity.Activity;
-
-public class ActivityQueHandler implements ObjectQueHandler<ActivityDTO> {
-    private InsertActivityOrDay<Activity> insertActivity;
-    private TimeIntervalBasedObjectRetriever<Map<ObjectId, Activity>> activitiesMap;
-    private StaticContainerHandler<ActivityDTO> arrayHandler;
-
-    public ActivityQueHandler(
-        InsertActivityOrDay<Activity> insertActivity,
-        TimeIntervalBasedObjectRetriever<Map<ObjectId, Activity>> activitiesMap,
-        StaticContainerHandler<ActivityDTO> arrayHandler
-    ) {
-        this.insertActivity = insertActivity;
-        this.activitiesMap = activitiesMap;
-        this.arrayHandler = arrayHandler;
+    public ActivityQueHandler(ObjectQueStateChecker stateChecker, ObjectQueInserter inserter) {
+        this.stateChecker = stateChecker;
+        this.inserter = inserter;
     }
 
-    public void run() {}
-
-    public void checkQueState() {
-        Calendar calendar = Calendar.getInstance();
-        int currentMinutesToday = (calendar.get(Calendar.HOUR_OF_DAY) * 60) + calendar.get(Calendar.MINUTE);
-
-        for (int index = 0; index < arrayHandler.length(); index++) {
-            ActivityDTO activityDTO = arrayHandler.get(index);
-
-            int activityMinutes = (activityDTO.getActivity().getHour() * 60) + activityDTO.getActivity().getMinutes();
-
-            if (activityDTO.getActivity().getConcluded()) {
-                try {
-                    insertActivity.updateObject(
-                        activityDTO.getActivityId(),
-                        activityDTO.getActivity()
-                    );
-                    arrayHandler.addAtIndex(index, null);
-                } catch (Exception e) {
-                    System.out.println("I should reconsider how this handling works, maybe, might not be an issue either way.");
-                }
-            }
-            else if ((currentMinutesToday - activityMinutes) > 30) arrayHandler.addAtIndex(index, null);
+    public void run() {
+        stateChecker.checkQueState();
+        try {
+            inserter.checkNullsAndAddToList();
+        } catch (Exception e) {
+            System.err.println(e);
         }
-    }
-
-    public void checkNullsAndAddToList() throws Exception {
-        Map<ObjectId, Activity> activityMap = activitiesMap.getObjects(30);
-        ActivityDTO[] activityDTOs = activityMap.keySet().stream().map(
-            key -> new ActivityDTO(key, activityMap.get(key))
-        ).toArray(ActivityDTO[]::new);
-
-        if (activityDTOs == null) throw new Exception("No activities to add.");
-
-        int index = 0;
-        while (arrayHandler.hasNulls()) {
-            try {
-                arrayHandler.nullShiftRight().add(activityDTOs[index]);
-            } catch (Exception e) {
-                System.err.println(e); // "No more space in array."
-                break;
-            }
-
-            index++;
-            if (index == activityDTOs.length) break;
-        }
-        activityDTOs = null;
     }
 }
