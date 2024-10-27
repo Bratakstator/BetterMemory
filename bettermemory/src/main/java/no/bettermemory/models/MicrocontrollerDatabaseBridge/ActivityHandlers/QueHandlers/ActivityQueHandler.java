@@ -5,9 +5,9 @@ import java.util.Map;
 
 import org.bson.types.ObjectId;
 
-import no.bettermemory.interfaces.MicrocontrollerDatabaseBridge.ObjectQueHandler;
-import no.bettermemory.interfaces.MicrocontrollerDatabaseBridge.StaticContainerHandler;
-import no.bettermemory.interfaces.MicrocontrollerDatabaseBridge.TimeIntervalBasedObjectRetriever;
+import no.bettermemory.interfaces.MicrocontrollerDatabaseBridge.ArrayHandlers.StaticContainerHandler;
+import no.bettermemory.interfaces.MicrocontrollerDatabaseBridge.QueHandlers.ObjectQueHandler;
+import no.bettermemory.interfaces.MicrocontrollerDatabaseBridge.TimeBasedDatabaseRetrievers.TimeIntervalBasedObjectRetriever;
 import no.bettermemory.interfaces.storageHandlers.databaseInserters.InsertActivityOrDay;
 import no.bettermemory.models.DTO.ActivityDTO;
 import no.bettermemory.models.activity.Activity;

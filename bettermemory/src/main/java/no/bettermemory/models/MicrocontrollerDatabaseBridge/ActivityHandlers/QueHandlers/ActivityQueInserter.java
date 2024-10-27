@@ -4,8 +4,8 @@ import java.util.Map;
 
 import org.bson.types.ObjectId;
 
-import no.bettermemory.interfaces.MicrocontrollerDatabaseBridge.StaticContainerHandler;
-import no.bettermemory.interfaces.MicrocontrollerDatabaseBridge.TimeIntervalBasedObjectRetriever;
+import no.bettermemory.interfaces.MicrocontrollerDatabaseBridge.ArrayHandlers.StaticContainerHandler;
+import no.bettermemory.interfaces.MicrocontrollerDatabaseBridge.TimeBasedDatabaseRetrievers.TimeIntervalBasedObjectRetriever;
 import no.bettermemory.models.DTO.ActivityDTO;
 import no.bettermemory.models.activity.Activity;
 

@@ -1,6 +1,6 @@
 package no.bettermemory.models.MicrocontrollerDatabaseBridge.ActivityHandlers.TimeDatabaseRetrievers;
 
-import no.bettermemory.interfaces.MicrocontrollerDatabaseBridge.TimeBasedObjectRetriever;
+import no.bettermemory.interfaces.MicrocontrollerDatabaseBridge.TimeBasedDatabaseRetrievers.TimeBasedObjectRetriever;
 import no.bettermemory.interfaces.Models.DayProvider;
 import no.bettermemory.interfaces.Models.HourProvider;
 import no.bettermemory.interfaces.Models.MinutesProvider;

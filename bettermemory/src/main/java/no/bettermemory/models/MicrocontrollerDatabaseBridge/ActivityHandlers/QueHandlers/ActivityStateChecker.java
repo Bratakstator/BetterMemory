@@ -1,6 +1,6 @@
 package no.bettermemory.models.MicrocontrollerDatabaseBridge.ActivityHandlers.QueHandlers;
 
-import no.bettermemory.interfaces.MicrocontrollerDatabaseBridge.StaticContainerHandler;
+import no.bettermemory.interfaces.MicrocontrollerDatabaseBridge.ArrayHandlers.StaticContainerHandler;
 import no.bettermemory.interfaces.storageHandlers.databaseInserters.InsertActivityOrDay;
 import no.bettermemory.models.DTO.ActivityDTO;
 import no.bettermemory.models.activity.Activity;

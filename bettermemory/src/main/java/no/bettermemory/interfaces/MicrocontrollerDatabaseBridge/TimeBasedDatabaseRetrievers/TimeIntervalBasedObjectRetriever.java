@@ -1,4 +1,4 @@
-package no.bettermemory.interfaces.MicrocontrollerDatabaseBridge;
+package no.bettermemory.interfaces.MicrocontrollerDatabaseBridge.TimeBasedDatabaseRetrievers;
 
 /**
  * This interface should be implemented those places where you need 

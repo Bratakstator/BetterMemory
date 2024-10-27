@@ -1,4 +1,4 @@
-package no.bettermemory.interfaces.MicrocontrollerDatabaseBridge;
+package no.bettermemory.interfaces.MicrocontrollerDatabaseBridge.TimeBasedDatabaseRetrievers;
 
 /**
  * This interface is meant to be used in order to return a 

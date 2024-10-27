@@ -4,7 +4,7 @@ import java.util.Map;
 
 import org.bson.types.ObjectId;
 
-import no.bettermemory.interfaces.MicrocontrollerDatabaseBridge.TimeIntervalBasedObjectRetriever;
+import no.bettermemory.interfaces.MicrocontrollerDatabaseBridge.TimeBasedDatabaseRetrievers.TimeIntervalBasedObjectRetriever;
 import no.bettermemory.interfaces.Models.DayProvider;
 import no.bettermemory.interfaces.Models.HourProvider;
 import no.bettermemory.interfaces.Models.MinutesProvider;

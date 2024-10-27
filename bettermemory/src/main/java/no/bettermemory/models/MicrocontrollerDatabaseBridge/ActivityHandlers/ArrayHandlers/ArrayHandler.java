@@ -2,7 +2,7 @@ package no.bettermemory.models.MicrocontrollerDatabaseBridge.ActivityHandlers.Ar
 
 import com.mongodb.Function;
 
-import no.bettermemory.interfaces.MicrocontrollerDatabaseBridge.StaticContainerHandler;
+import no.bettermemory.interfaces.MicrocontrollerDatabaseBridge.ArrayHandlers.StaticContainerHandler;
 
 public abstract class ArrayHandler<T> implements StaticContainerHandler<T> {
     T[] array;

@@ -4,7 +4,7 @@ import java.util.HashMap;
 
 import org.bson.types.ObjectId;
 
-import no.bettermemory.interfaces.MicrocontrollerDatabaseBridge.ObjectQue;
+import no.bettermemory.interfaces.MicrocontrollerDatabaseBridge.QueHandlers.ObjectQue;
 import no.bettermemory.models.DTO.ActivityDTO;
 import no.bettermemory.models.activity.Activity;
 
