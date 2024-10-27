@@ -1,12 +1,13 @@
 package no.bettermemory.models.MicrocontrollerDatabaseBridge.ActivityHandlers.QueHandlers;
 
 import no.bettermemory.interfaces.MicrocontrollerDatabaseBridge.ArrayHandlers.StaticContainerHandler;
+import no.bettermemory.interfaces.MicrocontrollerDatabaseBridge.QueHandlers.ObjectQueStateChecker;
 import no.bettermemory.interfaces.storageHandlers.databaseInserters.InsertActivityOrDay;
 import no.bettermemory.models.DTO.ActivityDTO;
 import no.bettermemory.models.activity.Activity;
 import no.bettermemory.tools.TimeComparisons;
 
-public class ActivityStateChecker {
+public class ActivityStateChecker implements ObjectQueStateChecker {
     private StaticContainerHandler<ActivityDTO> arrayHandler;
     private InsertActivityOrDay<Activity> insertActivity;
 
@@ -15,8 +16,8 @@ public class ActivityStateChecker {
         this.insertActivity = insertActivity;
     }
 
+    @Override
     public void checkQueState() {
-
         for (int index = 0; index < arrayHandler.length(); index++) {
             ActivityDTO activityDTO = arrayHandler.get(index);
 
