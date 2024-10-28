@@ -15,10 +15,17 @@ public class ArduinoActivityCommunicator {
     }
 
     private String compiledString = "";
+    private String minutesText;
+    private String hourText;
 
     //creates massge that will be sendt to arduino
     public String BuildMessage(String shortDescription, String longDescription, int hour, int minutes){
-        String message = shortDescription + ": " + longDescription + "@" + hour + ":" + minutes + "@\n";
+        if (hour < 10){hourText = "0" + hour;} // gives time format eks: 09:05 insted of 9:50
+        else{hourText = "" + hour;}
+
+        if (minutes < 10){minutesText = "0" + minutes;} // gives time format eks: 10:05 insted of 10:5
+        else{minutesText = "" + minutes;}
+        String message = shortDescription + ": " + longDescription + "@" + hourText + ":" + minutesText + "@\n";
         return message;
     }
 
@@ -90,24 +97,14 @@ public class ArduinoActivityCommunicator {
                     //System.out.println(receivedData);
                 
                     if (line.equals("ButtonPressed")) {
-                        /*
-                        * add funktionality to send the achived state back
-                        */
-                    break;
+                        activity.setConcluded(true);
                     }
-                    else if (line.equals("NoActivety")) {
-                        /*
-                         * add funktionality to send the achived state back
-                        */
                     break;
-                    }
-            
-            
                 }   
                 try {
-                Thread.sleep(500);
-                    } catch (InterruptedException e) {
-                e.printStackTrace();
+                    Thread.sleep(500);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
                 }
             }
         }

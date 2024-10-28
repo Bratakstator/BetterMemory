@@ -28,11 +28,6 @@ public class ArduinoRunTest {
     static int hour = 13;
     static int minutes = 00;
 
-    static String shortDescription2 = "Eat Dinner"; 
-    static String longDescription2 = "Consume the preprered frozen meal";
-    static int hour2 = 16;
-    static int minutes2 = 00;
-
 
     /*
      * This test aims to test the ArduinoSendActivety method that uses comports

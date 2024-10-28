@@ -1,26 +1,11 @@
 -------------------------------------------------------------------------------
 Test set: no.bettermemory.ArduinoRunTest
 -------------------------------------------------------------------------------
-Tests run: 1, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 0.704 s <<< FAILURE! -- in no.bettermemory.ArduinoRunTest
-no.bettermemory.ArduinoRunTest.testArduinoComAndReceive -- Time elapsed: 0.688 s <<< ERROR!
-org.mockito.exceptions.misusing.InvalidUseOfMatchersException: 
-
-Invalid use of argument matchers!
-2 matchers expected, 1 recorded:
--> at no.bettermemory.ArduinoRunTest.testArduinoComAndReceive(ArduinoRunTest.java:44)
-
-This exception may occur if matchers are combined with raw values:
-    //incorrect:
-    someMethod(any(), "raw String");
-When using matchers, all arguments have to be provided by matchers.
-For example:
-    //correct:
-    someMethod(any(), eq("String by matcher"));
-
-For more info see javadoc for Matchers class.
-
-	at no.bettermemory.models.MicrocontrollerDatabaseBridge.ActivityHandlers.ArrayHandler.getAttributeOf(ArrayHandler.java:70)
-	at no.bettermemory.ArduinoRunTest.testArduinoComAndReceive(ArduinoRunTest.java:44)
+Tests run: 1, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 0.979 s <<< FAILURE! -- in no.bettermemory.ArduinoRunTest
+no.bettermemory.ArduinoRunTest.testArduinoComAndReceive -- Time elapsed: 0.957 s <<< ERROR!
+java.lang.ArrayIndexOutOfBoundsException: Index 0 out of bounds for length 0
+	at no.bettermemory.tools.ArduinoActivityCommunicator.OpenPort(ArduinoActivityCommunicator.java:35)
+	at no.bettermemory.ArduinoRunTest.testArduinoComAndReceive(ArduinoRunTest.java:47)
 	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
 	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
 	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
