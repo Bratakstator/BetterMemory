@@ -7,7 +7,7 @@ import no.bettermemory.interfaces.MicrocontrollerDatabaseBridge.StaticContainerH
 import no.bettermemory.models.DTO.ActivityDTO;
 import no.bettermemory.models.activity.Activity;
 
-public class ArduinoActivityCommunicator {
+public class ArduinoActivityCommunicator implements Runnable {
     private StaticContainerHandler<ActivityDTO> arrayHandeler;
 
     public ArduinoActivityCommunicator(StaticContainerHandler<ActivityDTO> arrayHandeler){
@@ -29,9 +29,13 @@ public class ArduinoActivityCommunicator {
         return message;
     }
 
+    public void run() {
+        arduinoSendActivity(openPort());
+    }
+
 
     //opens port
-    public SerialPort OpenPort(){
+    public SerialPort openPort(){
         SerialPort comPort = SerialPort.getCommPorts()[0];
         comPort.setBaudRate(9600);
         if (comPort.openPort()) {
@@ -53,7 +57,7 @@ public class ArduinoActivityCommunicator {
 
 
     //closes port
-    public void ClosePort(SerialPort comportRecived){
+    public void closePort(SerialPort comportRecived){
         SerialPort comPort = comportRecived;
         comPort.closePort();
         System.out.println("Port is closed!");
@@ -61,27 +65,26 @@ public class ArduinoActivityCommunicator {
 
 
     //Send activety
-    public void ArduinoSendActivity(SerialPort comportRecived){
-        Activity activity = arrayHandeler.getAttributeOf(0, ActivityDTO::getActivity);
-        String longDescription = activity.getLongDescription();
-        String shortDescription = activity.getShortDescription();
-        int hour = activity.getHour();
-        int minutes = activity.getMinutes();
-
-        compiledString = BuildMessage(shortDescription, longDescription, hour, minutes);
+    public void arduinoSendActivity(SerialPort comportRecived){
         SerialPort comPort = comportRecived;
-
-        // Convert the message to bytes and send it
-        byte[] messageBytes = compiledString.getBytes();
-        comPort.writeBytes(messageBytes, messageBytes.length);
-
-
         try ( // looks after a respons from the arduino
                 Scanner data = new Scanner(comPort.getInputStream())) {
 
 
             // Keep checking for data in a loop
-            while (true) {
+            boolean loop = true;
+            while (loop) {
+                Activity activity = arrayHandeler.getAttributeOf(0, ActivityDTO::getActivity);
+                String longDescription = activity.getLongDescription();
+                String shortDescription = activity.getShortDescription();
+                int hour = activity.getHour();
+                int minutes = activity.getMinutes();
+
+                compiledString = BuildMessage(shortDescription, longDescription, hour, minutes);
+
+                // Convert the message to bytes and send it
+                byte[] messageBytes = compiledString.getBytes();
+                comPort.writeBytes(messageBytes, messageBytes.length);
                 // Check if there is any data available in the serial buffer
                 if (comPort.bytesAvailable() > 0) {
 
@@ -99,7 +102,6 @@ public class ArduinoActivityCommunicator {
                     if (line.equals("ButtonPressed")) {
                         activity.setConcluded(true);
                     }
-                    break;
                 }   
                 try {
                     Thread.sleep(500);

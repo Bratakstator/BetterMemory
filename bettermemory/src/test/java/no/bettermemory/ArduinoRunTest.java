@@ -44,8 +44,8 @@ public class ArduinoRunTest {
         Mockito.when(activity.getMinutes()).thenReturn(minutes);
 
         ArduinoActivityCommunicator Arduino1 = new ArduinoActivityCommunicator(arrayHandeler);
-        SerialPort comport = Arduino1.OpenPort();
-        Arduino1.ArduinoSendActivity(comport);
-        Arduino1.ClosePort(comport);
+        SerialPort comport = Arduino1.openPort();
+        Arduino1.arduinoSendActivity(comport);
+        Arduino1.closePort(comport);
     }
 }
