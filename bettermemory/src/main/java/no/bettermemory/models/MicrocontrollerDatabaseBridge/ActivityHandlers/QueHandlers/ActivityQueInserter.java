@@ -25,11 +25,12 @@ public class ActivityQueInserter implements ObjectQueInserter {
     @Override
     public void checkNullsAndAddToList() throws Exception {
         Map<ObjectId, Activity> activityMap = activitiesMap.getObjects(30);
+        
+        if (activityMap == null) throw new Exception("No activities to add.");
+
         ActivityDTO[] activityDTOs = activityMap.keySet().stream().map(
             key -> new ActivityDTO(key, activityMap.get(key))
         ).toArray(ActivityDTO[]::new);
-
-        if (activityDTOs == null) throw new Exception("No activities to add.");
 
         int index = 0;
         while (arrayHandler.hasNulls()) {
