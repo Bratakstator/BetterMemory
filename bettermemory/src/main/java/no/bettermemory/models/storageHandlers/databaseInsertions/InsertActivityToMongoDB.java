@@ -13,18 +13,17 @@ import no.bettermemory.models.activity.Activity;
 import no.bettermemory.tools.DatabaseConnections;
 
 public class InsertActivityToMongoDB implements InsertActivityOrDay<Activity> {
-    MongoClient client;
-    MongoDatabase database;
-    MongoCollection<Document> collection;
+    private MongoDatabase database;
+    private MongoCollection<Document> collection;
     
     public InsertActivityToMongoDB(MongoClient client) {
-        this.client = client;
         this.database = DatabaseConnections.getUsersDatabase(client);
         this.collection = DatabaseConnections.getActivitiesCollection(database);
     }
 
     @Override
     public ObjectId saveObject(Activity activity) throws Exception {
+        if (activity == null) throw new Exception("Activity is null.");
         Document insert = activity.toDocument();
         InsertOneResult result = collection.insertOne(insert);
 
@@ -33,6 +32,8 @@ public class InsertActivityToMongoDB implements InsertActivityOrDay<Activity> {
 
     @Override
     public void updateObject(ObjectId activityId, Activity activity) throws Exception {
+        if (activityId == null) throw new Exception("ActivityId is null.");
+        if (activity == null) throw new Exception("Activity is null.");
         Document query = new Document("_id", activityId);
         Document replaceDocument = activity.toDocument();
         collection.replaceOne(query, replaceDocument);
