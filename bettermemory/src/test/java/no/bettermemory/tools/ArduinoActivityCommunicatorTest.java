@@ -39,7 +39,7 @@ class ArduinoActivityCommunicatorTest {
 
     @Test
     void testClosePort() {
-        communicator.ClosePort(mockSerialPort);
+        communicator.closePort(mockSerialPort);
         verify(mockSerialPort).closePort();
     }
 
