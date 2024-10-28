@@ -17,14 +17,14 @@ import no.bettermemory.models.time.Day;
 import no.bettermemory.tools.DatabaseConnections;
 
 public class InsertDayToMongoDB implements InsertActivityOrDay<Day> {
-    MongoClient client;
-    MongoDatabase database;
-    MongoCollection<Document> collection;
+    private MongoDatabase database;
+    private MongoCollection<Document> collection;
+    private InsertActivityOrDay<Activity> insertActivity;
     
-    public InsertDayToMongoDB(MongoClient client) {
-        this.client = client;
+    public InsertDayToMongoDB(MongoClient client, InsertActivityOrDay<Activity> insertActivity) {
         this.database = DatabaseConnections.getUsersDatabase(client);
         this.collection = DatabaseConnections.getDaysCollection(database);
+        this.insertActivity = insertActivity;
     }
 
     public ObjectId saveObject(Day day) throws Exception {
@@ -35,7 +35,6 @@ public class InsertDayToMongoDB implements InsertActivityOrDay<Day> {
         ArrayList<Activity> activities = day.getActivities();
         if (activities.size() != 0) {
             List<ObjectId> activityIds = new ArrayList<>();
-            InsertActivityToMongoDB insertActivity = new InsertActivityToMongoDB(client);
             for (Activity activity : activities) {
                 ObjectId activityId = insertActivity.saveObject(activity);
                 activityIds.add(activityId);

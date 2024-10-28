@@ -34,7 +34,7 @@ public class InsertWeekToMongoDB implements InsertToDatabase<Week> {
         ArrayList<Day> days = week.getDays();
         if (days.size() != 0) {
             List<ObjectId> dayIds = new ArrayList<>();
-            InsertDayToMongoDB insertDay = new InsertDayToMongoDB(client);
+            InsertDayToMongoDB insertDay = new InsertDayToMongoDB(client, null);
             for (Day day : days) {
                 ObjectId dayId = insertDay.saveObject(day);
                 dayIds.add(dayId);
