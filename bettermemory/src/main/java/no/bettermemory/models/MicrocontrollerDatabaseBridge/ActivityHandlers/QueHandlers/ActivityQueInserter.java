@@ -14,6 +14,14 @@ public class ActivityQueInserter implements ObjectQueInserter {
     private TimeIntervalBasedObjectRetriever<Map<ObjectId, Activity>> activitiesMap;
     private StaticContainerHandler<ActivityDTO> arrayHandler;
 
+    public ActivityQueInserter(
+        TimeIntervalBasedObjectRetriever<Map<ObjectId, Activity>> activitiesMap,
+        StaticContainerHandler<ActivityDTO> arrayHandler
+    ) {
+        this.activitiesMap = activitiesMap;
+        this.arrayHandler = arrayHandler;
+    }
+
     @Override
     public void checkNullsAndAddToList() throws Exception {
         Map<ObjectId, Activity> activityMap = activitiesMap.getObjects(30);
