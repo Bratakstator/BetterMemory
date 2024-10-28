@@ -38,10 +38,39 @@ public class ActivityQueStateCheckerTest {
     }
 
     @Test
-    public void testCheckQueStateWhenConcluded() {
+    public void testCheckQueStateWhenConcluded() throws Exception {
         // Arrange
         when(mockArrayHandler.length()).thenReturn(1);
         when(mockArrayHandler.get(anyInt())).thenReturn(mockActivityDTO);
+        when(mockActivityDTO.getActivity()).thenReturn(mockActivity);
         when(mockActivityDTO.getActivity().getConcluded()).thenReturn(true);
+        when(mockArrayHandler.addAtIndex(0, null)).thenReturn(0);
+        when(mockActivityDTO.getActivityId()).thenReturn(mockObjectId);
+
+        // Act
+        stateChecker.checkQueState();
+
+        // Assert
+        verify(mockInsertActivity).updateObject(mockObjectId, mockActivity);
+        verify(mockArrayHandler).addAtIndex(0, null);
+    }
+
+    // This is just wrong, will fix
+    @Test
+    public void testCheckQueStateWhenTimeOut() {
+        // Arrange
+        when(mockArrayHandler.length()).thenReturn(1);
+        when(mockArrayHandler.get(anyInt())).thenReturn(mockActivityDTO);
+        when(mockActivityDTO.getActivity()).thenReturn(mockActivity);
+        when(mockActivityDTO.getActivity().getConcluded()).thenReturn(false);
+        when(mockActivityDTO.getActivity().getHour()).thenReturn(10);
+        when(mockActivityDTO.getActivity().getMinutes()).thenReturn(45);
+        //when(TimeComparisons.currentTimeHasPassedThreshold(10, 45, 30)).thenReturn(true);
+
+        // Act
+        stateChecker.checkQueState();
+
+        // Assert
+        verify(mockArrayHandler).addAtIndex(0, null);
     }
 }
