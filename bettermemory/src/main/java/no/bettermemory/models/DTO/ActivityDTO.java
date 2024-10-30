@@ -9,6 +9,8 @@ public class ActivityDTO {
     Activity activity;
     String dayName;
 
+    public ActivityDTO() {}
+
     public ActivityDTO(ObjectId activityId, Activity activity, String dayName) {
         this.activityId = activityId;
         this.activity = activity;
