@@ -12,6 +12,8 @@ import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 
 import no.bettermemory.interfaces.storageHandlers.storageGetters.GetActivity;
+import no.bettermemory.models.DTO.ActivityDTO;
+import no.bettermemory.models.DTO.ActivityToReceiveDTO;
 import no.bettermemory.models.activity.Activity;
 import no.bettermemory.tools.DatabaseConnections;
 import no.bettermemory.tools.TimeControls;
@@ -26,51 +28,76 @@ public class GetActivityFromMongoDB implements GetActivity {
 
     @SuppressWarnings("unchecked")
     @Override
-    public HashMap<ObjectId, Activity> getActivitiesAtMinute(String patientId, int year, int weekNumber, String dayName, int hour, int minutes) throws Exception {
+    public ActivityDTO[] getActivitiesAtMinute(ActivityToReceiveDTO activityToReceive) throws Exception {
         try {
-            TimeControls.hourCheck(hour);
-            TimeControls.minuteCheck(minutes);
+            TimeControls.hourCheck(activityToReceive.getHour());
+            TimeControls.minuteCheck(activityToReceive.getMinutes());
         } catch (IllegalArgumentException e) {
             throw new Exception(e.getMessage());
         }
 
 
-        Document weekQuery = new Document("patient", patientId).append("year", year).append("week_number", weekNumber);
+        Document weekQuery = new Document(
+                "patient", activityToReceive.getPatientId()
+            ).append(
+                "year", activityToReceive.getYear()
+            ).append(
+                "week_number", activityToReceive.getWeekNumber()
+        );
+
         collection = DatabaseConnections.getWeeksCollection(database);
         Document weekResult = collection.find(weekQuery).first();
 
-        if (weekResult == null) throw new Exception("week " + weekNumber + ", "+ year + " not registered in system");
-        if (!weekResult.containsKey("days")) throw new Exception("No days registered on week " + weekNumber + ".");
+        if (weekResult == null) throw new Exception(
+            "week " + activityToReceive.getWeekNumber() + ", "+ activityToReceive.getYear() + " not registered in system"
+        );
+        if (!weekResult.containsKey("days")) throw new Exception(
+            "No days registered on week " + activityToReceive.getWeekNumber() + "."
+        );
 
         List<ObjectId> dayIds = (List<ObjectId>) weekResult.get("days");
 
         Document relevantDay = null;
         for (ObjectId dayId : dayIds) {
-            Document dayQuery = new Document("_id", dayId).append("day", dayName);
+            Document dayQuery = new Document("_id", dayId).append("day", activityToReceive.getDayName());
             collection = DatabaseConnections.getDaysCollection(database);
             relevantDay = collection.find(dayQuery).first();
         }
 
-        if (relevantDay == null) throw new Exception(dayName + " not registered on week " + weekNumber + ".");
+        if (relevantDay == null) throw new Exception(
+            activityToReceive.getDayName() + " not registered on week " + activityToReceive.getWeekNumber() + "."
+        );
         if (!relevantDay.containsKey("activities")) throw new Exception(
-            "No activities registered on " + dayName + " at week " + weekNumber + "."
+            "No activities registered on " + activityToReceive.getDayName()
+             + " at week " + activityToReceive.getWeekNumber() + "."
         );
 
         List<ObjectId> activityIds = (List<ObjectId>) relevantDay.get("activities");
 
         List<Document> activityDocuments = new ArrayList<>();
         for (ObjectId activityId : activityIds) {
-            Document activityQuery = new Document("_id", activityId).append("hour", hour).append("minutes", minutes);
+            Document activityQuery = new Document(
+                    "_id", activityId
+                ).append(
+                    "hour", activityToReceive.getHour()
+                ).append(
+                    "minutes", activityToReceive.getMinutes()
+            );
+
             collection = DatabaseConnections.getActivitiesCollection(database);
             Document activityResult = collection.find(activityQuery).first();
             if (activityResult != null) activityDocuments.add(activityResult);
         }
 
         if (activityDocuments.size() == 0) throw new Exception(
-            "Could not find an activity happening on: " + dayName + ", week " + weekNumber + " at " + hour + ":" + minutes + "."
+            "Could not find an activity happening on: " + activityToReceive.getDayName()
+             + ", week " + activityToReceive.getWeekNumber()
+              + " at " + activityToReceive.getHour()
+              + ":" + activityToReceive.getMinutes()
+               + "."
         );
 
-        HashMap<ObjectId, Activity> activities = new HashMap<>();
+        List<ActivityDTO> activityDTOs = new ArrayList<>();
         for (Document activityDocument : activityDocuments) {
             Activity activity = new Activity();
             activity.setShortDescription(activityDocument.getString("short_desc"));
@@ -79,13 +106,19 @@ public class GetActivityFromMongoDB implements GetActivity {
             activity.setMinutes(activityDocument.getInteger("minutes"));
             activity.setImportant(activityDocument.getBoolean("important"));
             activity.setConcluded(activityDocument.getBoolean("concluded"));
-            activities.put(activityDocument.getObjectId("_id"), activity);
+
+            ActivityDTO activityDTO = new ActivityDTO(
+                activityDocument.getObjectId("_id"),
+                activity,
+                activityToReceive.getDayName()
+            );
+            activityDTOs.add(activityDTO);
         }
 
-        return activities;
+        return activityDTOs.toArray(ActivityDTO[]::new);
     }
 
-    @Override
+    /*@Override
     public HashMap<ObjectId, Activity> getActivitiesAtInterval(
         String patientId, int year, int weekNumber, String dayName, int currentHour, int currentMinutes, int interval
     ) throws Exception {
@@ -111,7 +144,7 @@ public class GetActivityFromMongoDB implements GetActivity {
         if (activities.size() == 0) throw new Exception("No activities found at the hour " + currentHour + ".");
 
         return activities;
-    }
+    }*/
 
     @Override
     public HashMap<ObjectId, Activity> getActivitiesFromObjectId(List<ObjectId> activityIds) throws Exception {

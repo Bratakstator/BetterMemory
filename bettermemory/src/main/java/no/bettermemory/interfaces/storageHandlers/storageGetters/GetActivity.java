@@ -6,12 +6,11 @@ import java.util.Map;
 import org.bson.types.ObjectId;
 
 import no.bettermemory.models.DTO.ActivityDTO;
+import no.bettermemory.models.DTO.ActivityToReceiveDTO;
 import no.bettermemory.models.activity.Activity;
 
 public interface GetActivity {
-    ActivityDTO[] getActivitiesAtMinute(
-        String patientId, int year, int weekNumber, String dayName, int hour, int minutes
-    ) throws Exception;
+    ActivityDTO[] getActivitiesAtMinute(ActivityToReceiveDTO activityToReceive) throws Exception;
 
     /* Been thinking of removing this
     HashMap<ObjectId, Activity> getActivitiesAtInterval(
