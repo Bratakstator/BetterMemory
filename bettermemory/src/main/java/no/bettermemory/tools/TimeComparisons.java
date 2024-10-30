@@ -1,6 +1,10 @@
 package no.bettermemory.tools;
 
+import java.time.DayOfWeek;
+import java.time.LocalDateTime;
+import java.time.temporal.WeekFields;
 import java.util.Calendar;
+import java.util.Locale;
 
 public class TimeComparisons {
     public static int getCurrentClockTimeInMinutes() {
@@ -8,14 +12,19 @@ public class TimeComparisons {
         return (time.get(Calendar.HOUR_OF_DAY) * 60) + time.get(Calendar.MINUTE);
     }
 
-    public static boolean currentTimeHasPassedThreshold(int hour, int minutes, int threshold) {
-        int currentMinutesToday = getCurrentClockTimeInMinutes();
-        int givenTimeInMinutes = (hour * 60) + minutes;
+    public static boolean givenTimeHasPassedThreshold(int year, int weekNumber, String dayName, int hour, int minutes, int threshold) {
+        WeekFields weekFields = WeekFields.of(Locale.getDefault());
+        LocalDateTime providedTime = LocalDateTime.now()
+            .withYear(year)
+            .with(weekFields.weekOfWeekBasedYear(), weekNumber)
+            .with(DayOfWeek.valueOf(dayName.toUpperCase()))
+            .withHour(hour)
+            .withMinute(minutes)
+            .withSecond(0)
+            .withNano(0);
 
-        // What was the term? magic numbers? i wouldn't personally call this that, 1440 is the amount of minutes in one day.
-        if (currentMinutesToday - givenTimeInMinutes < 0) currentMinutesToday += 1440;
-        if (currentMinutesToday - givenTimeInMinutes > 30) return true;
+        LocalDateTime currentTime = LocalDateTime.now();
 
-        return false;
+        return currentTime.isAfter(providedTime.plusMinutes(threshold));
     }
 }

@@ -65,6 +65,9 @@ public class ActivityQueStateCheckerTest {
         when(mockActivityDTO.getActivity().getConcluded()).thenReturn(false);
         when(mockActivityDTO.getActivity().getHour()).thenReturn(10);
         when(mockActivityDTO.getActivity().getMinutes()).thenReturn(45);
+        when(mockActivityDTO.getYear()).thenReturn(2024);
+        when(mockActivityDTO.getWeekNumber()).thenReturn(35);
+        when(mockActivityDTO.getDayName()).thenReturn("monday");
         //when(TimeComparisons.currentTimeHasPassedThreshold(10, 45, 30)).thenReturn(true);
 
         // Act

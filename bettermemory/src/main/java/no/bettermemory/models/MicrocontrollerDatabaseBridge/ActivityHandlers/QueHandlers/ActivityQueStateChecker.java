@@ -10,6 +10,7 @@ import no.bettermemory.tools.TimeComparisons;
 public class ActivityQueStateChecker implements ObjectQueStateChecker {
     private StaticContainerHandler<ActivityDTO> arrayHandler;
     private InsertActivityOrDay<Activity> insertActivity;
+    private int threshold = 30; // Standard value
 
     public ActivityQueStateChecker(StaticContainerHandler<ActivityDTO> arrayHandler, InsertActivityOrDay<Activity> insertActivity) {
         this.arrayHandler = arrayHandler;
@@ -33,14 +34,21 @@ public class ActivityQueStateChecker implements ObjectQueStateChecker {
                 }
             }
             else if (
-                TimeComparisons.currentTimeHasPassedThreshold(
+                TimeComparisons.givenTimeHasPassedThreshold(
+                    activityDTO.getYear(),
+                    activityDTO.getWeekNumber(),
+                    activityDTO.getDayName(),
                     activityDTO.getActivity().getHour(),
                     activityDTO.getActivity().getMinutes(),
-                    30
+                    threshold
                 )
             ) {
                 arrayHandler.addAtIndex(index, null);
             }
         }
     }
+
+    public void setThreshold(int threshold) { this.threshold = threshold; }
+
+    public int getThreshold() { return threshold; }
 }
