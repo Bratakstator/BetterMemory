@@ -13,27 +13,27 @@ import java.time.ZoneId;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @ExtendWith(MockitoExtension.class)
-public class PresentWeekIntegerTest {
+public class GetYearIntegerTest {
 
     @Test
-    @DisplayName("Get present week.")
-    public void getWeek() {
+    @DisplayName("Get present year.")
+    public void getHour() {
         /*
-         * Creates a fixed clock which to be used in the PresentWeekInteger constructor.
+         * Creates a fixed clock which to be used in the PresentYearInteger constructor.
          * The process of mocking the LocalDateTime class looked quite complicated, I therefor 
-         * found it simpler to implement a clock object to the PresentWeekInteger class in order 
+         * found it simpler to implement a clock object to the PresentYearInteger class in order 
          * to test this in a more predictable manner.
          */
-        Clock fixedClock = Clock.fixed(Instant.parse("0001-01-01T12:50:00Z"), ZoneId.of("UTC"));
+        Clock fixedClock = Clock.fixed(Instant.parse("1945-08-05T12:00:00Z"), ZoneId.of("UTC"));
 
        //Crates a PresentHourInteger object with the already created fixedClock object.
-        GetWeekInteger presentWeekInteger = new GetWeekInteger(fixedClock);
+        GetYearInteger presentYearInteger = new GetYearInteger(fixedClock);
 
        
-        int presentWeek = presentWeekInteger.getWeek();
+        int presentYear = presentYearInteger.getYear(0);
 
     
-        assertEquals(1, presentWeek);
+        assertEquals(1945, presentYear);
         
     }
 }

@@ -44,8 +44,8 @@ public class GetDayString implements DayProvider<String>{
      * This method will return the name of the day for ether the current time provided by the system
      * or based on the time set by the clock.
      */
-    public String getDay() {
-        return LocalDateTime.now(clock).getDayOfWeek().getDisplayName(TextStyle.FULL, Locale.ENGLISH);
+    public String getDay(int minutesInAdvance) {
+        return LocalDateTime.now(clock).plusMinutes(minutesInAdvance).getDayOfWeek().getDisplayName(TextStyle.FULL, Locale.ENGLISH);
 
     }
     

@@ -13,27 +13,29 @@ import java.time.ZoneId;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @ExtendWith(MockitoExtension.class)
-public class PresentHourIntegerTest {
+public class GetDayStringTest {
 
     @Test
-    @DisplayName("Get present hour.")
-    public void getHour() {
+    @DisplayName("Get present Day.")
+    public void getDay() {
         /*
          * Creates a fixed clock which to be used in the PresentHourInteger constructor.
          * The process of mocking the LocalDateTime class looked quite complicated, I therefor 
          * found it simpler to implement a clock object to the PresentHourInteger class in order 
          * to test this in a more predictable manner.
          */
-        Clock fixedClock = Clock.fixed(Instant.parse("0001-01-01T12:00:00Z"), ZoneId.of("UTC"));
+        Clock fixedClock = Clock.fixed(Instant.parse("0000-12-25T12:00:00Z"), ZoneId.of("UTC"));
 
-       //Crates a PresentHourInteger object with the already created fixedClock object.
-        GetHourInteger presentHourInteger = new GetHourInteger(fixedClock);
+       //Crates a PresentDayString object with the already created fixedClock object.
+        GetDayString presentDayString = new GetDayString(fixedClock);
 
        
-        int presentHour = presentHourInteger.getHour();
+        String presentDay = presentDayString.getDay(0);
 
     
-        assertEquals(12, presentHour);
+        assertEquals("Monday", presentDay);
+
+        System.out.println("Jesus was born on a monday.");
         
     }
 }

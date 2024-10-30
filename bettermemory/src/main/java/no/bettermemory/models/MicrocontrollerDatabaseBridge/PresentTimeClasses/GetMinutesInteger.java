@@ -41,8 +41,8 @@ public class GetMinutesInteger implements MinutesProvider<Integer> {
      * This class will provide an integer which represent the current or a predefined 
      * minutes.
      */
-    public Integer getMinutes() {
-        return  LocalDateTime.now(clock).getMinute();
+    public Integer getMinutes(int minutesInAdvance) {
+        return  LocalDateTime.now(clock).plusMinutes(minutesInAdvance).getMinute();
         
     }
     

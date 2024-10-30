@@ -10,6 +10,6 @@ public interface YearProvider<T> {
      * This method should return a year representation on the specified data value format.
      * @return T
      */
-    T getYear();
+    T getYear(int minutesInAdvance);
     
 }

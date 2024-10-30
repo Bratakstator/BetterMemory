@@ -10,6 +10,6 @@ public interface WeekProvider<T> {
      * This method should return a week representation on the specified data value format.
      * @return T
      */
-    T getWeek();
+    T getWeek(int minutesInAdvance);
     
 }

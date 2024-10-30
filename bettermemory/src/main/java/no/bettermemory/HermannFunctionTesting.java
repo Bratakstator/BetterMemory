@@ -14,19 +14,19 @@ public class HermannFunctionTesting {
 
         GetHourInteger presentHourInteger = new GetHourInteger();
 
-        System.out.println(presentHourInteger.getHour());
+        System.out.println(presentHourInteger.getHour(0));
 
         GetMinutesInteger presentMinutesInteger = new GetMinutesInteger();
 
-        System.out.println(presentMinutesInteger.getMinutes());
+        System.out.println(presentMinutesInteger.getMinutes(0));
 
         GetWeekInteger presentWeekInteger = new GetWeekInteger();
 
-        System.out.println(presentWeekInteger.getWeek());
+        System.out.println(presentWeekInteger.getWeek(0));
 
         GetYearInteger presentYearInteger = new GetYearInteger();
 
-        System.out.println(presentYearInteger.getYear());
+        System.out.println(presentYearInteger.getYear(0));
 
         
     }

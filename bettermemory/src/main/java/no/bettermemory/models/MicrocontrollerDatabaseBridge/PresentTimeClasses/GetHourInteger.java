@@ -41,8 +41,8 @@ public class GetHourInteger implements HourProvider<Integer> {
      * This class will provide an integer which represent the current or a predefined 
      * hour.
      */
-    public Integer getHour() {
-        return LocalDateTime.now(clock).getHour();
+    public Integer getHour(int minutesInAdvance) {
+        return LocalDateTime.now(clock).plusMinutes(minutesInAdvance).getHour();
         
     }
     

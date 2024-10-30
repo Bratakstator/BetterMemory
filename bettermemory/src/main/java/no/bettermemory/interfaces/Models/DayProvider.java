@@ -10,6 +10,6 @@ public interface DayProvider<T> {
     * This method should return a day representation on the specified data value format.
     * @return T
     */
-    T getDay();
+    T getDay(int minutesInAdvance);
     
 }

@@ -10,6 +10,6 @@ public interface MinutesProvider<T> {
     * This method should return a minutes representation on the specified data value format.
     * @return T
     */
-    T getMinutes();
+    T getMinutes(int minutesInAdvance);
     
 }

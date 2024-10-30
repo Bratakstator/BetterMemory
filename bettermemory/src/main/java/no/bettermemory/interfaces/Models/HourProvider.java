@@ -10,7 +10,7 @@ public interface HourProvider<T> {
     * This method should return a hour representation on the specified data value format.
     * @return T
     */
-    T getHour();
+    T getHour(int minutesInAdvance);
 
     
     

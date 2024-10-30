@@ -41,8 +41,8 @@ public class GetYearInteger implements YearProvider<Integer> {
      * This class will provide an integer which represent the current or a predefined 
      * year.
      */
-    public Integer getYear() {
-        return  LocalDateTime.now(clock).getYear();
+    public Integer getYear(int minutesInAdvance) {
+        return  LocalDateTime.now(clock).plusMinutes(minutesInAdvance).getYear();
     }
     
 }

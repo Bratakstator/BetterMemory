@@ -43,13 +43,13 @@ public class GetWeekInteger implements WeekProvider<Integer> {
      * This class will provide an integer which represent the current or a predefined 
      * weekNumber.
      */
-    public Integer getWeek() {
+    public Integer getWeek(int minutesInAdvance) {
         return  LocalDateTime.now(clock) //sets the clock for this the returned now value.
-                             .get(WeekFields.of(Locale.getDefault()) 
-                             .weekOfWeekBasedYear()); /*Sets the returned week number to 
-                                                  be based on the given year in the returned
-                                                  now value.
-                                                */
+        .plusMinutes(minutesInAdvance).get(WeekFields.of(Locale.getDefault()) 
+        .weekOfWeekBasedYear()); /*Sets the returned week number to 
+                                   be based on the given year in the returned
+                                   now value.
+                                  */
         
     }
     
