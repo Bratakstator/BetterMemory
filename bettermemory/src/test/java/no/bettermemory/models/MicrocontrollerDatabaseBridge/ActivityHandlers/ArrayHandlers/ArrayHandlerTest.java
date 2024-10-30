@@ -17,9 +17,11 @@ import no.bettermemory.models.activity.Activity;
 @ExtendWith(MockitoExtension.class)
 public class ArrayHandlerTest {
     @Mock
-    private ObjectId objectId;
+    private ObjectId mockObjectId;
     @Mock
-    private Activity activity;
+    private Activity mockActivity;
+    @Mock
+    private String mockDayName;
 
     @Test
     public void testArrayShift() {
@@ -27,11 +29,11 @@ public class ArrayHandlerTest {
         ArrayHandler<ActivityDTO> array = new ArrayDTOHandler<>(new ActivityDTO[5]);
         ActivityDTO[] activities = array.getArray();
 
-        activities[0] = new ActivityDTO(objectId, activity);
+        activities[0] = new ActivityDTO(mockObjectId, mockActivity, mockDayName);
         activities[1] = null;
         activities[2] = null;
-        activities[3] = new ActivityDTO(objectId, activity);
-        activities[4] = new ActivityDTO(objectId, activity);
+        activities[3] = new ActivityDTO(mockObjectId, mockActivity, mockDayName);
+        activities[4] = new ActivityDTO(mockObjectId, mockActivity, mockDayName);
 
         // Act
         array.nullShiftRight();
@@ -61,7 +63,7 @@ public class ArrayHandlerTest {
     public void testHasNullWithNoNulls() {
         // Arrange
         ArrayHandler<ActivityDTO> array = new ArrayDTOHandler<>(new ActivityDTO[1]);
-        array.getArray()[0] = new ActivityDTO(objectId, activity);
+        array.getArray()[0] = new ActivityDTO(mockObjectId, mockActivity, mockDayName);
 
         // Act
         boolean hasNull = array.hasNulls();
@@ -74,7 +76,7 @@ public class ArrayHandlerTest {
     public void testGetFirstNullWithNulls() {
         // Arrange
         ArrayHandler<ActivityDTO> array = new ArrayDTOHandler<>(new ActivityDTO[2]);
-        array.getArray()[0] = new ActivityDTO(objectId, activity);
+        array.getArray()[0] = new ActivityDTO(mockObjectId, mockActivity, mockDayName);
         array.getArray()[1] = null;
 
         // Act
@@ -93,7 +95,7 @@ public class ArrayHandlerTest {
     public void testGetFirstNullWithNoNulls() {
         // Arrange
         ArrayHandler<ActivityDTO> array = new ArrayDTOHandler<>(new ActivityDTO[1]);
-        array.getArray()[0] = new ActivityDTO(objectId, activity);
+        array.getArray()[0] = new ActivityDTO(mockObjectId, mockActivity, mockDayName);
 
         // Act
         Exception exception = assertThrows(Exception.class, () -> array.getFirstNullIndex());
@@ -106,8 +108,8 @@ public class ArrayHandlerTest {
     public void testGetAttributeOfElementFromIndexInBounds() {
         // Arrange
         ArrayHandler<ActivityDTO> array = new ArrayDTOHandler<>(new ActivityDTO[2]);
-        array.getArray()[0] = new ActivityDTO(objectId, activity);
-        array.getArray()[1] = new ActivityDTO(objectId, activity);
+        array.getArray()[0] = new ActivityDTO(mockObjectId, mockActivity, mockDayName);
+        array.getArray()[1] = new ActivityDTO(mockObjectId, mockActivity, mockDayName);
 
         // Act
         Activity activity1 = array.getAttributeOf(0, ActivityDTO::getActivity);
@@ -140,7 +142,7 @@ public class ArrayHandlerTest {
 
         // Act
         try {
-            array.add(new ActivityDTO(objectId, activity));
+            array.add(new ActivityDTO(mockObjectId, mockActivity, mockDayName));
         } catch (Exception e) {
             System.err.println(e);
         }
@@ -153,13 +155,13 @@ public class ArrayHandlerTest {
     public void testAddToListWithoutNulls() {
         // Arrange
         ArrayHandler<ActivityDTO> array = new ArrayDTOHandler<>(
-            new ActivityDTO[]{new ActivityDTO(objectId, activity)}
+            new ActivityDTO[]{new ActivityDTO(mockObjectId, mockActivity, mockDayName)}
         );
 
         // Act
         Exception exception = assertThrows(
             Exception.class,
-            () -> array.add(new ActivityDTO(objectId, activity))
+            () -> array.add(new ActivityDTO(mockObjectId, mockActivity, mockDayName))
         );
 
         // Assert
@@ -175,7 +177,7 @@ public class ArrayHandlerTest {
         try {
             array.addAtIndex(
                 1,
-                new ActivityDTO(objectId, activity)
+                new ActivityDTO(mockObjectId, mockActivity, mockDayName)
             );
         } catch (IndexOutOfBoundsException e) {
             System.err.println(e);
@@ -193,7 +195,7 @@ public class ArrayHandlerTest {
         // Act
         IndexOutOfBoundsException exception = assertThrows(
             IndexOutOfBoundsException.class,
-            () -> array.addAtIndex(1, new ActivityDTO(objectId, activity))
+            () -> array.addAtIndex(1, new ActivityDTO(mockObjectId, mockActivity, mockDayName))
         );
 
         // Assert
@@ -204,7 +206,7 @@ public class ArrayHandlerTest {
     public void testGetInBounds() {
         // Assert
         ArrayHandler<ActivityDTO> array = new ArrayDTOHandler<>(
-            new ActivityDTO[]{new ActivityDTO(objectId, activity)}
+            new ActivityDTO[]{new ActivityDTO(mockObjectId, mockActivity, mockDayName)}
         );
 
         // Act
