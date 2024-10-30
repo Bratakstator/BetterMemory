@@ -1,20 +1,23 @@
 package no.bettermemory.interfaces.storageHandlers.storageGetters;
 
-import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.bson.types.ObjectId;
 
+import no.bettermemory.models.DTO.ActivityDTO;
 import no.bettermemory.models.activity.Activity;
 
 public interface GetActivity {
-    HashMap<ObjectId, Activity> getActivitiesAtMinute(
+    ActivityDTO[] getActivitiesAtMinute(
         String patientId, int year, int weekNumber, String dayName, int hour, int minutes
     ) throws Exception;
 
+    /* Been thinking of removing this
     HashMap<ObjectId, Activity> getActivitiesAtInterval(
         String patientId, int year, int weekNumber, String dayName, int currentHour, int currentMinutes, int interval
     ) throws Exception;
+     */
     
-    HashMap<ObjectId, Activity> getActivitiesFromObjectId(List<ObjectId> activityIds) throws Exception;
+    Map<ObjectId, Activity> getActivitiesFromObjectId(List<ObjectId> activityIds) throws Exception;
 }
