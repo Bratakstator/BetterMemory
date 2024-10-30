@@ -110,7 +110,9 @@ public class GetActivityFromMongoDB implements GetActivity {
             ActivityDTO activityDTO = new ActivityDTO(
                 activityDocument.getObjectId("_id"),
                 activity,
-                activityToReceive.getDayName()
+                weekResult.getInteger("year"),
+                weekResult.getInteger("week_number"),
+                relevantDay.getString("day")
             );
             activityDTOs.add(activityDTO);
         }
