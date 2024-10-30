@@ -63,11 +63,11 @@ public class TimeIntervalBasedActivityRetriever implements TimeIntervalBasedObje
             try {
                 ActivityToReceiveDTO activityToReceive = new ActivityToReceiveDTO(
                     patientId,
-                    year.getYear(),
-                    weekNumber.getWeek(),
-                    dayName.getDay(),
-                    hour.getHour(),
-                    minute.getMinutes()
+                    year.getYear(intervalPos),
+                    weekNumber.getWeek(intervalPos),
+                    dayName.getDay(intervalPos),
+                    hour.getHour(intervalPos),
+                    minute.getMinutes(intervalPos)
                 );
                 activityDTOs.addAll(Arrays.asList(getActivity.getActivitiesAtMinute(activityToReceive)));
             } catch (Exception e) {

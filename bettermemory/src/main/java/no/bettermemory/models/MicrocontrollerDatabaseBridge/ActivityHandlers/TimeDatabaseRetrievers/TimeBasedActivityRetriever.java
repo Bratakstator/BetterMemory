@@ -65,11 +65,11 @@ public class TimeBasedActivityRetriever implements TimeBasedObjectRetriever<Acti
         try{
             ActivityToReceiveDTO activityToReceive = new ActivityToReceiveDTO(
                 patientId,
-                year.getYear(),
-                weekNumber.getWeek(),
-                dayName.getDay(),
-                hour.getHour(),
-                minute.getMinutes()
+                year.getYear(0),
+                weekNumber.getWeek(0),
+                dayName.getDay(0),
+                hour.getHour(0),
+                minute.getMinutes(0)
             );
             return getActivity.getActivitiesAtMinute(activityToReceive);
         }
