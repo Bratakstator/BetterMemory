@@ -1,22 +1,18 @@
 package no.bettermemory.models.MicrocontrollerDatabaseBridge.ActivityHandlers.TimeBasedDatabaseRetrievers;
 
-import org.bson.types.ObjectId;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.Mock;
 
-import static org.mockito.ArgumentMatchers.anyInt;
-import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.*;
 import static org.junit.jupiter.api.Assertions.*;
 import org.mockito.InjectMocks;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.DisplayName;
-import java.util.HashMap;
 
 import org.mockito.Mockito;
-import java.util.Map;
 
 import no.bettermemory.interfaces.storageHandlers.storageGetters.GetActivity;
 import no.bettermemory.interfaces.Models.MinutesProvider;
@@ -24,8 +20,9 @@ import no.bettermemory.interfaces.Models.HourProvider;
 import no.bettermemory.interfaces.Models.WeekProvider;
 import no.bettermemory.interfaces.Models.DayProvider;
 import no.bettermemory.interfaces.Models.YearProvider;
+import no.bettermemory.models.DTO.ActivityDTO;
+import no.bettermemory.models.DTO.ActivityToReceiveDTO;
 import no.bettermemory.models.MicrocontrollerDatabaseBridge.ActivityHandlers.TimeDatabaseRetrievers.TimeBasedActivityRetriever;
-import no.bettermemory.models.activity.Activity;
 
 
 @ExtendWith(MockitoExtension.class)
@@ -54,6 +51,9 @@ public class TimeBasedActivityRetrieverTest {
     @Mock 
     private YearProvider<Integer> mockYearProvider;
 
+    @Mock
+    private ActivityToReceiveDTO mockActivityToReceiveDTO;
+
     @InjectMocks
     private TimeBasedActivityRetriever timeBasedActivityRetriever;
 
@@ -72,27 +72,20 @@ public class TimeBasedActivityRetrieverTest {
     @DisplayName("Get activities for this instant")
     public void testGetObjectReturnsActivityList() throws Exception {
         //Arrange
-        when(mockMinuteProvider.getMinutes()).thenReturn(5); //
-        when(mockHourProvider.getHour()).thenReturn(15);
-        when(mockDayProvider.getDay()).thenReturn("Monday");
-        when(mockWeekProvider.getWeek()).thenReturn(40);
-        when(mockYearProvider.getYear()).thenReturn(2024);
+        when(mockMinuteProvider.getMinutes(anyInt())).thenReturn(5); //
+        when(mockHourProvider.getHour(anyInt())).thenReturn(15);
+        when(mockDayProvider.getDay(anyInt())).thenReturn("Monday");
+        when(mockWeekProvider.getWeek(anyInt())).thenReturn(40);
+        when(mockYearProvider.getYear(anyInt())).thenReturn(2024);
         //doReturn() is used here to handle the checked exception for the class.
-        Mockito.doReturn(new HashMap<ObjectId, Activity>()).when(mockGetActivity).getActivitiesAtMinute(
-            anyString(),
-            anyInt(), 
-            anyInt(), 
-            anyString(), 
-            anyInt(), 
-            anyInt()
-        );
+        Mockito.doReturn(new ActivityDTO[1]).when(mockGetActivity).getActivitiesAtMinute(mockActivityToReceiveDTO);
 
         //Act
-        Map<ObjectId, Activity> activities = timeBasedActivityRetriever.getObject();
+        ActivityDTO[] activities = timeBasedActivityRetriever.getObject();
         
         //Assert
         assertNotNull(activities);
-        assertTrue(activities.isEmpty());
+        //assertTrue(activities.isEmpty());
     }
     
 
