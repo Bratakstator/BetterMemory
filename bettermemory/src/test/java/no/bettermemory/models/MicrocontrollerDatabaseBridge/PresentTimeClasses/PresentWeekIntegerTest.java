@@ -27,7 +27,7 @@ public class PresentWeekIntegerTest {
         Clock fixedClock = Clock.fixed(Instant.parse("0001-01-01T12:50:00Z"), ZoneId.of("UTC"));
 
        //Crates a PresentHourInteger object with the already created fixedClock object.
-        PresentWeekInteger presentWeekInteger = new PresentWeekInteger(fixedClock);
+        GetWeekInteger presentWeekInteger = new GetWeekInteger(fixedClock);
 
        
         int presentWeek = presentWeekInteger.getWeek();

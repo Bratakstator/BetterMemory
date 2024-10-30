@@ -17,7 +17,7 @@ import no.bettermemory.interfaces.Models.DayProvider;
  * @author 
  * Hermann Mjelde Hamnnes
  */
-public class PresentDayString implements DayProvider<String>{
+public class GetDayString implements DayProvider<String>{
 
     private final Clock clock;
 
@@ -26,7 +26,7 @@ public class PresentDayString implements DayProvider<String>{
      * If no Clock object was passed to the constructor, the clock will
      * by default be set to the systemDefaultZone.
      */
-    public PresentDayString() {
+    public GetDayString() {
         this.clock = Clock.systemDefaultZone();
     }
 
@@ -35,7 +35,7 @@ public class PresentDayString implements DayProvider<String>{
      * a different Clock than the systemDefaultZone.
      * @param Clock
      */
-    public PresentDayString(Clock clock) {
+    public GetDayString(Clock clock) {
         this.clock = clock;
     }
 

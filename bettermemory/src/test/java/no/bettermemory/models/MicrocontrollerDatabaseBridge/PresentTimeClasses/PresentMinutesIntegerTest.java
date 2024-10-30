@@ -27,7 +27,7 @@ public class PresentMinutesIntegerTest {
         Clock fixedClock = Clock.fixed(Instant.parse("0001-01-01T12:50:00Z"), ZoneId.of("UTC"));
 
        //Crates a PresentHourInteger object with the already created fixedClock object.
-        PresentMinutesInteger presentMinutesInteger = new PresentMinutesInteger(fixedClock);
+        GetMinutesInteger presentMinutesInteger = new GetMinutesInteger(fixedClock);
 
        
         int presentMinutes = presentMinutesInteger.getMinutes();

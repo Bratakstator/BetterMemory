@@ -27,7 +27,7 @@ public class PresentDayStringTest {
         Clock fixedClock = Clock.fixed(Instant.parse("0000-12-25T12:00:00Z"), ZoneId.of("UTC"));
 
        //Crates a PresentDayString object with the already created fixedClock object.
-        PresentDayString presentDayString = new PresentDayString(fixedClock);
+        GetDayString presentDayString = new GetDayString(fixedClock);
 
        
         String presentDay = presentDayString.getDay();

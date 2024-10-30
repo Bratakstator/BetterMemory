@@ -27,7 +27,7 @@ public class PresentYearIntegerTest {
         Clock fixedClock = Clock.fixed(Instant.parse("1945-08-05T12:00:00Z"), ZoneId.of("UTC"));
 
        //Crates a PresentHourInteger object with the already created fixedClock object.
-        PresentYearInteger presentYearInteger = new PresentYearInteger(fixedClock);
+        GetYearInteger presentYearInteger = new GetYearInteger(fixedClock);
 
        
         int presentYear = presentYearInteger.getYear();
