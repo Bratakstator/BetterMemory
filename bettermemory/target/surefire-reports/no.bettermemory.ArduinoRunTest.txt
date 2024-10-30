@@ -1,0 +1,12 @@
+-------------------------------------------------------------------------------
+Test set: no.bettermemory.ArduinoRunTest
+-------------------------------------------------------------------------------
+Tests run: 1, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 0.979 s <<< FAILURE! -- in no.bettermemory.ArduinoRunTest
+no.bettermemory.ArduinoRunTest.testArduinoComAndReceive -- Time elapsed: 0.957 s <<< ERROR!
+java.lang.ArrayIndexOutOfBoundsException: Index 0 out of bounds for length 0
+	at no.bettermemory.tools.ArduinoActivityCommunicator.OpenPort(ArduinoActivityCommunicator.java:35)
+	at no.bettermemory.ArduinoRunTest.testArduinoComAndReceive(ArduinoRunTest.java:47)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+

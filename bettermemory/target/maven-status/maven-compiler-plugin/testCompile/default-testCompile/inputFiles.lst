@@ -1,13 +1,16 @@
-C:\Users\hhamn\OneDrive\Dokumenter\GitHub\BetterMemory\bettermemory\src\test\java\no\bettermemory\AppTest.java
-C:\Users\hhamn\OneDrive\Dokumenter\GitHub\BetterMemory\bettermemory\src\test\java\no\bettermemory\models\activity\ActivityTest.java
-C:\Users\hhamn\OneDrive\Dokumenter\GitHub\BetterMemory\bettermemory\src\test\java\no\bettermemory\models\MicrocontrollerDatabaseBridge\PresentDayStringTest.java
-C:\Users\hhamn\OneDrive\Dokumenter\GitHub\BetterMemory\bettermemory\src\test\java\no\bettermemory\models\MicrocontrollerDatabaseBridge\PresentHourIntegerTest.java
-C:\Users\hhamn\OneDrive\Dokumenter\GitHub\BetterMemory\bettermemory\src\test\java\no\bettermemory\models\MicrocontrollerDatabaseBridge\PresentMinutesIntegerTest.java
-C:\Users\hhamn\OneDrive\Dokumenter\GitHub\BetterMemory\bettermemory\src\test\java\no\bettermemory\models\MicrocontrollerDatabaseBridge\PresentWeekIntegerTest.java
-C:\Users\hhamn\OneDrive\Dokumenter\GitHub\BetterMemory\bettermemory\src\test\java\no\bettermemory\models\MicrocontrollerDatabaseBridge\PresentYearIntegerTest.java
-C:\Users\hhamn\OneDrive\Dokumenter\GitHub\BetterMemory\bettermemory\src\test\java\no\bettermemory\models\MicrocontrollerDatabaseBridge\TimeBasedActivityRetrieverTest.java
-C:\Users\hhamn\OneDrive\Dokumenter\GitHub\BetterMemory\bettermemory\src\test\java\no\bettermemory\models\time\DayTest.java
-C:\Users\hhamn\OneDrive\Dokumenter\GitHub\BetterMemory\bettermemory\src\test\java\no\bettermemory\models\time\WeekTest.java
-C:\Users\hhamn\OneDrive\Dokumenter\GitHub\BetterMemory\bettermemory\src\test\java\no\bettermemory\models\users\CloseRelativeTest.java
-C:\Users\hhamn\OneDrive\Dokumenter\GitHub\BetterMemory\bettermemory\src\test\java\no\bettermemory\models\users\HealthCarePersonnelTest.java
-C:\Users\hhamn\OneDrive\Dokumenter\GitHub\BetterMemory\bettermemory\src\test\java\no\bettermemory\models\users\PatientTest.java
+C:\Users\Hernic\Documents\Bettermomory deposit\BetterMemory\bettermemory\src\test\java\no\bettermemory\AppTest.java
+C:\Users\Hernic\Documents\Bettermomory deposit\BetterMemory\bettermemory\src\test\java\no\bettermemory\ArduinoRunTest.java
+C:\Users\Hernic\Documents\Bettermomory deposit\BetterMemory\bettermemory\src\test\java\no\bettermemory\models\activity\ActivityTest.java
+C:\Users\Hernic\Documents\Bettermomory deposit\BetterMemory\bettermemory\src\test\java\no\bettermemory\models\MicrocontrollerDatabaseBridge\ActivityHandlers\ArrayHandlerTest.java
+C:\Users\Hernic\Documents\Bettermomory deposit\BetterMemory\bettermemory\src\test\java\no\bettermemory\models\MicrocontrollerDatabaseBridge\PresentDayStringTest.java
+C:\Users\Hernic\Documents\Bettermomory deposit\BetterMemory\bettermemory\src\test\java\no\bettermemory\models\MicrocontrollerDatabaseBridge\PresentHourIntegerTest.java
+C:\Users\Hernic\Documents\Bettermomory deposit\BetterMemory\bettermemory\src\test\java\no\bettermemory\models\MicrocontrollerDatabaseBridge\PresentMinutesIntegerTest.java
+C:\Users\Hernic\Documents\Bettermomory deposit\BetterMemory\bettermemory\src\test\java\no\bettermemory\models\MicrocontrollerDatabaseBridge\PresentWeekIntegerTest.java
+C:\Users\Hernic\Documents\Bettermomory deposit\BetterMemory\bettermemory\src\test\java\no\bettermemory\models\MicrocontrollerDatabaseBridge\PresentYearIntegerTest.java
+C:\Users\Hernic\Documents\Bettermomory deposit\BetterMemory\bettermemory\src\test\java\no\bettermemory\models\MicrocontrollerDatabaseBridge\TimeBasedActivityRetrieverTest.java
+C:\Users\Hernic\Documents\Bettermomory deposit\BetterMemory\bettermemory\src\test\java\no\bettermemory\models\time\DayTest.java
+C:\Users\Hernic\Documents\Bettermomory deposit\BetterMemory\bettermemory\src\test\java\no\bettermemory\models\time\WeekTest.java
+C:\Users\Hernic\Documents\Bettermomory deposit\BetterMemory\bettermemory\src\test\java\no\bettermemory\models\users\CloseRelativeTest.java
+C:\Users\Hernic\Documents\Bettermomory deposit\BetterMemory\bettermemory\src\test\java\no\bettermemory\models\users\HealthCarePersonnelTest.java
+C:\Users\Hernic\Documents\Bettermomory deposit\BetterMemory\bettermemory\src\test\java\no\bettermemory\models\users\PatientTest.java
+C:\Users\Hernic\Documents\Bettermomory deposit\BetterMemory\bettermemory\src\test\java\no\bettermemory\tools\ArduinoActivityCommunicatorTest.java
