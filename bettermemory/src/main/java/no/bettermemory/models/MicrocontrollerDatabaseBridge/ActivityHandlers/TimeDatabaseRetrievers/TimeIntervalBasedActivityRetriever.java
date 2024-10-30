@@ -1,8 +1,7 @@
 package no.bettermemory.models.MicrocontrollerDatabaseBridge.ActivityHandlers.TimeDatabaseRetrievers;
 
-import java.util.Map;
-
-import org.bson.types.ObjectId;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 import no.bettermemory.interfaces.MicrocontrollerDatabaseBridge.TimeBasedDatabaseRetrievers.TimeIntervalBasedObjectRetriever;
 import no.bettermemory.interfaces.Models.DayProvider;
@@ -11,9 +10,10 @@ import no.bettermemory.interfaces.Models.MinutesProvider;
 import no.bettermemory.interfaces.Models.WeekProvider;
 import no.bettermemory.interfaces.Models.YearProvider;
 import no.bettermemory.interfaces.storageHandlers.storageGetters.GetActivity;
-import no.bettermemory.models.activity.Activity;
+import no.bettermemory.models.DTO.ActivityDTO;
+import no.bettermemory.models.DTO.ActivityToReceiveDTO;
 
-public class TimeIntervalBasedActivityRetriever implements TimeIntervalBasedObjectRetriever<Map<ObjectId, Activity>> {
+public class TimeIntervalBasedActivityRetriever implements TimeIntervalBasedObjectRetriever<ActivityDTO[]> {
     private MinutesProvider<Integer> minute;
     private HourProvider<Integer> hour;
     private DayProvider<String> dayName;
@@ -57,20 +57,24 @@ public class TimeIntervalBasedActivityRetriever implements TimeIntervalBasedObje
      * time parameters provided by classes which implements some specific interfaces.
      * @throws RuntimeException if a handling error occurs while retrieving activities.
      */
-    public Map<ObjectId, Activity> getObjects(int interval) {
-        try {
-            return getActivity.getActivitiesAtInterval(
-                patientId,
-                year.getYear(),
-                weekNumber.getWeek(),
-                dayName.getDay(),
-                hour.getHour(),
-                minute.getMinutes(),
-                interval
-            );
-        } catch (Exception e) {
-            System.err.println(e);
-            return null;
+    public ActivityDTO[] getObjects(int interval) {
+        ArrayList<ActivityDTO> activityDTOs = new ArrayList<>();
+        for (int intervalPos = 0; intervalPos < interval+1; intervalPos++) {
+            try {
+                ActivityToReceiveDTO activityToReceive = new ActivityToReceiveDTO(
+                    patientId,
+                    year.getYear(),
+                    weekNumber.getWeek(),
+                    dayName.getDay(),
+                    hour.getHour(),
+                    minute.getMinutes()
+                );
+                activityDTOs.addAll(Arrays.asList(getActivity.getActivitiesAtMinute(activityToReceive)));
+            } catch (Exception e) {
+                System.err.println(e);
+            }
         }
+
+        return activityDTOs.toArray(ActivityDTO[]::new);
     }
 }

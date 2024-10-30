@@ -7,17 +7,16 @@ import no.bettermemory.interfaces.Models.MinutesProvider;
 import no.bettermemory.interfaces.Models.WeekProvider;
 import no.bettermemory.interfaces.Models.YearProvider;
 import no.bettermemory.interfaces.storageHandlers.storageGetters.GetActivity;
-import no.bettermemory.models.activity.Activity;
-import java.util.Map;
-
-import org.bson.types.ObjectId;
+import no.bettermemory.models.DTO.ActivityDTO;
+import no.bettermemory.models.DTO.ActivityToReceiveDTO;
 
 /**
  * This class is meant to provide the activity objects which are associated with 
  * a specific time stamp.
  * @author Hermann Mjelde Hamnnes
+ * @author Joakim Klemsdal Bøe
  */
-public class TimeBasedActivityRetriever implements TimeBasedObjectRetriever<Map<ObjectId, Activity>> {
+public class TimeBasedActivityRetriever implements TimeBasedObjectRetriever<ActivityDTO[]> {
 
     private MinutesProvider<Integer> minute;
     private HourProvider<Integer> hour;
@@ -62,9 +61,9 @@ public class TimeBasedActivityRetriever implements TimeBasedObjectRetriever<Map<
      * time parameters provided by classes which implements some specific interfaces.
      * @throws RuntimeException if a handling error occurs while retrieving activities.
      */
-    public Map<ObjectId, Activity> getObject() {
+    public ActivityDTO[] getObject() {
         try{
-            return (Map<ObjectId, Activity>) getActivity.getActivitiesAtMinute(
+            ActivityToReceiveDTO activityToReceive = new ActivityToReceiveDTO(
                 patientId,
                 year.getYear(),
                 weekNumber.getWeek(),
@@ -72,6 +71,7 @@ public class TimeBasedActivityRetriever implements TimeBasedObjectRetriever<Map<
                 hour.getHour(),
                 minute.getMinutes()
             );
+            return getActivity.getActivitiesAtMinute(activityToReceive);
         }
         catch (Exception e) {
             System.err.println(e);
