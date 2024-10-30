@@ -1,8 +1,6 @@
 package no.bettermemory.models.MicrocontrollerDatabaseBridge.ActivityHandlers.QueHandlers;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.ArgumentMatchers.any;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -27,7 +25,7 @@ import no.bettermemory.models.activity.Activity;
 @ExtendWith(MockitoExtension.class)
 public class ActivityQueInserterTest {
     @Mock
-    private TimeIntervalBasedObjectRetriever<Map<ObjectId, Activity>> mockActivitiesMap;
+    private TimeIntervalBasedObjectRetriever<ActivityDTO[]> mockActivitiesMap;
     @Mock
     private StaticContainerHandler<ActivityDTO> mockArrayHandler;
     @InjectMocks
@@ -49,20 +47,10 @@ public class ActivityQueInserterTest {
         activityQueInserter = new ActivityQueInserter(mockActivitiesMap, mockArrayHandler);
     }
 
-    /* 
-     * This test sort of exists on the mercy of the compiler, if i remove one when().thenReturn() it breaks, which makes sense,
-     * but when looking at the checkNullsAndAddToList() method one would maybe think more mocks are needed, but no, no you don't, says Mockito.
-    */
     @Test
     public void testInsertNewActivityToArray() throws Exception {
         // Arrange
-        when(mockActivitiesMap.getObjects(30)).thenReturn(mockActivityMap);
-
-        when(mockActivityMap.keySet()).thenReturn(mockSet);
-        when(mockSet.stream()).thenReturn(mockStream);
-        when(mockStream.map(any())).thenAnswer(invocation -> {
-            return Stream.of(mockActivityDTO);
-        });
+        when(mockActivitiesMap.getObjects(30)).thenReturn(new ActivityDTO[1]);
         
         when(mockArrayHandler.hasNulls()).thenReturn(true, false);
         when(mockArrayHandler.nullShiftRight()).thenReturn(mockArrayHandler);
@@ -94,13 +82,7 @@ public class ActivityQueInserterTest {
     @Test
     public void testWhenArrayIsFull() throws Exception {
         // Arrange
-        when(mockActivitiesMap.getObjects(30)).thenReturn(mockActivityMap);
-
-        when(mockActivityMap.keySet()).thenReturn(mockSet);
-        when(mockSet.stream()).thenReturn(mockStream);
-        when(mockStream.map(any())).thenAnswer(invocation -> {
-            return Stream.of(mockActivityDTO);
-        });
+        when(mockActivitiesMap.getObjects(30)).thenReturn(new ActivityDTO[1]);
 
         when(mockArrayHandler.hasNulls()).thenReturn(false);
 

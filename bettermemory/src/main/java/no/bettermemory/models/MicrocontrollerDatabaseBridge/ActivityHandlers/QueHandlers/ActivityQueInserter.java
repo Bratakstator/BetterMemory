@@ -1,36 +1,38 @@
 package no.bettermemory.models.MicrocontrollerDatabaseBridge.ActivityHandlers.QueHandlers;
 
-import java.util.Map;
-
-import org.bson.types.ObjectId;
-
 import no.bettermemory.interfaces.MicrocontrollerDatabaseBridge.ArrayHandlers.StaticContainerHandler;
 import no.bettermemory.interfaces.MicrocontrollerDatabaseBridge.QueHandlers.ObjectQueInserter;
 import no.bettermemory.interfaces.MicrocontrollerDatabaseBridge.TimeBasedDatabaseRetrievers.TimeIntervalBasedObjectRetriever;
 import no.bettermemory.models.DTO.ActivityDTO;
-import no.bettermemory.models.activity.Activity;
 
 public class ActivityQueInserter implements ObjectQueInserter {
-    private TimeIntervalBasedObjectRetriever<Map<ObjectId, Activity>> activitiesMap;
+    private TimeIntervalBasedObjectRetriever<ActivityDTO[]> activitiesRetriever;
     private StaticContainerHandler<ActivityDTO> arrayHandler;
+    private int interval = 30; // Standard value
 
     public ActivityQueInserter(
-        TimeIntervalBasedObjectRetriever<Map<ObjectId, Activity>> activitiesMap,
+        TimeIntervalBasedObjectRetriever<ActivityDTO[]> activitiesRetriever,
         StaticContainerHandler<ActivityDTO> arrayHandler
     ) {
-        this.activitiesMap = activitiesMap;
+        this.activitiesRetriever = activitiesRetriever;
         this.arrayHandler = arrayHandler;
+    }
+
+    public ActivityQueInserter(
+        TimeIntervalBasedObjectRetriever<ActivityDTO[]> activitiesRetriever,
+        StaticContainerHandler<ActivityDTO> arrayHandler,
+        int interval
+    ) {
+        this.activitiesRetriever = activitiesRetriever;
+        this.arrayHandler = arrayHandler;
+        this.interval = interval;
     }
 
     @Override
     public void checkNullsAndAddToList() throws Exception {
-        Map<ObjectId, Activity> activityMap = activitiesMap.getObjects(30);
+        ActivityDTO[] activityDTOs = activitiesRetriever.getObjects(interval);
         
-        if (activityMap == null) throw new Exception("No activities to add.");
-
-        ActivityDTO[] activityDTOs = activityMap.keySet().stream().map(
-            key -> new ActivityDTO(key, activityMap.get(key))
-        ).toArray(ActivityDTO[]::new);
+        if (activityDTOs == null) throw new Exception("No activities to add.");
 
         int index = 0;
         while (arrayHandler.hasNulls()) {
@@ -46,4 +48,8 @@ public class ActivityQueInserter implements ObjectQueInserter {
         }
         activityDTOs = null;
     }
+
+    public void setInterval(int interval) { this.interval = interval; }
+
+    public int getInterval() { return interval; }
 }
