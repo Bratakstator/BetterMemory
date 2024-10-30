@@ -10,7 +10,7 @@ import org.mockito.MockitoAnnotations;
 
 import com.fazecast.jSerialComm.SerialPort;
 
-import no.bettermemory.interfaces.MicrocontrollerDatabaseBridge.StaticContainerHandler;
+import no.bettermemory.interfaces.MicrocontrollerDatabaseBridge.ArrayHandlers.StaticContainerHandler;
 import no.bettermemory.models.DTO.ActivityDTO;
 
 class ArduinoActivityCommunicatorTest {

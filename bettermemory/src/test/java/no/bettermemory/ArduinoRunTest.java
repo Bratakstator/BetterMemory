@@ -11,7 +11,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import com.fazecast.jSerialComm.SerialPort;
 
 import no.bettermemory.models.DTO.ActivityDTO;
-import no.bettermemory.models.MicrocontrollerDatabaseBridge.ActivityHandlers.ArrayDTOHandler;
+import no.bettermemory.models.MicrocontrollerDatabaseBridge.ActivityHandlers.ArrayHandlers.ArrayDTOHandler;
 import no.bettermemory.models.activity.Activity;
 import no.bettermemory.tools.ArduinoActivityCommunicator;
 
