@@ -71,7 +71,7 @@ public class TimeIntervalBasedActivityRetriever implements TimeIntervalBasedObje
                 );
                 activityDTOs.addAll(Arrays.asList(getActivity.getActivitiesAtMinute(activityToReceive)));
             } catch (Exception e) {
-                System.err.println(e);
+                //System.err.println(e);
             }
         }
 

@@ -22,16 +22,26 @@ public class ActivityQueStateChecker implements ObjectQueStateChecker {
         for (int index = 0; index < arrayHandler.length(); index++) {
             ActivityDTO activityDTO = arrayHandler.get(index);
 
+            if (activityDTO == null) continue;
+
+            System.out.println(
+                activityDTO.getActivity().getShortDescription()
+            );
+
             if (activityDTO.getActivity().getConcluded()) {
+                System.out.println("AQSC "+activityDTO.getActivity());
                 try {
                     insertActivity.updateObject(
                         activityDTO.getActivityId(),
                         activityDTO.getActivity()
                     );
+                    System.out.println("Activity set concluded: " + activityDTO.getActivity());
                     arrayHandler.addAtIndex(index, null);
+                } catch (IndexOutOfBoundsException e) {
+                    System.err.println(e);
                 } catch (Exception e) {
                     System.err.println(e);
-                }
+                } 
             }
             else if (
                 TimeComparisons.givenTimeHasPassedThreshold(

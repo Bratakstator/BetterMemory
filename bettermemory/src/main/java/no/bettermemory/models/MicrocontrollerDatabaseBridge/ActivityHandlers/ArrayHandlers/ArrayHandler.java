@@ -11,7 +11,7 @@ public abstract class ArrayHandler<T> implements StaticContainerHandler<T> {
         this.array = array;
     }
 
-    public int add(T t) throws Exception {
+    public synchronized int add(T t) throws Exception {
         try {
             int index = getFirstNullIndex();
             array[index] = t;
@@ -21,7 +21,7 @@ public abstract class ArrayHandler<T> implements StaticContainerHandler<T> {
         }
     }
 
-    public int addAtIndex(int index, T t) throws IndexOutOfBoundsException {
+    public synchronized int addAtIndex(int index, T t) throws IndexOutOfBoundsException {
         try {
             array[index] = t;
             return index;
@@ -31,7 +31,7 @@ public abstract class ArrayHandler<T> implements StaticContainerHandler<T> {
         }
     }
 
-    public StaticContainerHandler<T> nullShiftRight() {
+    public synchronized StaticContainerHandler<T> nullShiftRight() {
         for (int index = 0; index < array.length; index++) {
             if (array[index] == null) {
                 for (int ahead = index + 1; ahead < array.length; ahead++) {
@@ -46,17 +46,17 @@ public abstract class ArrayHandler<T> implements StaticContainerHandler<T> {
         return this;
     }
 
-    public boolean hasNulls() {
+    public synchronized boolean hasNulls() {
         for (T t : array) if (t == null) return true;
         return false;
     }
 
-    public int getFirstNullIndex() throws Exception {
+    public synchronized int getFirstNullIndex() throws Exception {
         for (int index = 0; index < array.length; index++) if(array[index] == null) return index;
         throw new Exception("No nulls in array.");
     }
 
-    public T get(int index) throws IndexOutOfBoundsException {
+    public synchronized T get(int index) throws IndexOutOfBoundsException {
         try {
             return array[index];
         } catch (IndexOutOfBoundsException e) {
@@ -65,7 +65,7 @@ public abstract class ArrayHandler<T> implements StaticContainerHandler<T> {
         }
     }
 
-    public <R> R getAttributeOf(int index, Function<T, R> toReturn) throws IndexOutOfBoundsException {
+    public synchronized <R> R getAttributeOf(int index, Function<T, R> toReturn) throws IndexOutOfBoundsException {
         try {
             return toReturn.apply(array[index]);
         } catch (IndexOutOfBoundsException e) {
@@ -74,15 +74,15 @@ public abstract class ArrayHandler<T> implements StaticContainerHandler<T> {
         }
     }
 
-    public int length() {
+    public synchronized int length() {
         return array.length;
     }
 
-    public T[] getArray() {
+    public synchronized T[] getArray() {
         return array;
     }
 
-    public void setArray(T[] array) {
+    public synchronized void setArray(T[] array) {
         this.array = array;
     }
 }

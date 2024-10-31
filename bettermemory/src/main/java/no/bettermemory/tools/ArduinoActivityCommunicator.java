@@ -1,4 +1,5 @@
 package no.bettermemory.tools;
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 import com.fazecast.jSerialComm.SerialPort;
@@ -9,6 +10,7 @@ import no.bettermemory.models.activity.Activity;
 
 public class ArduinoActivityCommunicator implements Runnable {
     private StaticContainerHandler<ActivityDTO> arrayHandeler;
+    boolean running = true;
 
     public ArduinoActivityCommunicator(StaticContainerHandler<ActivityDTO> arrayHandeler){
         this.arrayHandeler = arrayHandeler;
@@ -31,6 +33,10 @@ public class ArduinoActivityCommunicator implements Runnable {
 
     public void run() {
         arduinoSendActivity(openPort());
+    }
+
+    public void stop() {
+        running = false;
     }
 
 
@@ -70,41 +76,60 @@ public class ArduinoActivityCommunicator implements Runnable {
         try ( // looks after a respons from the arduino
                 Scanner data = new Scanner(comPort.getInputStream())) {
 
-
             // Keep checking for data in a loop
-            boolean loop = true;
-            while (loop) {
-                Activity activity = arrayHandeler.getAttributeOf(0, ActivityDTO::getActivity);
-                String longDescription = activity.getLongDescription();
-                String shortDescription = activity.getShortDescription();
-                int hour = activity.getHour();
-                int minutes = activity.getMinutes();
-
-                compiledString = BuildMessage(shortDescription, longDescription, hour, minutes);
-
-                // Convert the message to bytes and send it
-                byte[] messageBytes = compiledString.getBytes();
-                comPort.writeBytes(messageBytes, messageBytes.length);
-                // Check if there is any data available in the serial buffer
-                if (comPort.bytesAvailable() > 0) {
-
-                    try {
-                        Thread.sleep(500);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-
-                    System.out.println("I will read");
-                    // Read the data into the buffer
-                    String line = data.nextLine().trim();
-                    //System.out.println(receivedData);
-                
-                    if (line.equals("ButtonPressed")) {
-                        activity.setConcluded(true);
-                    }
-                }   
+            while (running && !Thread.currentThread().isInterrupted()) {
                 try {
-                    Thread.sleep(500);
+                    synchronized (arrayHandeler) {
+                        Activity activity = arrayHandeler.getAttributeOf(0, ActivityDTO::getActivity);
+                        String longDescription = activity.getLongDescription();
+                        String shortDescription = activity.getShortDescription();
+                        int hour = activity.getHour();
+                        int minutes = activity.getMinutes();
+
+                        compiledString = BuildMessage(shortDescription, longDescription, hour, minutes);
+
+                        // Convert the message to bytes and send it
+                        byte[] messageBytes = compiledString.getBytes();
+                        System.out.println("AAC "+activity);
+                        comPort.writeBytes(messageBytes, messageBytes.length);
+                        // Check if there is any data available in the serial buffer
+                        if (comPort.bytesAvailable() > 0) {
+
+                            try {
+                                Thread.sleep(1000);
+                            } catch (InterruptedException e) {
+                                Thread.currentThread().interrupt();
+                                e.printStackTrace();
+                                break;
+                            }
+
+                            System.out.println("AAC "+ "I will read");
+                            // Read the data into the buffer
+                            String line;
+                            try {
+                                line = data.nextLine();
+                            } catch (NoSuchElementException e) {
+                                System.err.println(e);
+                                line = "";
+                            }
+                            //System.out.println(receivedData);
+                        
+                            if (line.trim().equals("ButtonPressed")) {
+                                activity.setConcluded(true);
+                            }
+                        }   
+                    }
+                } catch (NullPointerException e) {
+                    compiledString = "Waiting for activity\n";
+
+                    // Convert the message to bytes and send it
+                    byte[] messageBytes = compiledString.getBytes();
+                    comPort.writeBytes(messageBytes, messageBytes.length);
+
+                    System.err.println("AAC "+ "Is null");
+                }
+                try {
+                    Thread.sleep(1000);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }

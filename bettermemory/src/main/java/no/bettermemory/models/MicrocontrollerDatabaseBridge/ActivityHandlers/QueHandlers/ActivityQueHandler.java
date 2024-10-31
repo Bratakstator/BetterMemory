@@ -6,6 +6,7 @@ import no.bettermemory.interfaces.MicrocontrollerDatabaseBridge.QueHandlers.Obje
 public class ActivityQueHandler implements Runnable {
     public ObjectQueStateChecker stateChecker;
     public ObjectQueInserter inserter;
+    boolean running = true;
 
     public ActivityQueHandler(ObjectQueStateChecker stateChecker, ObjectQueInserter inserter) {
         this.stateChecker = stateChecker;
@@ -13,11 +14,24 @@ public class ActivityQueHandler implements Runnable {
     }
 
     public void run() {
-        stateChecker.checkQueState();
-        try {
-            inserter.checkNullsAndAddToList();
-        } catch (Exception e) {
-            System.err.println(e);
+        while (running && !Thread.currentThread().isInterrupted()) {
+            stateChecker.checkQueState();
+            try {
+                inserter.checkNullsAndAddToList();
+            } catch (Exception e) {
+                System.err.println(e);
+            }
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+                e.printStackTrace();
+                break;
+            }
         }
+    }
+
+    public void stop() {
+        running = false;
     }
 }

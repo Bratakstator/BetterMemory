@@ -10,6 +10,7 @@ import com.mongodb.client.MongoDatabase;
 import java.util.List;
 import java.util.ArrayList;
 
+import no.bettermemory.interfaces.storageHandlers.databaseInserters.InsertActivityOrDay;
 import no.bettermemory.interfaces.storageHandlers.databaseInserters.InsertToDatabase;
 import no.bettermemory.models.time.Day;
 import no.bettermemory.models.time.Week;
@@ -19,11 +20,13 @@ public class InsertWeekToMongoDB implements InsertToDatabase<Week> {
     MongoClient client;
     MongoDatabase database;
     MongoCollection<Document> collection;
+    InsertActivityOrDay<Day> insertDay;
     
-    public InsertWeekToMongoDB(MongoClient client) {
+    public InsertWeekToMongoDB(MongoClient client, InsertActivityOrDay<Day> insertDay) {
         this.client = client;
         this.database = DatabaseConnections.getUsersDatabase(client);
         this.collection = DatabaseConnections.getWeeksCollection(database);
+        this.insertDay = insertDay;
     }
 
     public void saveObject(Week week) throws Exception {
@@ -34,7 +37,6 @@ public class InsertWeekToMongoDB implements InsertToDatabase<Week> {
         ArrayList<Day> days = week.getDays();
         if (days.size() != 0) {
             List<ObjectId> dayIds = new ArrayList<>();
-            InsertDayToMongoDB insertDay = new InsertDayToMongoDB(client, null);
             for (Day day : days) {
                 ObjectId dayId = insertDay.saveObject(day);
                 dayIds.add(dayId);

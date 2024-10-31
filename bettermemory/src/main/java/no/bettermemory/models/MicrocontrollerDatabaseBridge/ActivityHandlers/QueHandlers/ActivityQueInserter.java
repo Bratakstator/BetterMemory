@@ -35,16 +35,25 @@ public class ActivityQueInserter implements ObjectQueInserter {
         if (activityDTOs == null) throw new Exception("No activities to add.");
 
         int index = 0;
+        synchronized (arrayHandler) {
         while (arrayHandler.hasNulls()) {
-            try {
-                arrayHandler.nullShiftRight().add(activityDTOs[index]);
-            } catch (Exception e) {
-                System.err.println(e); // "No more space in array."
-                break;
-            }
+            System.out.println("AQI: "+activityDTOs[index]);
+                try {
+                    if (!activityDTOs[index].getActivity().getConcluded()) {
+                        System.out.println("AQI: "+"Activity not already concluded");
+                        arrayHandler.nullShiftRight().add(activityDTOs[index]);
+                        System.out.println("AQI: "+"Added activity: " + activityDTOs[index]);
+                    } else {
+                        System.out.println("AQI: "+"Activity already concluded");
+                    }
+                } catch (Exception e) {
+                    System.err.println(e); // "No more space in array."
+                    break;
+                }
 
-            index++;
-            if (index == activityDTOs.length) break;
+                index++;
+                if (index == activityDTOs.length) break;
+            }
         }
         activityDTOs = null;
     }
