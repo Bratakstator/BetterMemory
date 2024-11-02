@@ -16,12 +16,12 @@ Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET);
 String receivedText = "";             // String to hold the received text
 String receivedTime = "";             // String to hold the time of when the activety should be preformed
 bool parsingTime = false;             // Flag to indicate if we are currently parsing the time
-unsigned long timeStartActivety = 0;  // Variable to hold the time of when an activety is sendt to the arduino
-unsigned long activetyTimeDelay = 1000; // The time activety is held befor it counts it as not completed (1.8 mill = half an hour) but set to 15000 for testing purposes
+unsigned long timeStartActivity = 0;  // Variable to hold the time of when an activety is sendt to the arduino
+unsigned long activityTimeDelay = 1000; // The time activety is held befor it counts it as not completed (1.8 mill = half an hour) but set to 15000 for testing purposes
 const int buttonPin = 2;              // Pin where the button is connected
 int buttonState = 0;                  // Variable for reading the buttonstate
 int ledPin = 4;                       //Pin where led indicator is connected
-bool activetyActive = false;          // Flag to indicate if there is an activety waiting to be done
+bool activityActive = false;          // Flag to indicate if there is an activety waiting to be done
 
 
 //This Arduino programs main objective is to receive text from the java program and display it
@@ -68,23 +68,23 @@ void loop() {
   // 
 
   buttonState = digitalRead(buttonPin);
-  if (buttonState == HIGH && activetyActive){
+  if (buttonState == HIGH && activityActive){
     Serial.println("ButtonPressed\n"); // Send data to Java when button is pressed
     delay(200); // Debounce delay
-    activetyActive = false;
+    activityActive = false;
 
     display.setCursor(0, 48); //displays that the activety registered sucsessfully
-    display.println("Activety completed");
+    display.println("Activity completed");
     display.display();// Update Display
     digitalWrite(ledPin, LOW);
   }
-  else if (activetyActive && (millis()-timeStartActivety) > activetyTimeDelay){
-    Serial.println("NoActivety\n");
+  else if (activityActive && (millis()-timeStartActivity) > activityTimeDelay){
+    Serial.println("NoActivity\n");
     delay(200);
-    activetyActive = false;
+    activityActive = false;
 
-    display.setCursor(0, 48); //displays that the activety registered sucsessfully
-    display.println("Activety NOT completed");
+    display.setCursor(0, 48); //displays that the activity registered sucsessfully
+    display.println("Activity NOT complete");
     display.display();// Update Display
     digitalWrite(ledPin, LOW);
   }
@@ -111,13 +111,18 @@ void loop() {
       display.println(receivedTime);
 
       display.display();// Update Display
+
+      if (receivedText == "Waiting for activity") {
+        activityActive = false;
+      } else {
+        activityActive = true; // Primes putton reader
+      }
       
       // Clear the received text for the next message
       receivedText = "";
       receivedTime = "";
-      activetyActive = true; // Primes putton reader
       digitalWrite(ledPin, HIGH);
-      timeStartActivety = millis(); // Timestamps when activety is recived
+      timeStartActivity = millis(); // Timestamps when activity is recived
 
     } else if (incomingChar == '@' && !parsingTime) {
       // Detected start of time block

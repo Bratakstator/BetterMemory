@@ -24,12 +24,9 @@ public class ActivityQueStateChecker implements ObjectQueStateChecker {
 
             if (activityDTO == null) continue;
 
-            System.out.println(
-                activityDTO.getActivity().getShortDescription()
-            );
+            System.out.println("AQSC "+activityDTO.getActivity());
 
             if (activityDTO.getActivity().getConcluded()) {
-                System.out.println("AQSC "+activityDTO.getActivity());
                 try {
                     insertActivity.updateObject(
                         activityDTO.getActivityId(),

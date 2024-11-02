@@ -1,4 +1,5 @@
 package no.bettermemory.tools;
+import java.io.IOException;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
@@ -46,7 +47,7 @@ public class ArduinoActivityCommunicator implements Runnable {
         comPort.setBaudRate(9600);
         if (comPort.openPort()) {
             System.out.println("Port is open!");
-            
+            clearInputBuffer(comPort);
         } else {
             System.out.println("Failed to open the port.");
         }
@@ -111,6 +112,7 @@ public class ArduinoActivityCommunicator implements Runnable {
                             } catch (NoSuchElementException e) {
                                 System.err.println(e);
                                 line = "";
+                                continue;
                             }
                             //System.out.println(receivedData);
                         
@@ -133,6 +135,16 @@ public class ArduinoActivityCommunicator implements Runnable {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
+            }
+        }
+    }
+
+    public void clearInputBuffer(SerialPort comPort) {
+        while (comPort.bytesAvailable() > 0) {
+            try {
+                comPort.getInputStream().read();
+            } catch (IOException e) {
+                e.printStackTrace();
             }
         }
     }
