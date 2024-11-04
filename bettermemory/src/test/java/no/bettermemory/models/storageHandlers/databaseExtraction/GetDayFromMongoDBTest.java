@@ -19,6 +19,10 @@ import org.mockito.MockitoAnnotations;
 import org.mockito.internal.matchers.Any;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.powermock.api.mockito.PowerMockito;
+import org.powermock.core.classloader.annotations.PrepareForTest;
+import org.powermock.modules.junit4.PowerMockRunner;
+import org.powermock.modules.junit4.PowerMockRunnerDelegate;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,7 +47,8 @@ public class GetDayFromMongoDBTest {
     @BeforeEach
     public void setUp() {
         MockitoAnnotations.openMocks(this);
-        when(mockDatabaseConnections.getUsersDatabase(any(MongoClient.class))).thenReturn(mockMongoClient);
+        PowerMockito.mockStatic(DatabaseConnections.class);
+        when(DatabaseConnections.getUsersDatabase(mockMongoClient)).thenReturn(mockDatabase);
         getDayFromMongoDB = new GetDayFromMongoDB(any(MongoClient.class));
     }
 
@@ -51,7 +56,9 @@ public class GetDayFromMongoDBTest {
     @Test
     @DisplayName("Test constructor for GetDayFromMongoDB")
     public void testGetDayFromMongoDB() {
-        when(getDayFromMongoDB.GetDayFromMongoDB(any(MongoClient.class))).then
+        assertNotNull(getDayFromMongoDB);
+        assertEquals(mockMongoClient, getDayFromMongoDB.getClient());
+
 
     }
 

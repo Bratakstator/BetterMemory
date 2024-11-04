@@ -25,6 +25,11 @@ public class GetDayFromMongoDB implements GetDay {
         this.database = DatabaseConnections.getUsersDatabase(client);
     }
 
+
+    public MongoClient getClient() {
+        return this.client;
+    }
+
     @SuppressWarnings("unchecked")
     @Override
     public Day getSpecific(String patientId, int year, int weekNumber, String dayName) throws Exception {
