@@ -5,6 +5,9 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoDatabase;
+
+import no.bettermemory.tools.DatabaseConnections;
+
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.FindIterable;
 import org.bson.Document;
@@ -32,18 +35,29 @@ public class GetDayFromMongoDBTest {
     @Mock
     private MongoCollection<Document> mockCollection;
 
+    @Mock
+    private DatabaseConnections mockDatabaseConnections;
+
     private GetDayFromMongoDB getDayFromMongoDB;
 
     @BeforeEach
     public void setUp() {
         MockitoAnnotations.openMocks(this);
+        when(mockDatabaseConnections.getUsersDatabase(any(MongoClient.class))).thenReturn(mockMongoClient);
         getDayFromMongoDB = new GetDayFromMongoDB(any(MongoClient.class));
     }
 
     
     @Test
+    @DisplayName("Test constructor for GetDayFromMongoDB")
+    public void testGetDayFromMongoDB() {
+        when(getDayFromMongoDB.GetDayFromMongoDB(any(MongoClient.class))).then
+
+    }
+
+    @Test
     @DisplayName("Get specific day from database")
-    public void testGetSpecificDay() {
+    public void testGetSpecific() {
         
     }
 
