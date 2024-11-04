@@ -5,30 +5,29 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoDatabase;
-
-import no.bettermemory.tools.DatabaseConnections;
-
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.FindIterable;
 import org.bson.Document;
+import org.bson.types.ObjectId;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.mockito.internal.matchers.Any;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.powermock.api.mockito.PowerMockito;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.junit4.PowerMockRunner;
-import org.powermock.modules.junit4.PowerMockRunnerDelegate;
+import org.mockito.MockedStatic;
+
+import no.bettermemory.tools.DatabaseConnections;
+import no.bettermemory.models.time.Day;
+import no.bettermemory.models.activity.Activity;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+
 
 @ExtendWith(MockitoExtension.class)
-@PrepareForTest({DatabaseConnections.class, GetActivityFromMongoDB.class})
 public class GetDayFromMongoDBTest {
 
     @Mock
@@ -40,21 +39,24 @@ public class GetDayFromMongoDBTest {
     @Mock
     private MongoCollection<Document> mockCollection;
 
-    @Mock
-    private DatabaseConnections mockDatabaseConnections;
 
-    @Mock
-    private Document mockDocument;
 
     private GetDayFromMongoDB getDayFromMongoDB;
 
     @BeforeEach
     public void setUp() {
         MockitoAnnotations.openMocks(this);
-        PowerMockito.mockStatic(DatabaseConnections.class);
-        when(DatabaseConnections.getUsersDatabase(mockMongoClient)).thenReturn(mockDatabase);
-        when()
-        getDayFromMongoDB = new GetDayFromMongoDB(any(MongoClient.class));
+
+        try(MockedStatic<DatabaseConnections> mockedStatic = mockStatic(DatabaseConnections.class)){
+            mockedStatic.when(() -> DatabaseConnections.getUsersDatabase(mockMongoClient))
+                                                       .thenReturn(mockDatabase);
+            mockedStatic.when(() -> DatabaseConnections.getWeeksCollection(mockDatabase))
+                                                       .thenReturn(mockCollection);
+            mockedStatic.when(() -> DatabaseConnections.getDaysCollection(mockDatabase))
+                                                       .thenReturn(mockCollection);
+            getDayFromMongoDB = new GetDayFromMongoDB(mockMongoClient);
+        }
+
     }
 
     
@@ -66,14 +68,22 @@ public class GetDayFromMongoDBTest {
         assertEquals(mockDatabase, getDayFromMongoDB.getMongoDatabase());
     }
 
+
+    /* 
     @Test
     @DisplayName("Get specific day from database")
-    public void testGetSpecific()  {
-        //Arrange
+    public void testGetSpecific() throws Exception {
+
+        when(mockCollection.find(WeekQuery)).thenReturn(null)
+
+
+
+
+
         
 
         
-    }
+    }*/
 
 
    
