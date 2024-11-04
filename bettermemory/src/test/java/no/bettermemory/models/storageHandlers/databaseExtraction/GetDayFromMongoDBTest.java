@@ -58,6 +58,7 @@ public class GetDayFromMongoDBTest {
     public void testGetDayFromMongoDB() {
         assertNotNull(getDayFromMongoDB);
         assertEquals(mockMongoClient, getDayFromMongoDB.getClient());
+        assertEquals(mockDatabase)
 
 
     }

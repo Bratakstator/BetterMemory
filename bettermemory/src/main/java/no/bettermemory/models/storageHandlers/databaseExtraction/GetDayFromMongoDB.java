@@ -30,6 +30,10 @@ public class GetDayFromMongoDB implements GetDay {
         return this.client;
     }
 
+    public MongoDatabase getMongoDatabase() {
+        return this.database;
+    }
+
     @SuppressWarnings("unchecked")
     @Override
     public Day getSpecific(String patientId, int year, int weekNumber, String dayName) throws Exception {
