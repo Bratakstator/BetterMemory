@@ -59,21 +59,54 @@ public class ActivityQueStateCheckerTest {
     @Test
     public void testCheckQueStateWhenTimeOut() {
         // Arrange
+        int year = 2024;
+        int weekNumber = 35;
+        String dayName = "monday";
+        int hour = 10;
+        int minutes = 45;
+
         when(mockArrayHandler.length()).thenReturn(1);
         when(mockArrayHandler.get(anyInt())).thenReturn(mockActivityDTO);
         when(mockActivityDTO.getActivity()).thenReturn(mockActivity);
         when(mockActivityDTO.getActivity().getConcluded()).thenReturn(false);
-        when(mockActivityDTO.getActivity().getHour()).thenReturn(10);
-        when(mockActivityDTO.getActivity().getMinutes()).thenReturn(45);
-        when(mockActivityDTO.getYear()).thenReturn(2024);
-        when(mockActivityDTO.getWeekNumber()).thenReturn(35);
-        when(mockActivityDTO.getDayName()).thenReturn("monday");
-        //when(TimeComparisons.currentTimeHasPassedThreshold(10, 45, 30)).thenReturn(true);
+        when(mockActivityDTO.getActivity().getHour()).thenReturn(hour);
+        when(mockActivityDTO.getActivity().getMinutes()).thenReturn(minutes);
+        when(mockActivityDTO.getYear()).thenReturn(year);
+        when(mockActivityDTO.getWeekNumber()).thenReturn(weekNumber);
+        when(mockActivityDTO.getDayName()).thenReturn(dayName);
 
         // Act
         stateChecker.checkQueState();
 
         // Assert
         verify(mockArrayHandler).addAtIndex(0, null);
+    }
+
+    @Test
+    public void testCheckQueStateWhenNothing() {
+        // Arrange
+        int year = 2026;
+        int weekNumber = 35;
+        String dayName = "monday";
+        int hour = 10;
+        int minutes = 45;
+
+        when(mockArrayHandler.length()).thenReturn(1);
+        when(mockArrayHandler.get(anyInt())).thenReturn(mockActivityDTO);
+
+        when(mockActivityDTO.getActivity()).thenReturn(mockActivity);
+        when(mockActivity.getConcluded()).thenReturn(false);
+
+        when(mockActivityDTO.getYear()).thenReturn(year);
+        when(mockActivityDTO.getWeekNumber()).thenReturn(weekNumber);
+        when(mockActivityDTO.getDayName()).thenReturn(dayName);
+        when(mockActivity.getHour()).thenReturn(hour);
+        when(mockActivity.getMinutes()).thenReturn(minutes);
+
+        // Act
+        stateChecker.checkQueState();
+
+        // Assert
+        verify(mockArrayHandler, never()).addAtIndex(0, null);
     }
 }
