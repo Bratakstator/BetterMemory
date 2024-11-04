@@ -25,13 +25,16 @@ public class GetDayFromMongoDB implements GetDay {
         this.database = DatabaseConnections.getUsersDatabase(client);
     }
 
-
     public MongoClient getClient() {
         return this.client;
     }
 
     public MongoDatabase getMongoDatabase() {
         return this.database;
+    }
+
+    public MongoCollection<Document> getMongoCollection () {
+        return this.collection;
     }
 
     @SuppressWarnings("unchecked")

@@ -28,6 +28,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @ExtendWith(MockitoExtension.class)
+@PrepareForTest({DatabaseConnections.class, GetActivityFromMongoDB.class})
 public class GetDayFromMongoDBTest {
 
     @Mock
@@ -42,6 +43,9 @@ public class GetDayFromMongoDBTest {
     @Mock
     private DatabaseConnections mockDatabaseConnections;
 
+    @Mock
+    private Document mockDocument;
+
     private GetDayFromMongoDB getDayFromMongoDB;
 
     @BeforeEach
@@ -49,6 +53,7 @@ public class GetDayFromMongoDBTest {
         MockitoAnnotations.openMocks(this);
         PowerMockito.mockStatic(DatabaseConnections.class);
         when(DatabaseConnections.getUsersDatabase(mockMongoClient)).thenReturn(mockDatabase);
+        when()
         getDayFromMongoDB = new GetDayFromMongoDB(any(MongoClient.class));
     }
 
@@ -58,14 +63,15 @@ public class GetDayFromMongoDBTest {
     public void testGetDayFromMongoDB() {
         assertNotNull(getDayFromMongoDB);
         assertEquals(mockMongoClient, getDayFromMongoDB.getClient());
-        assertEquals(mockDatabase)
-
-
+        assertEquals(mockDatabase, getDayFromMongoDB.getMongoDatabase());
     }
 
     @Test
     @DisplayName("Get specific day from database")
-    public void testGetSpecific() {
+    public void testGetSpecific()  {
+        //Arrange
+        
+
         
     }
 
