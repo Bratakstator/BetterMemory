@@ -137,9 +137,9 @@ public class GetUserFromMongoDb implements GetUser {
             HealthCarePersonnel healthCarePersonnel = new HealthCarePersonnel(); //Creates a new HealthCarePersonnel object, that will be built.
 
             //The HealthCarePersonnel objects instance variables wil be set by the following code.
-            healthCarePersonnel.setEmployeeNumber(result.get("_id").toString());
-            healthCarePersonnel.setFirstName(result.get("first_name").toString());
-            healthCarePersonnel.setSurname(result.get("surname").toString());
+            healthCarePersonnel.setEmployeeNumber(result.getString("_id"));
+            healthCarePersonnel.setFirstName(result.getString("first_name"));
+            healthCarePersonnel.setSurname(result.getString("surname"));
 
 
             //Checks if the HealthCarePersonnel Object in the database is listed with any connectedPatients.
