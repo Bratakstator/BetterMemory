@@ -219,8 +219,8 @@ public class GetUserFromMongoDb implements GetUser {
 
                             if (closeRelativeDocument.containsValue(firstName)) {
 
-                                String id = closeRelativeDocument.get("relative_id").toString();
-                                String surname = closeRelativeDocument.get("surname").toString();
+                                String id = closeRelativeDocument.getString("relative_id");
+                                String surname = closeRelativeDocument.getString("surname");
 
                                 CloseRelative closeRelative = new CloseRelative(id, firstName, surname);
 
