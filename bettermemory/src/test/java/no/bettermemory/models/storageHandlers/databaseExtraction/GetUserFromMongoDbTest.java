@@ -19,6 +19,7 @@ import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 
+import no.bettermemory.models.users.CloseRelative;
 import no.bettermemory.models.users.HealthCarePersonnel;
 import no.bettermemory.models.users.Patient;
 import no.bettermemory.tools.DatabaseConnections;
@@ -54,15 +55,15 @@ public class GetUserFromMongoDbTest {
     @Mock
     private Document mockResult;
     @Mock
-    private List<Document> mockCloseRelativesList;
+    private List<Document> mockDocumentList;
     @Mock
-    private Iterator<Document> mockCloseRelativesIterator;
+    private Iterator<Document> mockDocumentIterator;
     @Mock
     private Document mockCloseRelativeDocument;
     @Mock
-    private List<String> mockPatientIds;
+    private List<String> mockStringList;
     @Mock
-    private Iterator<String> mockPatientIterator;
+    private Iterator<String> mockStringIterator;
 
     @BeforeEach
     void setup() {
@@ -105,11 +106,11 @@ public class GetUserFromMongoDbTest {
         when(mockResult.getString("surname")).thenReturn(patientSurname);
 
         when(mockResult.containsKey("close_relatives")).thenReturn(true);
-        when(mockResult.get("close_relatives")).thenReturn(mockCloseRelativesList);
+        when(mockResult.get("close_relatives")).thenReturn(mockDocumentList);
 
-        when(mockCloseRelativesList.iterator()).thenReturn(mockCloseRelativesIterator);
-        when(mockCloseRelativesIterator.hasNext()).thenReturn(true, false);
-        when(mockCloseRelativesIterator.next()).thenReturn(mockCloseRelativeDocument);
+        when(mockDocumentList.iterator()).thenReturn(mockDocumentIterator);
+        when(mockDocumentIterator.hasNext()).thenReturn(true, false);
+        when(mockDocumentIterator.next()).thenReturn(mockCloseRelativeDocument);
 
         when(mockCloseRelativeDocument.getString("relative_id")).thenReturn(relativeId);
         when(mockCloseRelativeDocument.getString("first_name")).thenReturn(relativeFirstName);
@@ -177,11 +178,11 @@ public class GetUserFromMongoDbTest {
         when(mockResult.getString("surname")).thenReturn(employeeSurname);
 
         when(mockResult.containsKey("connected_patients")).thenReturn(true);
-        when(mockResult.get("connected_patients")).thenReturn(mockPatientIds);
+        when(mockResult.get("connected_patients")).thenReturn(mockStringList);
 
-        when(mockPatientIds.iterator()).thenReturn(mockPatientIterator);
-        when(mockPatientIterator.hasNext()).thenReturn(true, false);
-        when(mockPatientIterator.next()).thenReturn(patientId);
+        when(mockStringList.iterator()).thenReturn(mockStringIterator);
+        when(mockStringIterator.hasNext()).thenReturn(true, false);
+        when(mockStringIterator.next()).thenReturn(patientId);
 
         // Act
         HealthCarePersonnel healthCarePersonnel = getUserFromMongoDb.getHealthCarePersonnel(employeeNumber);
@@ -207,5 +208,139 @@ public class GetUserFromMongoDbTest {
         );
 
         assertEquals("No health care personnel was found.", exception.getMessage());
+    }
+
+    @Test
+    public void getCloseRelativeExists() throws Exception {
+        // Arrange
+        when(DatabaseConnections.getPatientCollection(mockDatabase)).thenReturn(mockCollection);
+        when(mockCollection.find(any(Document.class))).thenReturn(mockFindIterable);
+        when(mockFindIterable.first()).thenReturn(mockResult);
+
+        when(mockResult.containsKey("close_relatives")).thenReturn(true);
+        when(mockResult.get("close_relatives")).thenReturn(mockDocumentList);
+
+        when(mockDocumentList.iterator()).thenReturn(mockDocumentIterator);
+        when(mockDocumentIterator.hasNext()).thenReturn(true, false);
+        when(mockDocumentIterator.next()).thenReturn(mockCloseRelativeDocument);
+
+        when(mockCloseRelativeDocument.containsValue(anyString())).thenReturn(true);
+
+        when(mockCloseRelativeDocument.getString("relative_id")).thenReturn(relativeId);
+        when(mockCloseRelativeDocument.getString("surname")).thenReturn(relativeSurname);
+
+        // Act
+        CloseRelative closeRelative = getUserFromMongoDb.getCloseRelative(patientId, relativeFirstName);
+
+        // Assert
+        assertEquals(relativeId, closeRelative.getId());
+        assertEquals(relativeFirstName, closeRelative.getFirstName());
+        assertEquals(relativeSurname, closeRelative.getSurname());
+    }
+
+    @Test
+    public void getCloseRelativeWhenNoRelativeWithGivenName() {
+        // Arrange
+        when(DatabaseConnections.getPatientCollection(mockDatabase)).thenReturn(mockCollection);
+        when(mockCollection.find(any(Document.class))).thenReturn(mockFindIterable);
+        when(mockFindIterable.first()).thenReturn(mockResult);
+
+        when(mockResult.containsKey("close_relatives")).thenReturn(true);
+        when(mockResult.get("close_relatives")).thenReturn(mockDocumentList);
+
+        when(mockDocumentList.iterator()).thenReturn(mockDocumentIterator);
+        when(mockDocumentIterator.hasNext()).thenReturn(true, false);
+        when(mockDocumentIterator.next()).thenReturn(mockCloseRelativeDocument);
+
+        when(mockCloseRelativeDocument.containsValue(anyString())).thenReturn(false);
+
+        // Act
+        Exception exception = assertThrows(
+            Exception.class,
+            () -> getUserFromMongoDb.getCloseRelative(patientId, relativeFirstName)
+        );
+
+        // Assert
+        assertEquals("The patient has no close relatives with the provided name.", exception.getMessage());
+    }
+
+    @Test
+    public void getCloseRelativeCouldNotConvertToDocument() {
+        // Arrange
+        when(DatabaseConnections.getPatientCollection(mockDatabase)).thenReturn(mockCollection);
+        when(mockCollection.find(any(Document.class))).thenReturn(mockFindIterable);
+        when(mockFindIterable.first()).thenReturn(mockResult);
+
+        when(mockResult.containsKey("close_relatives")).thenReturn(true);
+        when(mockResult.get("close_relatives")).thenReturn(mockStringList);
+
+        when(mockStringList.iterator()).thenReturn(mockStringIterator);
+        when(mockStringIterator.hasNext()).thenReturn(true, false);
+        when(mockStringIterator.next()).thenReturn("Not a document");
+
+        // Act
+        Exception exception = assertThrows(
+            Exception.class,
+            () -> getUserFromMongoDb.getCloseRelative(patientId, relativeFirstName)
+        );
+
+        // Assert
+        assertEquals("Could not convert object to Document-type", exception.getMessage());
+    }
+
+    @Test
+    public void getCloseRelativeCouldNotFindList() {
+        // Arrange
+        when(DatabaseConnections.getPatientCollection(mockDatabase)).thenReturn(mockCollection);
+        when(mockCollection.find(any(Document.class))).thenReturn(mockFindIterable);
+        when(mockFindIterable.first()).thenReturn(mockResult);
+
+        when(mockResult.containsKey("close_relatives")).thenReturn(true);
+        when(mockResult.get("close_relatives")).thenReturn("Not a list");
+
+        // Act
+        Exception exception = assertThrows(
+            Exception.class,
+            () -> getUserFromMongoDb.getCloseRelative(patientId, relativeFirstName)
+        );
+
+        // Assert
+        assertEquals("No close relative list was found.", exception.getMessage());
+    }
+
+    @Test
+    public void getCloseRelativePatientHasNoRelatives() {
+        // Arrange
+        when(DatabaseConnections.getPatientCollection(mockDatabase)).thenReturn(mockCollection);
+        when(mockCollection.find(any(Document.class))).thenReturn(mockFindIterable);
+        when(mockFindIterable.first()).thenReturn(mockResult);
+
+        when(mockResult.containsKey("close_relatives")).thenReturn(false);
+
+        // Act
+        Exception exception = assertThrows(
+            Exception.class,
+            () -> getUserFromMongoDb.getCloseRelative(patientId, relativeFirstName)
+        );
+
+        // Assert
+        assertEquals("The patient has no close relatives", exception.getMessage());
+    }
+
+    @Test
+    public void getCloseRelativeNoPatientFound() {
+        // Arrange
+        when(DatabaseConnections.getPatientCollection(mockDatabase)).thenReturn(mockCollection);
+        when(mockCollection.find(any(Document.class))).thenReturn(mockFindIterable);
+        when(mockFindIterable.first()).thenReturn(null);
+
+        // Act
+        Exception exception = assertThrows(
+            Exception.class,
+            () -> getUserFromMongoDb.getCloseRelative(patientId, relativeFirstName)
+        );
+
+        // Assert
+        assertEquals("No patient was found.", exception.getMessage());
     }
 }
