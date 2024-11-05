@@ -20,12 +20,10 @@ import java.util.HashSet;
  */
 public class GetUserFromMongoDb implements GetUser {
 
-    private MongoClient mongoClient;
     private MongoDatabase database;
     private MongoCollection<Document> collection;
 
-    public GetUserFromMongoDb() {
-        mongoClient = DatabaseConnections.getMongodbClientInfo();
+    public GetUserFromMongoDb(MongoClient mongoClient) {
         database = DatabaseConnections.getUsersDatabase(mongoClient);
     }
 
