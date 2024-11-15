@@ -114,14 +114,15 @@ void loop() {
 
       if (receivedText == "Waiting for activity") {
         activityActive = false;
+        digitalWrite(ledPin, LOW);
       } else {
         activityActive = true; // Primes putton reader
+        digitalWrite(ledPin, HIGH);
       }
       
       // Clear the received text for the next message
       receivedText = "";
       receivedTime = "";
-      digitalWrite(ledPin, HIGH);
       timeStartActivity = millis(); // Timestamps when activity is recived
 
     } else if (incomingChar == '@' && !parsingTime) {
