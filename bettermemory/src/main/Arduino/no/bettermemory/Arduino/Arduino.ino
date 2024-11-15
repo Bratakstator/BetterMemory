@@ -17,7 +17,7 @@ String receivedText = "";             // String to hold the received text
 String receivedTime = "";             // String to hold the time of when the activety should be preformed
 bool parsingTime = false;             // Flag to indicate if we are currently parsing the time
 unsigned long timeStartActivity = 0;  // Variable to hold the time of when an activety is sendt to the arduino
-unsigned long activityTimeDelay = 1000; // The time activety is held befor it counts it as not completed (1.8 mill = half an hour) but set to 15000 for testing purposes
+unsigned long activityTimeDelay = 15000; // The time activety is held befor it counts it as not completed (1.8 mill = half an hour) but set to 15000 for testing purposes
 const int buttonPin = 2;              // Pin where the button is connected
 int buttonState = 0;                  // Variable for reading the buttonstate
 int ledPin = 4;                       //Pin where led indicator is connected
