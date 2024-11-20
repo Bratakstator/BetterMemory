@@ -26,12 +26,19 @@ public class InsertDayToMongoDB implements InsertActivityOrDay<Day> {
         this.collection = DatabaseConnections.getDaysCollection(database);
         this.insertActivity = insertActivity;
     }
-
+    
+    /**
+     *  This method should be used to save a day to MongoDB. 
+     *  @param  -  The day you want to add to the database
+     *  @code 
+     *  This is an example of how you can use this method:
+     *  <pre>{@code  InsertActivityToMongoDB.saveObject(day);}
+     */
     public ObjectId saveObject(Day day) throws Exception {
         if (day == null) throw new Exception("Day object is null.");
 
         Document dayDocument = day.toDocument();
-
+    
         ArrayList<Activity> activities = day.getActivities();
         if (activities.size() != 0) {
             List<ObjectId> activityIds = new ArrayList<>();
