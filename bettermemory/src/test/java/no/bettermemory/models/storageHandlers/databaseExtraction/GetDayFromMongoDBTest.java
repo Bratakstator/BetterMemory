@@ -2,9 +2,7 @@ package no.bettermemory.models.storageHandlers.databaseExtraction;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.mockito.ArgumentMatchers.anyCollection;
-import static org.mockito.ArgumentMatchers.anyIterable;
-import static org.mockito.ArgumentMatchers.anyString;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mockStatic;
 import static org.mockito.Mockito.when;
@@ -12,14 +10,13 @@ import static org.mockito.Mockito.when;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.mockito.Mockito;
 
 import org.bson.Document;
 import org.bson.types.ObjectId;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.ArgumentMatcher;
 import org.mockito.ArgumentMatchers;
 import org.mockito.Mock;
 import org.mockito.MockedStatic;
@@ -47,18 +44,19 @@ public class GetDayFromMongoDBTest {
     private Document mockDocument;
     @Mock
     private Day mockDay;
+ 
 
     private GetDayFromMongoDB getDayFromMongoDB;
 
     @BeforeEach
     void setUp() {
         when(DatabaseConnections.getUsersDatabase(mockClient)).thenReturn(mockDatabase);
-        //when(DatabaseConnections.getActivitiesCollection(mockDatabase)).thenReturn(mockCollection);
         getDayFromMongoDB = new GetDayFromMongoDB(mockClient);
     }
 
     @Test 
-    public void testGetSpecific() throws Exception{
+    @DisplayName("Test of extraction of Day object from mongoDB where days exists")
+    public void testGetSpecificWithDays() throws Exception{
         //Arrange
         String patientId = "0003333";
         int year = 2024;
@@ -67,14 +65,12 @@ public class GetDayFromMongoDBTest {
 
 
         try(MockedStatic<DatabaseConnections> mockedDatabaseConnection = mockStatic(DatabaseConnections.class)) {
-            mockedDatabaseConnection.when(() -> DatabaseConnections.getUsersDatabase(mockClient))
-            .thenReturn(mockDatabase);
             mockedDatabaseConnection.when(() -> DatabaseConnections.getWeeksCollection(mockDatabase))
             .thenReturn(mockCollection);
             mockedDatabaseConnection.when(() -> DatabaseConnections.getDaysCollection(mockDatabase))
             .thenReturn(mockCollection);
 
-            
+
             doReturn(true).when(mockDocument).containsKey("days");
             doReturn(new ArrayList<>(List.of(new ObjectId()))).when(mockDocument).get("days");
             when(mockFindIterable.first()).thenReturn(mockDocument);
@@ -82,8 +78,10 @@ public class GetDayFromMongoDBTest {
             when(mockDocument.getString("day")).thenReturn(dayName);
             
 
+            //Act
             Day day = getDayFromMongoDB.getSpecific(patientId, year, weekNumber, dayName);
 
+            //Assert
             assertNotNull(day);
             assertEquals(dayName, day.getDayName());
 
@@ -91,7 +89,41 @@ public class GetDayFromMongoDBTest {
     
     }
 
+    @Test
+    @DisplayName("Test of extraction of Day object from mongoDB where days do not exists")
+    public void testGetSpecificWithoutDays() throws Exception{
+        //Arrange
+        String patientId = "0003333";
+        int year = 2024;
+        int weekNumber = 50;
+        String dayName = "Monday";
+
+
+        try(MockedStatic<DatabaseConnections> mockedDatabaseConnection = mockStatic(DatabaseConnections.class)) {
+            mockedDatabaseConnection.when(() -> DatabaseConnections.getWeeksCollection(mockDatabase))
+            .thenReturn(mockCollection);
+            mockedDatabaseConnection.when(() -> DatabaseConnections.getDaysCollection(mockDatabase))
+            .thenReturn(mockCollection);
+
+
+            doReturn(false).when(mockDocument).containsKey("days");
+            when(mockFindIterable.first()).thenReturn(mockDocument);
+            when(mockCollection.find(ArgumentMatchers.any(Document.class))).thenReturn(mockFindIterable);
+            
+        
+            //Act
+            Exception exception = assertThrows(Exception.class, () -> {
+                getDayFromMongoDB.getSpecific(patientId, year, weekNumber, dayName);
+            });
+
+            //Assert
+            assertEquals("No days are registered for week 50.", exception.getMessage());
+
+        }
     
+    }
+
+
 }
 
 
