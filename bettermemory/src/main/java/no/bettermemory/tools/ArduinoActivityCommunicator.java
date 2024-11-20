@@ -129,6 +129,7 @@ public class ArduinoActivityCommunicator implements Runnable {
 
     /**
      * This is the main function of this class, it is responsible for sending the activity to the arduino
+     * And it is dependant on that the arrayHandeler is holding activities
      * 
      * @param comportRecived - used for comunication
      * 
