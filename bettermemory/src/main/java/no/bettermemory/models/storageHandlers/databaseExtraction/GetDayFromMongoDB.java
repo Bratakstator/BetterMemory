@@ -41,7 +41,7 @@ public class GetDayFromMongoDB implements GetDay {
      *  @return day
      *  @code 
      *  This is an example of how you can use this method:
-     *  <pre>{@code  getDayFromMongoDB.getSpecific()}
+     *  <pre>{@code  getDayFromMongoDB.getSpecific(patientId, year, weekNumber, dayName);}
      */
     @SuppressWarnings("unchecked")
     @Override
@@ -88,7 +88,7 @@ public class GetDayFromMongoDB implements GetDay {
      *  @return days
      *  @code 
      *  This is an example of how you can use this method:
-     *  <pre>{@code  getDayFromMongoDB.getSpecific()}
+     *  <pre>{@code  getDayFromMongoDB.getSpecific();}
      */
     @SuppressWarnings("unchecked")
     @Override

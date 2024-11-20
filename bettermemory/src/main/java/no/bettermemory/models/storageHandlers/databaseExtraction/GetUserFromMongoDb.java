@@ -16,7 +16,9 @@ import java.util.Set;
 import java.util.HashSet;
 
 /**
- * 
+ * This class should be used for retrieving user objects stored in MongoDB.
+ * This is an example of how you use this class:
+ * <pre>{@code  GetUserFromMongoDb getUserFromMongoDb = new getUserFromMongoDb(client);}
  */
 public class GetUserFromMongoDb implements GetUser {
 
