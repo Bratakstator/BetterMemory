@@ -9,17 +9,38 @@ import no.bettermemory.interfaces.MicrocontrollerDatabaseBridge.ArrayHandlers.St
 import no.bettermemory.models.DTO.ActivityDTO;
 import no.bettermemory.models.activity.Activity;
 
+/**
+ * This class is ment to be a tool for comunicating to the arduino, it is formated in a way that the arduino.ino file can read
+ * 
+ * @param arrayHandeler - used to hold the activitys that will be sendt to arduino
+ * @param running - indicates that the run thread is active
+ * @param compiledString - holds message after compiling together diferent values like minuits and houres
+ * @param minutesText - holds minuits that has been turned into string format (9:5 -> 09:05)
+ * @param hourText - holds houres that has been turned into string format (9:5 -> 09:05)
+ * 
+ * @author Hans Henrik Disen & Joakim Klemsdal Bøe
+ * 
+ * @code
+ * When using arduinoSendActivity you have to openPort befor, and cloePort after
+ * <pre>{@code 
+ * ArduinoActivityCommunicator arduinoActivityCommunicator = new ArduinoActivityCommunicator(arrayDTOHandler);
+ * arduinoSendActivity(openPort());
+ * } </pre>
+ */
+
+
 public class ArduinoActivityCommunicator implements Runnable {
     private StaticContainerHandler<ActivityDTO> arrayHandeler;
     boolean running = true;
+    private String compiledString = "";
+    private String minutesText;
+    private String hourText;
+
 
     public ArduinoActivityCommunicator(StaticContainerHandler<ActivityDTO> arrayHandeler){
         this.arrayHandeler = arrayHandeler;
     }
 
-    private String compiledString = "";
-    private String minutesText;
-    private String hourText;
 
     //creates massge that will be sendt to arduino
     public String BuildMessage(String shortDescription, String longDescription, int hour, int minutes){
@@ -32,9 +53,11 @@ public class ArduinoActivityCommunicator implements Runnable {
         return message;
     }
 
+
     public void run() {
         arduinoSendActivity(openPort());
     }
+
 
     public void stop() {
         running = false;
@@ -114,7 +137,6 @@ public class ArduinoActivityCommunicator implements Runnable {
                                 line = "";
                                 continue;
                             }
-                            //System.out.println(receivedData);
                         
                             if (line.trim().equals("ButtonPressed")) {
                                 activity.setConcluded(true);
