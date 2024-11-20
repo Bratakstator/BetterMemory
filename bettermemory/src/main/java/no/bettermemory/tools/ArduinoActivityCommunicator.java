@@ -10,7 +10,7 @@ import no.bettermemory.models.DTO.ActivityDTO;
 import no.bettermemory.models.activity.Activity;
 
 /**
- * This class is ment to be a tool for comunicating to the arduino, it is formated in a way that the arduino.ino file can read
+ * This class is ment to be a tool for communicating to the arduino, it is formatted in a way that the arduino.ino file can read
  * 
  * @param arrayHandeler - used to hold the activitys that will be sendt to arduino
  * @param running - indicates that the run thread is active
@@ -37,23 +37,44 @@ public class ArduinoActivityCommunicator implements Runnable {
     private String hourText;
 
 
+
     public ArduinoActivityCommunicator(StaticContainerHandler<ActivityDTO> arrayHandeler){
         this.arrayHandeler = arrayHandeler;
     }
 
 
-    //creates massge that will be sendt to arduino
+
+    /**
+     * This method is compiling the String that gets sent to the arduino
+     * 
+     * @param shortDescription - Title of activity
+     * @param longDescription - Description of the activity 
+     * @param hour
+     * @param minutes
+     * @return
+     * 
+     * @author Hans Henrik Disen
+     */
+
     public String BuildMessage(String shortDescription, String longDescription, int hour, int minutes){
         if (hour < 10){hourText = "0" + hour;} // gives time format eks: 09:05 insted of 9:50
         else{hourText = "" + hour;}
 
         if (minutes < 10){minutesText = "0" + minutes;} // gives time format eks: 10:05 insted of 10:5
         else{minutesText = "" + minutes;}
+
         String message = shortDescription + ": " + longDescription + "@" + hourText + ":" + minutesText + "@\n";
         return message;
     }
 
 
+    /**
+     * This funktion is used to start the thread process where, this ensures that the communicator can 
+     * continue to update the arduino on what activity is active
+     * 
+     * @author Joakim Klemsdal Bøe
+     */
+    @Override
     public void run() {
         arduinoSendActivity(openPort());
     }
@@ -64,17 +85,24 @@ public class ArduinoActivityCommunicator implements Runnable {
     }
 
 
-    //opens port
+
+    /**
+     * this method is used to initiate the usb object
+     * 
+     * @param comPort - object that is conected to usb writing and reading
+     * 
+     * @author Hans Henrik Disen
+     */
+
     public SerialPort openPort(){
         SerialPort comPort = SerialPort.getCommPorts()[0];
-        comPort.setBaudRate(9600);
-        if (comPort.openPort()) {
+        comPort.setBaudRate(9600); //sets communication speed so that both sides can read correctly
+        if (comPort.openPort()) { //opens port here!
             System.out.println("Port is open!");
             clearInputBuffer(comPort);
         } else {
             System.out.println("Failed to open the port.");
         }
-
         // Wait for 2 seconds to give the Arduino time to reset
         try {
             Thread.sleep(2000);
@@ -86,30 +114,43 @@ public class ArduinoActivityCommunicator implements Runnable {
     }
 
 
-    //closes port
+    /**
+     *This function closes the comport, this is required if you would connect it to another program, like the arduino IDE
+     * 
+     * @param comportRecived - this function is dependent on having an item to close, that is the 
+     * 
+     * @author Hans Henrik Disen
+     */
     public void closePort(SerialPort comportRecived){
         SerialPort comPort = comportRecived;
         comPort.closePort();
         System.out.println("Port is closed!");
     }
 
-
+    /**
+     * This is the main function of this class, it is responsible for sending the activity to the arduino
+     * 
+     * @param comportRecived - used for comunication
+     * 
+     * @author Hans Henrik Disen & Joakim Klemsdal Bøe
+     */
     //Send activety
     public void arduinoSendActivity(SerialPort comportRecived){
         SerialPort comPort = comportRecived;
+
         try ( // looks after a respons from the arduino
                 Scanner data = new Scanner(comPort.getInputStream())) {
-
             // Keep checking for data in a loop
             while (running && !Thread.currentThread().isInterrupted()) {
                 try {
-                    synchronized (arrayHandeler) {
+                    synchronized (arrayHandeler) { 
+                        //the following lines retrieves values from the active activity that is first in the array handler 
                         Activity activity = arrayHandeler.getAttributeOf(0, ActivityDTO::getActivity);
                         String longDescription = activity.getLongDescription();
                         String shortDescription = activity.getShortDescription();
                         int hour = activity.getHour();
                         int minutes = activity.getMinutes();
-
+                        //compiles the values into a string that the arduino understands
                         compiledString = BuildMessage(shortDescription, longDescription, hour, minutes);
 
                         // Convert the message to bytes and send it
