@@ -10,13 +10,15 @@ import no.bettermemory.models.DTO.ActivityToReceiveDTO;
 import no.bettermemory.models.activity.Activity;
 
 public interface GetActivity {
-    ActivityDTO[] getActivitiesAtMinute(ActivityToReceiveDTO activityToReceive) throws Exception;
-
-    /* Been thinking of removing this
-    HashMap<ObjectId, Activity> getActivitiesAtInterval(
-        String patientId, int year, int weekNumber, String dayName, int currentHour, int currentMinutes, int interval
-    ) throws Exception;
+    /**
+     *  This method should be used for creating Activity objects from data stored in a MongoDB. 
+     *  It returns an array of every activity at present time
+     *  @param activityToReceive -  This DTO includes patientId, year, weekNumber, dayName, hour, minutes
+     *  @return ActivityDTO[]
+     *  @code 
+     *  This is an example of how you can use this method:
+     *  <pre>{@code  getActivityFromMongoDB.getActivitiesAtMinute(activityToReceive);}
      */
-    
+    ActivityDTO[] getActivitiesAtMinute(ActivityToReceiveDTO activityToReceive) throws Exception;
     Map<ObjectId, Activity> getActivitiesFromObjectId(List<ObjectId> activityIds) throws Exception;
 }

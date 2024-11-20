@@ -39,8 +39,6 @@ public class GetActivityFromMongoDB implements GetActivity {
      *  @code 
      *  This is an example of how you can use this method:
      *  <pre>{@code  getActivityFromMongoDB.getActivitiesAtMinute(activityToReceive);}
-     * 
-     * 
      */
     @SuppressWarnings("unchecked")
     @Override
