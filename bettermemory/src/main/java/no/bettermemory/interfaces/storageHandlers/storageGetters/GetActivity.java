@@ -20,5 +20,13 @@ public interface GetActivity {
      *  <pre>{@code  getActivityFromMongoDB.getActivitiesAtMinute(activityToReceive);}
      */
     ActivityDTO[] getActivitiesAtMinute(ActivityToReceiveDTO activityToReceive) throws Exception;
+    /**
+     * This method should be used for to retrieve activities  by their ObjectId from MongoDB.
+     * @param activityIds - A unique ID for an activity in MongoDB
+     * @return activities
+     * @code
+     * This is an example of how you can use this method:
+     * <pre>{@code  getActivityFromMongoDB.getActibitiesFromMongoDB(activityIds);}
+     */
     Map<ObjectId, Activity> getActivitiesFromObjectId(List<ObjectId> activityIds) throws Exception;
 }
