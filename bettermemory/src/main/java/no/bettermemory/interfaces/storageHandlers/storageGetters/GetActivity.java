@@ -11,7 +11,7 @@ import no.bettermemory.models.activity.Activity;
 
 public interface GetActivity {
     /**
-     *  This method should be used for creating Activity objects from data stored in a MongoDB. 
+     *  This method should be used for creating an activitylist from data stored in a MongoDB. 
      *  It returns an array of every activity at present time
      *  @param activityToReceive -  This DTO includes patientId, year, weekNumber, dayName, hour, minutes
      *  @return ActivityDTO[]
@@ -21,7 +21,8 @@ public interface GetActivity {
      */
     ActivityDTO[] getActivitiesAtMinute(ActivityToReceiveDTO activityToReceive) throws Exception;
     /**
-     * This method should be used for to retrieve activities  by their ObjectId from MongoDB.
+     * This method should be used for to retrieve activities by their ObjectId from MongoDB.
+     * It returns a activities for that ObjectId.
      * @param activityIds - A unique ID for an activity in MongoDB
      * @return activities
      * @code

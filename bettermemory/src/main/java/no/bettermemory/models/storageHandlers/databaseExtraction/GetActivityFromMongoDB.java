@@ -32,7 +32,7 @@ public class GetActivityFromMongoDB implements GetActivity {
     }
 
     /**
-     *  This method should be used for creating Activity objects from data stored in a MongoDB. 
+     *  This method should be used for creating an activitylist from data stored in a MongoDB. 
      *  It returns an array of every activity at present time
      *  @param activityToReceive -  This DTO includes patientId, year, weekNumber, dayName, hour, minutes
      *  @return ActivityDTO[]
