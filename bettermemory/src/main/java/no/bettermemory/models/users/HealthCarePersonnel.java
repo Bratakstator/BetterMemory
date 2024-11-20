@@ -30,7 +30,7 @@ public class HealthCarePersonnel {
     private String employeeNumber;
     private String firstName;
     private String surname;
-    private Set<String> connectedPatients;
+    private Set<String> connectedPatients = new HashSet<>();
 
     /**
      * Default constructor.

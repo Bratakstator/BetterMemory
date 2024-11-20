@@ -20,12 +20,10 @@ import java.util.HashSet;
  */
 public class GetUserFromMongoDb implements GetUser {
 
-    private MongoClient mongoClient;
     private MongoDatabase database;
     private MongoCollection<Document> collection;
 
-    public GetUserFromMongoDb() {
-        mongoClient = DatabaseConnections.getMongodbClientInfo();
+    public GetUserFromMongoDb(MongoClient mongoClient) {
         database = DatabaseConnections.getUsersDatabase(mongoClient);
     }
 
@@ -139,9 +137,9 @@ public class GetUserFromMongoDb implements GetUser {
             HealthCarePersonnel healthCarePersonnel = new HealthCarePersonnel(); //Creates a new HealthCarePersonnel object, that will be built.
 
             //The HealthCarePersonnel objects instance variables wil be set by the following code.
-            healthCarePersonnel.setEmployeeNumber(result.get("_id").toString());
-            healthCarePersonnel.setFirstName(result.get("first_name").toString());
-            healthCarePersonnel.setSurname(result.get("surname").toString());
+            healthCarePersonnel.setEmployeeNumber(result.getString("_id"));
+            healthCarePersonnel.setFirstName(result.getString("first_name"));
+            healthCarePersonnel.setSurname(result.getString("surname"));
 
 
             //Checks if the HealthCarePersonnel Object in the database is listed with any connectedPatients.
@@ -221,8 +219,8 @@ public class GetUserFromMongoDb implements GetUser {
 
                             if (closeRelativeDocument.containsValue(firstName)) {
 
-                                String id = closeRelativeDocument.get("relative_id").toString();
-                                String surname = closeRelativeDocument.get("surname").toString();
+                                String id = closeRelativeDocument.getString("relative_id");
+                                String surname = closeRelativeDocument.getString("surname");
 
                                 CloseRelative closeRelative = new CloseRelative(id, firstName, surname);
 

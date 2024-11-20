@@ -36,7 +36,7 @@ public class GetWeekFromMongoDB implements GetWeek {
         Week week = new Week();
 
         week.setPatient(
-            (new GetUserFromMongoDb()).getPatient(
+            (new GetUserFromMongoDb(client)).getPatient(
                 result.getString("patient")
             )
         );
