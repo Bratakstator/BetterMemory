@@ -18,6 +18,11 @@ import no.bettermemory.models.activity.Activity;
 import no.bettermemory.tools.DatabaseConnections;
 import no.bettermemory.tools.TimeControls;
 
+/**
+ *  This class should be used retrieving activity objects from data stored in a MongoDB.
+ *  This is an example of how you use this class:
+ *  <pre>{@code  GetActivityFromMongoDB getActivityFromMongoDB = new getActivityFromMongoDB(client);}
+ */
 public class GetActivityFromMongoDB implements GetActivity {
     private MongoDatabase database;
     private MongoCollection<Document> collection;
@@ -26,9 +31,21 @@ public class GetActivityFromMongoDB implements GetActivity {
         this.database = DatabaseConnections.getUsersDatabase(client);
     }
 
+    /**
+     *  This method should be used for creating Activity objects from data stored in a MongoDB. 
+     *  It returns an array of every activity at present time
+     *  @param activityToReceive -  This DTO includes patientId, year, weekNumber, dayName, hour, minutes
+     *  @return ActivityDTO[]
+     *  @code 
+     *  This is an example of how you can use this method:
+     *  <pre>{@code  getActivityFromMongoDB.getActivitiesAtMinute(activityToReceive);}
+     * 
+     * 
+     */
     @SuppressWarnings("unchecked")
     @Override
     public ActivityDTO[] getActivitiesAtMinute(ActivityToReceiveDTO activityToReceive) throws Exception {
+        // Checks if hour and minutes given is right
         try {
             TimeControls.hourCheck(activityToReceive.getHour());
             TimeControls.minuteCheck(activityToReceive.getMinutes());
