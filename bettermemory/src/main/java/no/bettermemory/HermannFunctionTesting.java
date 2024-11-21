@@ -1,10 +1,10 @@
 package no.bettermemory;
 
 
-import no.bettermemory.models.MicrocontrollerDatabaseBridge.PresentTimeClasses.GetHourInteger;
-import no.bettermemory.models.MicrocontrollerDatabaseBridge.PresentTimeClasses.GetMinutesInteger;
-import no.bettermemory.models.MicrocontrollerDatabaseBridge.PresentTimeClasses.GetWeekInteger;
-import no.bettermemory.models.MicrocontrollerDatabaseBridge.PresentTimeClasses.GetYearInteger;
+import no.bettermemory.models.Micro_DB_Bridge.PresentTimeClasses.GetHourInteger;
+import no.bettermemory.models.Micro_DB_Bridge.PresentTimeClasses.GetMinutesInteger;
+import no.bettermemory.models.Micro_DB_Bridge.PresentTimeClasses.GetWeekInteger;
+import no.bettermemory.models.Micro_DB_Bridge.PresentTimeClasses.GetYearInteger;
 
 
 public class HermannFunctionTesting {
