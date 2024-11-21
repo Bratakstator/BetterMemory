@@ -4,6 +4,13 @@ import com.mongodb.Function;
 
 import no.bettermemory.interfaces.MicrocontrollerDatabaseBridge.ArrayHandlers.StaticContainerHandler;
 
+/**
+ * This abstract class is used to add methods for handling arrays.
+ * This abstract class contains methods to make it easier to use an array
+ * as a ordered list.
+ * 
+ * @author Joakim Klemsdal Bøe
+ */
 public abstract class ArrayHandler<T> implements StaticContainerHandler<T> {
     T[] array;
 
@@ -11,6 +18,14 @@ public abstract class ArrayHandler<T> implements StaticContainerHandler<T> {
         this.array = array;
     }
 
+    /**
+     * This method adds the provided object to the first instance of null in the array.
+     * If the array does not contain any null values, it will throw an exception.
+     * Returns the index where the object was added.
+     * 
+     * @return int
+     * @throws Exception
+     */
     public synchronized int add(T t) throws Exception {
         try {
             int index = getFirstNullIndex();
@@ -21,6 +36,13 @@ public abstract class ArrayHandler<T> implements StaticContainerHandler<T> {
         }
     }
 
+    /**
+     * Adds given object to specified index.
+     * Returns the index where the object was added.
+     * 
+     * @return int
+     * @throws IndexOutOfBoundsException
+     */
     public synchronized int addAtIndex(int index, T t) throws IndexOutOfBoundsException {
         try {
             array[index] = t;
@@ -31,6 +53,12 @@ public abstract class ArrayHandler<T> implements StaticContainerHandler<T> {
         }
     }
 
+    /**
+     * Goes through the array and moves all nulls to the back, used to maintain the order of the array.
+     * Returns the updated instance of itself.
+     * 
+     * @return StaticContainerHandler<T>
+     */
     public synchronized StaticContainerHandler<T> nullShiftRight() {
         for (int index = 0; index < array.length; index++) {
             if (array[index] == null) {
@@ -46,16 +74,35 @@ public abstract class ArrayHandler<T> implements StaticContainerHandler<T> {
         return this;
     }
 
+    /**
+     * Checks if the array contains null values.
+     * Returns true if it has nulls, false if it doesn't.
+     * 
+     * @return boolean
+     */
     public synchronized boolean hasNulls() {
         for (T t : array) if (t == null) return true;
         return false;
     }
 
+    /**
+     * Returns the index of the first null instance in array.
+     * If array does not have nulls, it will throw an exception.
+     * 
+     * @return int
+     * @throws Exception
+     */
     public synchronized int getFirstNullIndex() throws Exception {
         for (int index = 0; index < array.length; index++) if(array[index] == null) return index;
         throw new Exception("No nulls in array.");
     }
 
+    /**
+     * Returns the object at given index.
+     * 
+     * @return T
+     * @throws IndexOutOfBoundsException
+     */
     public synchronized T get(int index) throws IndexOutOfBoundsException {
         try {
             return array[index];
@@ -65,6 +112,15 @@ public abstract class ArrayHandler<T> implements StaticContainerHandler<T> {
         }
     }
 
+    /**
+     * Returns a given attribute of the object at given index.
+     * 
+     * @return the type of the given attribute.
+     * @throws IndexOutOfBoundsException
+     * 
+     * @code
+     * <pre>{@code arrayHandler.getAttributeOf(2, ExampleClass::getName);} </pre>
+     */
     public synchronized <R> R getAttributeOf(int index, Function<T, R> toReturn) throws IndexOutOfBoundsException {
         try {
             return toReturn.apply(array[index]);
@@ -74,10 +130,15 @@ public abstract class ArrayHandler<T> implements StaticContainerHandler<T> {
         }
     }
 
+    /**
+     * Returns the length of the array.
+     * 
+     * @return int
+     */
     public synchronized int length() {
         return array.length;
     }
-
+    
     public synchronized T[] getArray() {
         return array;
     }

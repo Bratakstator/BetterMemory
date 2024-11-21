@@ -18,6 +18,11 @@ import no.bettermemory.models.activity.Activity;
 import no.bettermemory.tools.DatabaseConnections;
 import no.bettermemory.tools.TimeControls;
 
+/**
+ *  This class should be used retrieving activity objects from data stored in a MongoDB.
+ *  This is an example of how you use this class:
+ *  <pre>{@code  GetActivityFromMongoDB getActivityFromMongoDB = new getActivityFromMongoDB(client);}
+ */
 public class GetActivityFromMongoDB implements GetActivity {
     private MongoDatabase database;
     private MongoCollection<Document> collection;
@@ -26,6 +31,15 @@ public class GetActivityFromMongoDB implements GetActivity {
         this.database = DatabaseConnections.getUsersDatabase(client);
     }
 
+    /**
+     *  This method should be used for creating an activitylist from data stored in a MongoDB. 
+     *  It returns an array of every activity at present time
+     *  @param activityToReceive -  This DTO includes patientId, year, weekNumber, dayName, hour, minutes
+     *  @return ActivityDTO[]
+     *  @code 
+     *  This is an example of how you can use this method:
+     *  <pre>{@code  getActivityFromMongoDB.getActivitiesAtMinute(activityToReceive);}
+     */
     @SuppressWarnings("unchecked")
     @Override
     public ActivityDTO[] getActivitiesAtMinute(ActivityToReceiveDTO activityToReceive) throws Exception {
@@ -120,34 +134,15 @@ public class GetActivityFromMongoDB implements GetActivity {
         return activityDTOs.toArray(ActivityDTO[]::new);
     }
 
-    /*@Override
-    public HashMap<ObjectId, Activity> getActivitiesAtInterval(
-        String patientId, int year, int weekNumber, String dayName, int currentHour, int currentMinutes, int interval
-    ) throws Exception {
-        try {
-            TimeControls.hourCheck(currentHour);
-            TimeControls.minuteCheck(currentMinutes);
-        } catch (IllegalArgumentException e) {
-            throw new Exception(e.getMessage());
-        }
-
-        HashMap<ObjectId, Activity> activities = new HashMap<>();
-        for (int offset = 0; offset < interval; offset++) {
-            int minute = currentMinutes + offset;
-            if (minute > 59) {
-                currentHour += 1;
-                currentMinutes -= 60;
-            }
-            activities.putAll(
-                getActivitiesAtMinute(patientId, year, weekNumber, dayName, currentHour, minute)
-            );
-        }
-
-        if (activities.size() == 0) throw new Exception("No activities found at the hour " + currentHour + ".");
-
-        return activities;
-    }*/
-
+    /**
+     * This method should be used for to retrieve activities by their ObjectId from MongoDB.
+     * It returns activities based on ObjectId and Activity
+     * @param activityIds - A unique ID for an activity in MongoDB
+     * @return activities
+     * @code
+     * This is an example of how you can use this method:
+     * <pre>{@code  getActivityFromMongoDB.getActibitiesFromMongoDB(activityIds);}
+     */
     @Override
     public HashMap<ObjectId, Activity> getActivitiesFromObjectId(List<ObjectId> activityIds) throws Exception {
         HashMap<ObjectId, Activity> activities = new HashMap<>();

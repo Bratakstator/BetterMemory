@@ -16,6 +16,11 @@ import no.bettermemory.models.time.Day;
 import no.bettermemory.models.time.Week;
 import no.bettermemory.tools.DatabaseConnections;
 
+/**
+ * This class should be used for sending a Week object to MongoDB
+ * This is an example of how you use this class:
+ * <pre>{@code  InsertPatientToMongoDB insertPatientToMongoDB = new insertPatientToMongoDB(client);}
+ */
 public class InsertWeekToMongoDB implements InsertToDatabase<Week> {
     MongoClient client;
     MongoDatabase database;
@@ -28,12 +33,19 @@ public class InsertWeekToMongoDB implements InsertToDatabase<Week> {
         this.collection = DatabaseConnections.getWeeksCollection(database);
         this.insertDay = insertDay;
     }
-
+    
+    /**
+     *  This method should be used to save a week to MongoDB. 
+     *  @param patient -  The patient you want to add to the database
+     *  @code 
+     *  This is an example of how you can use this method:
+     *  <pre>{@code  InsertWeekToMongoDB.saveObject(week);}
+     */
     public void saveObject(Week week) throws Exception {
         if (week == null) throw new Exception("Week is set to null.");
 
         Document weekDocument = week.toDocument();
-
+        
         ArrayList<Day> days = week.getDays();
         if (days.size() != 0) {
             List<ObjectId> dayIds = new ArrayList<>();
