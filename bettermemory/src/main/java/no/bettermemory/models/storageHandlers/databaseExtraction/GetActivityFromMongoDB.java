@@ -135,7 +135,8 @@ public class GetActivityFromMongoDB implements GetActivity {
     }
 
     /**
-     * This method should be used for to retrieve activities  by their ObjectId from MongoDB.
+     * This method should be used for to retrieve activities by their ObjectId from MongoDB.
+     * It returns activities based on ObjectId and Activity
      * @param activityIds - A unique ID for an activity in MongoDB
      * @return activities
      * @code

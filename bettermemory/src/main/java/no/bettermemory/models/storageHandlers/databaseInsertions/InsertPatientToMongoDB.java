@@ -12,7 +12,7 @@ import no.bettermemory.tools.DatabaseConnections;
 import no.bettermemory.tools.DatabaseDataHandler;
 
 /**
- * This class should be used for sending a Patient objects to MongoDB
+ * This class should be used for sending a Patient object to MongoDB
  * This is an example of how you use this class:
  * <pre>{@code  InsertPatientToMongoDB insertPatientToMongoDB = new insertPatientToMongoDB(client);}
  */

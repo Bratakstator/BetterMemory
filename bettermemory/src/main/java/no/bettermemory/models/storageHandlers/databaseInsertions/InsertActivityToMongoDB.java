@@ -12,7 +12,7 @@ import no.bettermemory.interfaces.storageHandlers.databaseInserters.InsertActivi
 import no.bettermemory.models.activity.Activity;
 import no.bettermemory.tools.DatabaseConnections;
 /**
- * This class should be used for sending activities to MongoDB
+ * This class should be used for sending activity objects to MongoDB
  * This is an example of how you use this class:
  * <pre>{@code  InsertActivityToMongoDB insertActivityToMongoDB = new insertActivityToMongoDB(client);}
  */
@@ -43,7 +43,7 @@ public class InsertActivityToMongoDB implements InsertActivityOrDay<Activity> {
     
     /**
      *  This method should be used to update an activity in a MongoDB. 
-     *  @param activity -  The activityID you want to update to the database
+     *  @param activityID -  The activityID you want to update to the database
      *  @param activity -  The activity you want to update to the database
      *  @code 
      *  This is an example of how you can use this method:
