@@ -14,7 +14,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import no.bettermemory.interfaces.MicrocontrollerDatabaseBridge.ArrayHandlers.StaticContainerHandler;
 import no.bettermemory.interfaces.storageHandlers.databaseInserters.InsertActivityOrDay;
 import no.bettermemory.models.DTO.ActivityDTO;
-import no.bettermemory.models.Micro_DB_Bridge.ActivityHandlers.QueHandlers.ActivityQueStateChecker;
 import no.bettermemory.models.activity.Activity;
 
 @ExtendWith(MockitoExtension.class)

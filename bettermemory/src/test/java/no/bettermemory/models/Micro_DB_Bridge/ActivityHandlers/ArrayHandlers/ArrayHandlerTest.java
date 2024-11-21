@@ -12,8 +12,6 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import no.bettermemory.models.DTO.ActivityDTO;
-import no.bettermemory.models.Micro_DB_Bridge.ActivityHandlers.ArrayHandlers.ArrayDTOHandler;
-import no.bettermemory.models.Micro_DB_Bridge.ActivityHandlers.ArrayHandlers.ArrayHandler;
 import no.bettermemory.models.activity.Activity;
 
 @ExtendWith(MockitoExtension.class)

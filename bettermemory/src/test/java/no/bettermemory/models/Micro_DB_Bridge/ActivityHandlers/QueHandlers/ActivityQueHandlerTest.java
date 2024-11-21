@@ -10,10 +10,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import no.bettermemory.models.Micro_DB_Bridge.ActivityHandlers.QueHandlers.ActivityQueHandler;
-import no.bettermemory.models.Micro_DB_Bridge.ActivityHandlers.QueHandlers.ActivityQueInserter;
-import no.bettermemory.models.Micro_DB_Bridge.ActivityHandlers.QueHandlers.ActivityQueStateChecker;
-
 @ExtendWith(MockitoExtension.class)
 public class ActivityQueHandlerTest {
     @Mock

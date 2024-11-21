@@ -6,8 +6,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import no.bettermemory.models.Micro_DB_Bridge.PresentTimeClasses.GetYearInteger;
-
 import java.time.Clock;
 import java.time.Instant;
 import java.time.ZoneId;
