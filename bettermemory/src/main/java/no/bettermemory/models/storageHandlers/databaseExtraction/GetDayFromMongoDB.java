@@ -15,6 +15,12 @@ import no.bettermemory.models.activity.Activity;
 import no.bettermemory.models.time.Day;
 import no.bettermemory.tools.DatabaseConnections;
 
+/**
+ *  This class should be used for retrieving day objects from data stored in a MongoDB.
+ *  This is an example of how you use this class:
+ *  <pre>{@code  GetDayFromMongoDB getDayFromMongoDB = new getDayFromMongoDB(client);}
+ */
+
 public class GetDayFromMongoDB implements GetDay {
     MongoClient client;
     private MongoDatabase database;
@@ -37,6 +43,18 @@ public class GetDayFromMongoDB implements GetDay {
         return this.collection;
     }
 
+    /**
+     *  This method should be used to retrieve a spesific day from data stored in a MongoDB. 
+     *  It returns that spesific day based on the parameters.
+     *  @param patientId -  All patients in the database are organized based on their patientId.
+     *  @param year - The year the day is within 
+     *  @param weekNumber - The week number the day is within 
+     *  @param dayName - The name of the day it is
+     *  @return day
+     *  @code 
+     *  This is an example of how you can use this method:
+     *  <pre>{@code  getDayFromMongoDB.getSpecific(patientId, year, weekNumber, dayName);}
+     */
     @SuppressWarnings("unchecked")
     @Override
     public Day getSpecific(String patientId, int year, int weekNumber, String dayName) throws Exception {
@@ -75,6 +93,15 @@ public class GetDayFromMongoDB implements GetDay {
         return day;
     }
 
+    /**
+     *  This method should be used to retrieve a days by their ObjectID from data stored in a MongoDB. 
+     *  It returns that an arraylist of days from MongoDB.
+     *  @param dayIds -  A unique ID for a day in MongoDB
+     *  @return days
+     *  @code 
+     *  This is an example of how you can use this method:
+     *  <pre>{@code  getDayFromMongoDB.getSpecific();}
+     */
     @SuppressWarnings("unchecked")
     @Override
     public List<Day> getDaysFromObjectId(List<ObjectId> dayIds) throws Exception {
