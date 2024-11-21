@@ -16,6 +16,11 @@ import no.bettermemory.models.activity.Activity;
 import no.bettermemory.models.time.Day;
 import no.bettermemory.tools.DatabaseConnections;
 
+/**
+ * This class should be used for sending day objects to MongoDB
+ * This is an example of how you use this class:
+ * <pre>{@code  InsertDayToMongoDB insertDayToMongoDB = new insertDayToMongoDB(client);}
+ */
 public class InsertDayToMongoDB implements InsertActivityOrDay<Day> {
     private MongoDatabase database;
     private MongoCollection<Document> collection;
@@ -29,7 +34,7 @@ public class InsertDayToMongoDB implements InsertActivityOrDay<Day> {
     
     /**
      *  This method should be used to save a day to MongoDB. 
-     *  @param  -  The day you want to add to the database
+     *  @param day -  The day you want to add to the database
      *  @code 
      *  This is an example of how you can use this method:
      *  <pre>{@code  InsertActivityToMongoDB.saveObject(day);}
